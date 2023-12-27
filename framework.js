@@ -1,4 +1,4 @@
-try {
+ try {
   globalThis.await = (promise) => {
     console.log("Attempting to await promise in synchronous context ", promise);
     return promise;
