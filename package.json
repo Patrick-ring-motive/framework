@@ -1,0 +1,17 @@
+{
+  "name": "framework",
+  "version": "1.0.0",
+  "author": "Patrick Ring <patrick.ring.motive@gmail.com>",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Patrick-ring-motive/framework.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
