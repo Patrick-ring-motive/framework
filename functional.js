@@ -1,299 +1,299 @@
 
-globalThis.If=(bool,then,elseThen)=>{
+globalThis.If = (bool, then, elseThen) => {
 
-    if(bool){
+  if (bool) {
 
-                                if((typeof bool)=='function'){
+    if ((typeof bool) == 'function') {
 
-                                                if(bool()){
+      if (bool()) {
 
-                                                                return then();
+        return then();
 
-                                                }else{
+      } else {
 
-                                                                if(elseThen){
+        if (elseThen) {
 
-                                                                                return elseThen(e);
+          return elseThen(e);
 
-                                                                }else{
+        } else {
 
-                                                                                return;
-
-                                                                }
-
-                                                }
-
-                                }else{
-
-                                                return then();
-
-                                }
-
-    }else{
-
-        if(elseThen){
-
-            return elseThen(e);
-
-        }else{
-
-            return;
+          return;
 
         }
 
+      }
+
+    } else {
+
+      return then();
+
     }
 
-}
+  } else {
 
- 
+    if (elseThen) {
 
-globalThis.Var=(name,value)=>{
+      return elseThen(e);
 
-                globalThis[name]=value;
+    } else {
 
-}
+      return;
 
-globalThis.Let=(name,value)=>{
+    }
 
-                globalThis[name]=value;
-
-}
-
-globalThis.Const=(name,value)=>{
-
-                globalThis[name]=value;
-
-                Object.freeze(globalThis[name]);
+  }
 
 }
 
-globalThis.__=(comments)=>globalThis.__;
 
-globalThis.Assign=(name,value)=>{
 
-                globalThis[name]=value;
+globalThis.Var = (name, value) => {
 
-}
-
-globalThis.Put=(obj,name,value)=>{
-
-                obj[name]=value;
+  globalThis[name] = value;
 
 }
 
-globalThis.Add=(num1,num2)=>{
+globalThis.Let = (name, value) => {
 
-                return num1 + num2;
-
-}
-
-globalThis.Multiply=(num1,num2)=>{
-
-                return num1 * num2;
+  globalThis[name] = value;
 
 }
 
-globalThis.Exponentiate=(num1,num2)=>{
+globalThis.Const = (name, value) => {
 
-                return num1 ** num2;
+  globalThis[name] = value;
 
-}
-
-globalThis.Divide=(num1,num2)=>{
-
-                return num1 / num2;
+  Object.freeze(globalThis[name]);
 
 }
 
-globalThis.Modulus=(num1,num2)=>{
+globalThis.__ = (comments) => globalThis.__;
 
-                return num1 % num2;
+globalThis.Assign = (name, value) => {
 
-}
-
-globalThis.Increment=(num)=>{
-
-                return num++;
+  globalThis[name] = value;
 
 }
 
-globalThis.Decrement=(num)=>{
+globalThis.Put = (obj, name, value) => {
 
-                return num--;
-
-}
-
-globalThis.BitwiseAnd=(a,b)=>{
-
-                return a & b;
+  obj[name] = value;
 
 }
 
-globalThis.BitwiseOr=(a,b)=>{
+globalThis.Add = (num1, num2) => {
 
-                return a | b;
-
-}
-
-globalThis.Xor=(a,b)=>{
-
-                return a ^ b;
+  return num1 + num2;
 
 }
 
-globalThis.BitwiseNot=(a)=>{
+globalThis.Multiply = (num1, num2) => {
 
-                return ~a;
-
-}
-
-globalThis.Minus=(a)=>{
-
-                return -a;
+  return num1 * num2;
 
 }
 
-globalThis.Plus=(a)=>{
+globalThis.Exponentiate = (num1, num2) => {
 
-                return +a;
-
-}
-
-globalThis.LeftShift=(a,b)=>{
-
-                return a << b;
+  return num1 ** num2;
 
 }
 
-globalThis.RightShift=(a,b)=>{
+globalThis.Divide = (num1, num2) => {
 
-                return a >> b;
-
-}
-
-globalThis.ZeroRightShift=(a,b)=>{
-
-                return a >>> b;
+  return num1 / num2;
 
 }
 
-globalThis.And=(a,b)=>{
+globalThis.Modulus = (num1, num2) => {
 
-                return a && b;
-
-}
-
-globalThis.Or=(a,b)=>{
-
-                return a || b;
+  return num1 % num2;
 
 }
 
-globalThis.Not=(a)=>{
+globalThis.Increment = (num) => {
 
-                return !a;
-
-}
-
-globalThis.Ternary=(condition,val1,val2)=>{
-
-                return condition ? val1 : val2;
+  return num++;
 
 }
 
-globalThis.Comma=(a,b)=>{
+globalThis.Decrement = (num) => {
 
-                return b;
-
-}
-
-globalThis.Delete=(a,b)=>{
-
-                delete a[b];
+  return num--;
 
 }
 
-globalThis.Get=(a,b)=>{
+globalThis.BitwiseAnd = (a, b) => {
 
-                return a[b];
-
-}
-
-globalThis.TypeOf=(a)=>{
-
-                return typeof a;
+  return a & b;
 
 }
 
-globalThis.In=(a,b)=>{
+globalThis.BitwiseOr = (a, b) => {
 
-                return a in b;
-
-}
-
-globalThis.InstanceOf=(a,b)=>{
-
-                return a instanceof b;
+  return a | b;
 
 }
 
-globalThis.Equal=(a,b)=>{
+globalThis.Xor = (a, b) => {
 
-                return a == b;
-
-}
-
-globalThis.NotEqual=(a,b)=>{
-
-                return a != b;
+  return a ^ b;
 
 }
 
-globalThis.StrictEqual=(a,b)=>{
+globalThis.BitwiseNot = (a) => {
 
-                return a === b;
-
-}
-
-globalThis.StrictNotEqual=(a,b)=>{
-
-                return a !== b;
+  return ~a;
 
 }
 
-globalThis.GreaterThan=(a,b)=>{
+globalThis.Minus = (a) => {
 
-                return a > b;
-
-}
-
-globalThis.GreaterThanEqual=(a,b)=>{
-
-                return a >= b;
+  return -a;
 
 }
 
-globalThis.LessThan=(a,b)=>{
+globalThis.Plus = (a) => {
 
-                return a < b;
-
-}
-
-globalThis.LessThanEqual=(a,b)=>{
-
-                return a <= b;
+  return +a;
 
 }
 
-globalThis.Coalesce=(a,b)=>{
+globalThis.LeftShift = (a, b) => {
 
-                return a ?? b;
+  return a << b;
 
 }
 
-globalThis.Option=(a,b)=>{
+globalThis.RightShift = (a, b) => {
 
-                return a?.[b];
+  return a >> b;
+
+}
+
+globalThis.ZeroRightShift = (a, b) => {
+
+  return a >>> b;
+
+}
+
+globalThis.And = (a, b) => {
+
+  return a && b;
+
+}
+
+globalThis.Or = (a, b) => {
+
+  return a || b;
+
+}
+
+globalThis.Not = (a) => {
+
+  return !a;
+
+}
+
+globalThis.Ternary = (condition, val1, val2) => {
+
+  return condition ? val1 : val2;
+
+}
+
+globalThis.Comma = (a, b) => {
+
+  return b;
+
+}
+
+globalThis.Delete = (a, b) => {
+
+  delete a[b];
+
+}
+
+globalThis.Get = (a, b) => {
+
+  return a[b];
+
+}
+
+globalThis.TypeOf = (a) => {
+
+  return typeof a;
+
+}
+
+globalThis.In = (a, b) => {
+
+  return a in b;
+
+}
+
+globalThis.InstanceOf = (a, b) => {
+
+  return a instanceof b;
+
+}
+
+globalThis.Equal = (a, b) => {
+
+  return a == b;
+
+}
+
+globalThis.NotEqual = (a, b) => {
+
+  return a != b;
+
+}
+
+globalThis.StrictEqual = (a, b) => {
+
+  return a === b;
+
+}
+
+globalThis.StrictNotEqual = (a, b) => {
+
+  return a !== b;
+
+}
+
+globalThis.GreaterThan = (a, b) => {
+
+  return a > b;
+
+}
+
+globalThis.GreaterThanEqual = (a, b) => {
+
+  return a >= b;
+
+}
+
+globalThis.LessThan = (a, b) => {
+
+  return a < b;
+
+}
+
+globalThis.LessThanEqual = (a, b) => {
+
+  return a <= b;
+
+}
+
+globalThis.Coalesce = (a, b) => {
+
+  return a ?? b;
+
+}
+
+globalThis.Option = (a, b) => {
+
+  return a?.[b];
 
 }
 
@@ -303,211 +303,210 @@ globalThis.Option=(a,b)=>{
 
 }*/
 
-globalThis.Run=(a,b)=>{
+globalThis.Run = (a, b) => {
 
-                if(b){
+  if (b) {
 
-                                return a(...b);
+    return a(...b);
 
-                }
+  }
 
-                return a();
-
-}
-
-globalThis.Funtion=(a)=>{
-
-                return ()=>a;
+  return a();
 
 }
 
-globalThis.For=function(a,b,c,d){
+globalThis.Funtion = (a) => {
 
-                this.breakVal=false;
-
-                this.Break=()=>breakVal=true;
-
-                this.Continue=()=>null;
-
-                let e;
-
-                for(a();b();c()){
-
-                                if(breakVal){break;}
-
-                                e=d();
-
-                }
-
-                return e;
+  return () => a;
 
 }
 
-globalThis.ForIn=function(b,d){
+globalThis.For = function(a, b, c, d) {
 
-                this.breakVal=false;
+  this.breakVal = false;
 
-                this.Break=()=>breakVal=true;
+  this.Break = () => breakVal = true;
 
-                this.Continue=()=>null;
+  this.Continue = () => null;
 
-                let e;
+  let e;
 
-                for(const a in b){
+  for (a(); b(); c()) {
 
-                                if(breakVal){break;}
+    if (breakVal) { break; }
 
-                                e=d(a);
+    e = d();
 
-                }
+  }
 
-                return e;
-
-}
-
- 
-
-globalThis.ForOf=function(b,d){
-
-                this.breakVal=false;
-
-                this.Break=()=>breakVal=true;
-
-                this.Continue=()=>null;
-
-                let e;
-
-                for(const a of b){
-
-                                if(breakVal){break;}
-
-                                e=d(a);
-
-                }
-
-                return e;
+  return e;
 
 }
 
- 
+globalThis.ForIn = function(b, d) {
 
-globalThis.While=function(b,d){
+  this.breakVal = false;
 
-                this.breakVal=false;
+  this.Break = () => breakVal = true;
 
-                this.Break=()=>breakVal=true;
+  this.Continue = () => null;
 
-                this.Continue=()=>null;
+  let e;
 
-                let e;
+  for (const a in b) {
 
-                while(b()){
+    if (breakVal) { break; }
 
-                                if(breakVal){break;}
+    e = d(a);
 
-                                e=d();
+  }
 
-                }
-
-                return e;
+  return e;
 
 }
 
-globalThis.Do=function(b,d){
 
-                this.breakVal=false;
 
-                this.Break=()=>breakVal=true;
+globalThis.ForOf = function(b, d) {
 
-                this.Continue=()=>null;
+  this.breakVal = false;
 
-                let e;
+  this.Break = () => breakVal = true;
 
-                do{
+  this.Continue = () => null;
 
-                                if(breakVal){break;}
+  let e;
 
-                                e=d();
+  for (const a of b) {
 
-                }while(b())
+    if (breakVal) { break; }
 
-                return e;
+    e = d(a);
 
-}
+  }
 
-globalThis.With=function(b,d){
-
-                let e;
-
-                with(b){
-
-                                e=d();
-
-                }
-
-                return e;
+  return e;
 
 }
 
-globalThis.Try=(t,c,f)=>{
 
-                let g;
 
-                try{
+globalThis.While = function(b, d) {
 
-                                g=t();
+  this.breakVal = false;
 
-                }catch(e){
+  this.Break = () => breakVal = true;
 
-                                g=c(e);
+  this.Continue = () => null;
 
-                }
+  let e;
 
-                finally{
+  while (b()) {
 
-                                if(f){
+    if (breakVal) { break; }
 
-                                f();
+    e = d();
 
-                                }
+  }
 
-                }
-
-                return g;
+  return e;
 
 }
 
-globalThis.Throw=(e)=>{
+globalThis.Do = function(b, d) {
 
-                throw e;
+  this.breakVal = false;
 
-}
+  this.Break = () => breakVal = true;
 
-globalThis.FUNCTION=(arguments,block)=>{
+  this.Continue = () => null;
 
-                return (...arguments)=>{
+  let e;
 
-                                for(let i = 0;i<block.length;i++){
+  do {
 
-                                                block[i][0](...block[i][1]);
+    if (breakVal) { break; }
 
-                                }
+    e = d();
 
-                };
+  } while (b())
 
-}
-
-globalThis.ASYNC_FUNCTION=(arguments,block)=>{
-
-                return async (...arguments)=>{
-
-                                for(let i = 0;i<block.length;i++){
-
-                                                block[i][0](...block[i][1]);
-
-                                }
-
-                };
+  return e;
 
 }
 
+globalThis.With = function(b, d) {
+
+  let e;
+
+  with (b) {
+
+    e = d();
+
+  }
+
+  return e;
+
+}
+
+globalThis.Try = (t, c, f) => {
+
+  let g;
+
+  try {
+
+    g = t();
+
+  } catch (e) {
+
+    g = c(e);
+
+  }
+
+  finally {
+
+    if (f) {
+
+      f();
+
+    }
+
+  }
+
+  return g;
+
+}
+
+globalThis.Throw = (e) => {
+
+  throw e;
+
+}
+
+globalThis.FUNCTION = (arguments, block) => {
+
+  return (...arguments) => {
+
+    for (let i = 0; i < block.length; i++) {
+
+      block[i][0](...block[i][1]);
+
+    }
+
+  };
+
+}
+
+globalThis.ASYNC_FUNCTION = (arguments, block) => {
+
+  return async (...arguments) => {
+
+    for (let i = 0; i < block.length; i++) {
+
+      block[i][0](...block[i][1]);
+
+    }
+
+  };
+
+}
