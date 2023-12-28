@@ -1,5 +1,6 @@
 # **JavaxScript**
-
+# Introduction
+This library provides a set of utility functions to enable faster front end development. In particular it provides a way to write declarative code that is straightforward and not necessarily coupled to the UI or JSX.
 
 # `Q` and `$Q`
 
