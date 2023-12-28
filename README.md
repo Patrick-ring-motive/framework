@@ -1,4 +1,6 @@
-# `Q` and `$Q` Functions Documentation
+# **JavaxScript**
+
+# `Q` and `$Q`
 
 ## Introduction
 - `Q` is a utility function for safely executing a function and returning its result, or `undefined` if an error occurs.
