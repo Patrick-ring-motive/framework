@@ -374,7 +374,7 @@
   Symbol.prototype.X = function () {
     return arguments[0](this, ...Array.from(arguments).slice(1));
   };
-  //if (globalThis.node) {
+  if (globalThis.node) {
   Q(
     (U) =>
       (Node.prototype.X = function () {
@@ -387,7 +387,7 @@
         return arguments[0](this, ...Array.from(arguments).slice(1));
       }),
   );
-  //}
+  }
   Map.prototype.X = function () {
     return arguments[0](this, ...Array.from(arguments).slice(1));
   };
@@ -498,4 +498,27 @@ Great for malformed json.
   console.log("framework loaded successfully");
 } catch (e) {
   console.log("framework failed to load: ", e);
+}
+
+
+globalThis.subscribeState=function(elem,attr,str){
+
+ declare(()=>elem.updateAttribute(attr,localStorag.getItem(str)))
+
+}
+
+localStorage.updateItem = function(key,val){
+
+if(!(localStorage.getItem(key))){
+localStorage.setItem(key,val);
+}else if(localStorage.getItem(key)!=val){
+localStorage.setItem(key,val);
+}
+
+}
+
+globalThis.publishState=function(elem,attr,str){
+
+declare(()=>localStorage.updateItem(str,elem.getAttribute(attr)))
+
 }
