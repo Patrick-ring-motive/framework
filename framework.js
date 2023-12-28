@@ -25,7 +25,7 @@
     }
   };
 
-  globalThis.AQ = async (U) => {
+    globalThis.$Q = async (U) => {
     try {
       if (`${U.constructor}`.includes("unction")) {
         try {
@@ -48,6 +48,7 @@
       return undefined;
     }
   };
+  globalThis.AQ = globalThis.$Q;
 
   globalThis.ptr = function (obj) {
     let pointer = Object.create(null);
