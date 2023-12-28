@@ -64,10 +64,10 @@ ptr(object)
 ## Parameters
 - object: The object to which you want to create a pointer.
 ## Return Value
-Returns a sealed object with a single property * that references the passed object. This object acts like a pointer to the original object.
+Returns a sealed object with a single property `*` that references the passed object. This object acts like a pointer to the original object.
 
-##vDescription
-ptr creates an object with no prototype (using Object.create(null)) and assigns the provided object to a property named *. It then seals the new object using Object.seal, preventing new properties from being added to it and existing properties from being removed, effectively making it a read-only reference to the original object.
+## Description
+`ptr` creates an object with no prototype (using `Object.create(null)`) and assigns the provided object to a property named `*`. It then seals the new object using `Object.seal`, preventing new properties from being added to it and existing properties from being removed, effectively making it a read-only reference to the original object.
 
 This function is useful for scenarios where you want to ensure that multiple parts of your code are referring to and modifying the same object, emulating pointer-like behavior found in other programming languages.
 
