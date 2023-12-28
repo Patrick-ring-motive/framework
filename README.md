@@ -12,28 +12,28 @@ Q(functionOrValue)
 $Q(asyncFunctionOrPromise)
 ```
 ## Parameters
-- functionOrValue (Q): A function to execute or a value to return.
-- asyncFunctionOrPromise ($Q): An async function to execute or a promise to resolve.
+- `functionOrValue (Q)`: A function to execute or a value to return.
+- `asyncFunctionOrPromise ($Q)`: An async function to execute or a promise to resolve.
 ## Return Value
-- For Q: The return value of the executed function, or undefined in case of an error.
-- For $Q: The resolved value of the promise or async function, or undefined in case of an error or rejection.
+- For `Q`: The return value of the executed function, or undefined in case of an error.
+- For `$Q`: The resolved value of the promise or async function, or undefined in case of an error or rejection.
 ## Error Handling
-Both Q and $Q return undefined when encountering an error, providing a safe and concise way to handle exceptions.
+Both `Q` and `$Q` return undefined when encountering an error, providing a safe and concise way to handle exceptions.
 
 ## Examples
-Using Q
+Using `Q`
 ```javascript
 let result = Q(() => mightFailFunction());
 console.log(result); // Outputs the function's return value or undefined
 ```
 
-## Using Q with a Value
+## Using `Q` with a Value
 ```javascript
 let value = 'example';
 let result = Q(value); // Simply returns the value
 console.log(result);
 ```
-## Using $Q with an Async Function
+## Using `$Q` with an Async Function
 ```javascript
 
 let fetchData = async () => {
@@ -62,7 +62,7 @@ The `ptr` function is designed to emulate pointers in JavaScript. It creates a s
 ptr(object)
 ```
 ## Parameters
-- object: The object to which you want to create a pointer.
+- `object`: The object to which you want to create a pointer.
 ## Return Value
 Returns a sealed object with a single property `*` that references the passed object. This object acts like a pointer to the original object.
 
@@ -95,7 +95,7 @@ In this example, `pointerToObject` acts as a pointer to `originalObject`. Any ch
 console.detail(item)
 ```
 ## Parameters
-- item: The item to log. Can be a primitive value, object, or any JavaScript entity.
+- `item`: The item to log. Can be a primitive value, object, or any JavaScript entity.
 ## Behavior
 In the Chrome Developer Console, this function changes the way primitives and objects are logged, showing them as full JavaScript objects instead of the standard primitive representation. This can be useful for debugging or inspecting values in detail.
 
@@ -117,7 +117,7 @@ console.list
 console.list(...items)
 ```
 ## Parameters
-- ...items: A spread of items to log. Each item is treated as an element of an array.
+- `...items`: A spread of items to log. Each item is treated as an element of an array.
 ## Behavior
 This function is particularly useful for examining HTML elements in the Developer Console, as it provides a different view from the default logging behavior, showing them more like JavaScript objects.
 
