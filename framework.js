@@ -203,14 +203,15 @@
    asynt(wrapDeclare(fn));
   }
   
-  if (!globalThis.declarations) {
+  if (!(globalThis.declarations)) {
     globalThis.declarations = [];
     globalThis.declarationStrings = [];
   }
 
   globalThis.declare = function (func, id) {
     let funcString = func.toString() + id;
-    if (!declarationStrings.includes(funcString)) {
+    if ((!(declarationStrings.includes(funcString)))
+      ||(!(funcString.includes('declare(')))) {
       globalThis.declarations.push(func);
       globalThis.declarationStrings.push(funcString);
     }
