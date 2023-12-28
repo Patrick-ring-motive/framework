@@ -12,6 +12,10 @@
   globalThis.async = async (_) => {
     return await _;
   };
+  
+  globalThis.asynt = (fn) => {
+   setTimeout(fn,0);
+  }
 
   globalThis.Q = (U) => {
     if (`${U.constructor}`.includes("unction")) {
@@ -182,7 +186,23 @@
       queryAttrAll(query, attr, "bound", func);
     }, query);
   };
+  
+  globalThis.declareErrorQueue=[];
+  globalThis.wrapDeclare = (fn) => {
+   let wrapper = () => {
+    try{
+     fn();
+    }catch(e){
+     declareErrorQueue.push(e);
+    }
+   }
+   return wrapper;
+  }
 
+  globalThis.declareAsynt = (fn) => {
+   asynt(wrapDeclare(fn));
+  }
+  
   if (!globalThis.declarations) {
     globalThis.declarations = [];
     globalThis.declarationStrings = [];
@@ -203,7 +223,17 @@
         await async("declareEvaluator");
       }
       try {
-        declarations[i]();
+         const declareErrorQueue_length = declareErrorQueue.length;
+         for(let x = 0;x < declareErrorQueue_length;x++){try{
+           await async("ErrorQueue");
+           console.log(declareErrorQueue.shift());
+         }catch(e){
+          await async("ErrorQueue");
+          console.log(e);
+          continue;
+         }
+        }
+        declareAsynt(declarations[i]);
       } catch (e) {
         await async("declareEvaluator");
         console.log(e);
