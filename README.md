@@ -1,5 +1,6 @@
 # **JavaxScript**
 
+
 # `Q` and `$Q`
 
 ## Introduction
@@ -52,6 +53,7 @@ console.log(result); // Outputs fetched data or undefined on error
 ```
 These functions are especially useful for reducing the need for repetitive try-catch blocks and for simplifying error handling in both synchronous and asynchronous operations.
 
+
 # `ptr` Function Documentation
 
 ## Introduction
@@ -85,7 +87,8 @@ In this example, `pointerToObject` acts as a pointer to `originalObject`. Any ch
 
 # Enhanced Console Functions Documentation
 
-## `console.detail`
+
+# `console.detail`
 
 ## Introduction
 `console.detail` is a custom logging function that enhances the display of primitive values and objects in the Chrome Developer Console. It attaches a log method to the object's prototype and then executes it, causing primitives to display as full JavaScript objects.
@@ -107,7 +110,7 @@ console.detail(obj); // Enhanced display of the object
 console.list
 ```
 
-## `console.list`
+# `console.list`
 
 ## Introduction
 `console.list` is a function that logs items as elements of an array. This alters their representation in the Chrome Developer Console, particularly for HTML elements, displaying them as JavaScript objects rather than showing their outerHTML.
@@ -127,6 +130,7 @@ let elem = document.createElement('div');
 console.list(elem); // Logs the HTML element in an array, displaying it as a JavaScript object
 ```
 These enhanced console functions offer alternative ways of viewing and debugging data in the Chrome Developer Console, providing more insights into the structure and state of the logged items.
+
 
 # `Element.prototype.updateAttribute` Function
 
