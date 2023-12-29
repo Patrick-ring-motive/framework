@@ -4,40 +4,18 @@
     }
     
     
+
+    
+ 
     
     
-    try{
-     /* document.firstElementChild.style.filter='hue-rotate(-45deg)';*/
-    
-       }catch(e){}
-    window.addEventListener("DOMContentLoaded", (event) => {try{
-    
-    }catch(e){}});
-    
-    
-      //linkSheets();
-    
-    
-    document.addEventListener("readystatechange", (event) => {
-     // linkSheets();
-    });
-    
-    document.addEventListener("DOMContentLoaded", (event) => {
-     // linkSheets();
-    });
-    
-    document.addEventListener("load", (event) => {
-      //linkSheets();
-    });
-    
-    
-    setInterval(function(){
+    declare(()=>{
     
       transformLinks('href');
       transformLinks('src');
       transformLinks('action');
-     // linkSheetsAsync();
-    },100);
+  
+    });
     
     
     
