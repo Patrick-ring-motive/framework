@@ -258,11 +258,11 @@
       globalThis.declareEvaluator();
     }, 100);
 
-    let page_html = document.querySelector("html");
+    globalThis.page_html = document.querySelector("html")||document.firstElementChild;
 
-    page_html.setAttribute("window-location", window.location.href);
+    globalThis.page_html.setAttribute("window-location", window.location.href);
     declare(() =>
-      page_html.updateAttribute("window-location", window.location.href),
+      globalThis.page_html.updateAttribute("window-location", window.location.href),
     );
 
     page_html.setAttribute("user-agent", navigator.userAgent);
@@ -271,18 +271,18 @@
 
   if (globalThis.window) {
     if (window != window.top) {
-      page_html.setAttribute("framed", "true");
+      globalThis.page_html.setAttribute("framed", "true");
     }
   }
   declare(() => {
     if ((window.innerHeight = window.innerWidth)) {
-      page_html.updateAttribute("orientation", "square");
+      globalThis.page_html.updateAttribute("orientation", "square");
     }
     if (window.innerHeight > window.innerWidth) {
-      page_html.updateAttribute("orientation", "portrait");
+      globalThis.page_html.updateAttribute("orientation", "portrait");
     }
     if (window.innerHeight < window.innerWidth) {
-      page_html.updateAttribute("orientation", "landscape");
+      globalThis.page_html.updateAttribute("orientation", "landscape");
     }
   });
 
