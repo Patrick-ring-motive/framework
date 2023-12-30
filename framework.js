@@ -522,3 +522,38 @@ globalThis.publishState=function(elem,attr,str){
 declare(()=>localStorage.updateItem(str,elem.getAttribute(attr)))
 
 }
+
+globalThis.updateProperty=function(obj,prop,val){
+
+if(!(obj[prop])){
+ obj[prop]=val;
+ return;
+}
+if(obj[prop]!=val){
+ obj[prop]=val;
+ return;
+}
+ 
+}
+
+  globalThis.swapText(startText,endText){
+      let el=document.body;
+      const reg = new RegExp(startText, "gi")
+      if(!el){return;}
+      var n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
+      while(n=walk.nextNode()){
+      a.push(n);
+        let ntext=n.textContent;
+
+      ntext=ntext.replace(reg,endText);
+
+        updateProperty(n,textContent,ntext);
+
+
+      };
+      if(document.title.toLowerCase().includes(startText.toLowerCase())){
+        document.title=document.title
+          .replace(reg,endText);
+         }
+      return a;
+      }
