@@ -21,9 +21,7 @@ if(!globalThis.hostTargetList){
   
     });
     
-    declare(()=>{
-    swapText('readallcomics',window.location.host);
-    });
+
     
     async function transformLinks(attr){
     
