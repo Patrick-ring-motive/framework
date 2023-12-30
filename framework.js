@@ -560,7 +560,9 @@ return str;
 
       ntext=ntext.replace(reg,endText);
 
-        updateProperty(n,'textContent',ntext);
+       if(n.textContent!=ntext){
+        n.textContent=ntext;
+       }
 
 
       };
