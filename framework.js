@@ -546,7 +546,7 @@ const abc_length = abc.length;
 return str;
 }
 
-  globalThis.swapText(startText,endText){
+  globalThis.swapText=function(startText,endText){
       let el=document.body;
       if(endText.toLowerCase().includes(startText.toLowerCase())){
        endText=toSansSerif(endText);
