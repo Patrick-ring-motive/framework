@@ -561,7 +561,7 @@ return str;
       ntext=ntext.replace(reg,endText);
 
        if(n.textContent!=ntext){
-        n['textContent']=ntext;
+        updateProperty(n,'textContent',ntext);
        }
 
 
