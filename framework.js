@@ -133,6 +133,19 @@ if(obj[prop]!=val){
 }
  
 }
+	 
+globalThis.approveProperty=function(obj,prop,val){
+if(!val){return;}
+if(!(obj[prop])){
+ obj[prop]=val;
+ return;
+}
+if(obj[prop]!=val){
+ obj[prop]=val;
+ return;
+}
+ 
+}
   
   console.detail = function (stuff) {
     try {
@@ -184,6 +197,18 @@ if(obj[prop]!=val){
   };
   if (globalThis.Element) {
     Element.prototype.updateAttribute = function (attr, val) {
+      const el = this;
+      if (!el.hasAttribute(attr, val)) {
+        el.setAttribute(attr, val);
+      } else {
+        if (el.getAttribute(attr) != val) {
+          el.setAttribute(attr, val);
+        }
+      }
+    };
+
+Element.prototype.approveAttribute = function (attr, val) {
+	if(!val){return;}
       const el = this;
       if (!el.hasAttribute(attr, val)) {
         el.setAttribute(attr, val);
@@ -475,6 +500,18 @@ declare(() => {
     for (let i = 0; i < untagged_length; i++) {
       try {
         untagged[i].updateAttribute("tag-name-js",untagged[i].tagName);
+      } catch (e) {
+        continue;
+      }
+    }
+  });
+
+  declare(() => {
+    const untagged = Array.from(document.querySelectorAll(":not([element-prefix])"));
+    const untagged_length = untagged.length;
+    for (let i = 0; i < untagged_length; i++) {
+      try {
+        untagged[i].approveAttribute("element-prifix",untagged[i].untagged[i].prefix);
       } catch (e) {
         continue;
       }
