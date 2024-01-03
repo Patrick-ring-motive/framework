@@ -362,6 +362,8 @@ if (`${func.constructor}`.includes("unction")) {
       globalThis.page_html.setAttribute("framed", "true");
     }
   }
+
+
   declare(() => {
     if ((window.innerHeight == window.innerWidth)) {
       globalThis.page_html.updateAttribute("orientation", "square");
@@ -372,6 +374,18 @@ if (`${func.constructor}`.includes("unction")) {
     if (window.innerHeight < window.innerWidth) {
       globalThis.page_html.updateAttribute("orientation", "landscape");
     }
+  });
+
+  declare(() => {
+   
+      globalThis.page_html.updateAttribute("ready-state", "document.readyState");
+
+  });
+
+  declare(() => {
+   
+      globalThis.page_html.updateAttribute("visibility-state", "document.visibilityState");
+
   });
 
   declare(() => {
@@ -442,6 +456,8 @@ if (`${func.constructor}`.includes("unction")) {
   updateProperty(globalThis,'hasSupported',hasTest);
   globalThis.page_html.updateAttribute('has-supported',hasTest);
   });
+
+
 
 globalThis.modulesSupported=true;
 globalThis.page_html.updateAttribute('modules-supported',true);
