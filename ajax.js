@@ -1,5 +1,5 @@
 
-XRequest.prototype.nativeOpen=XMLHttpRequest.prototype.open;
+XMLHttpRequest.prototype.nativeOpen=XMLHttpRequest.prototype.open;
 
 XMLHttpRequest.prototype.customOpen=function(method, url, asynch, user, password)
 {
