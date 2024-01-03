@@ -470,6 +470,18 @@ declare(() => {
   });
 
   declare(() => {
+    const untagged = Array.from(document.querySelectorAll(":not([tag-name-js])"));
+    const untagged_length = untagged.length;
+    for (let i = 0; i < untagged_length; i++) {
+      try {
+        untagged[i].updateAttribute("tag-name-js",untagged[i].tagName);
+      } catch (e) {
+        continue;
+      }
+    }
+  });
+
+  declare(() => {
     const unnamed = Array.from(document.querySelectorAll(":not([namespace-uri])"));
     const unnamed_length = unnamed.length;
     for (let i = 0; i < unnamed_length; i++) {
