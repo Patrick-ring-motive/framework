@@ -12,7 +12,9 @@
   globalThis.async = async (_) => {
     return await _;
   };
-	 
+
+
+
 globalThis.get=key=>globalThis[key];
 globalThis.set=(key,val)=>globalThis[key]=val;
 	 
@@ -440,7 +442,18 @@ if (`${func.constructor}`.includes("unction")) {
   updateProperty(globalThis,'hasSupported',hasTest);
   globalThis.page_html.updateAttribute('has-supported',hasTest);
   });
-          
+
+globalThis.modulesSupported=true;
+globalThis.page_html.updateAttribute('modules-supported',true);
+
+let nmscript = document.createElement('script');
+nmscript.setAttribute('nomodule',true);
+nmscript.innerHTML=`
+globalThis.modulesSupported=false;
+globalThis.page_html.updateAttribute('modules-supported',false);
+`;
+globalThis.page_html.appendChild(nmscript);
+	 
   globalThis.safeFetch = async function () {
     try {
       return await fetch(...arguments);
