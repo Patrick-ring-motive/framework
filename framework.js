@@ -817,7 +817,6 @@ let xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
 	let headers = xhttp.getAllResponseHeaders().split('\r\n');
-		console.log(headers);
 		const headers_length = headers.length;
 		for(let i = 0;i < headers_length;i++){try{
 			if(!headers[i]){continue;}
