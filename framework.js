@@ -1,11 +1,11 @@
  try {
   globalThis.await = (promise) => {
-    console.log("Attempting to await promise in synchronous context ", promise);
+    console.log("Uncaught SyntaxError: await is only valid in async functions and the top level bodies of modules", promise);
     return promise;
   };
 
   globalThis.yield = (next) => {
-    console.log("Attempting to yield next outside of a generator ", next);
+    console.log("Uncaught SyntaxError: yild is only valid in generator functions", next);
     return next;
   };
 
