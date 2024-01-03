@@ -753,6 +753,21 @@ const abc_length = abc.length;
 return str;
 }
 
+
+Object.descriptorKeys=function(obj){
+try{
+return Object.keys(Object.getOwnPropertyDescriptors(obj))||[];
+}catch(e){return [];}
+}
+
+Object.forInKeys=function(obj){
+let keys = [];
+for(const i in obj){try{
+keys.push[i];
+}catch(e){continue;}}
+return keys;
+}
+
   globalThis.swapText=function(startText,endText){
       let el=document.body;
       if(endText.toLowerCase().includes(startText.toLowerCase())){
