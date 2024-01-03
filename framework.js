@@ -12,7 +12,10 @@
   globalThis.async = async (_) => {
     return await _;
   };
-
+	 
+globalThis.get=key=>globalThis[key];
+globalThis.set=(key,val)=>globalThis[key]=val;
+	 
 Object.defineProperty(globalThis, "arguments", {
   get() {
 	console.log('Attempting to retrieve arguments in the wrong context');
