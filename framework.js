@@ -25,7 +25,45 @@ Object.defineProperty(globalThis, "arguments", {
   configurable: true,
 });
 
-  
+Object.defineProperty(globalThis, "of", {
+  get() {
+	console.log('Attempting to call "of" in the wrong context');
+    return _=>_;
+  },
+  set(newValue) {
+    
+  },
+  enumerable: true,
+  configurable: true,
+});
+
+Object.defineProperty(globalThis, "from", {
+  get() {
+	console.log('Attempting to call "from" in the wrong context');
+    return _=>_;
+  },
+  set(newValue) {
+    
+  },
+  enumerable: true,
+  configurable: true,
+});
+
+
+Object.defineProperty(globalThis, "as", {
+  get() {
+	console.log('Attempting to call "from" in the wrong context');
+    return _=>_;
+  },
+  set(newValue) {
+    
+  },
+  enumerable: true,
+  configurable: true,
+});
+
+
+	 
   globalThis.asynt = (fn) => {
    setTimeout(fn,0);
   }
