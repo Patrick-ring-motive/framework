@@ -389,6 +389,60 @@ if (`${func.constructor}`.includes("unction")) {
   });
 
   declare(() => {
+   
+      globalThis.page_html.updateAttribute("character-set", document.characterSet);
+
+  });
+
+  declare(() => {
+   
+      globalThis.page_html.updateAttribute("compat-mode", document.compatMode);
+
+  });
+
+declare(() => {
+   
+      globalThis.page_html.updateAttribute("content-type", document.contentType);
+
+  });
+
+declare(() => {
+   
+      globalThis.page_html.updateAttribute("cookie", document.cookie);
+
+  });
+
+declare(() => {
+   
+      globalThis.page_html.updateAttribute("design-mode", document.designMode);
+
+  });
+
+declare(() => {
+   
+      globalThis.page_html.updateAttribute("dir", document.dir);
+
+  });
+
+declare(() => {
+   
+      globalThis.page_html.updateAttribute("doctype", document.doctype);
+
+  });
+declare(() => {
+   
+      globalThis.page_html.updateAttribute("document-uri", document.documentURI);
+
+  });
+
+declare(() => {
+   
+      globalThis.page_html.updateAttribute("referrer", document.referrer);
+
+  });
+	 
+
+  declare(() => {
     const untagged = Array.from(document.querySelectorAll(":not([tag-name])"));
     const untagged_length = untagged.length;
     for (let i = 0; i < untagged_length; i++) {
