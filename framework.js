@@ -300,7 +300,7 @@ if (`${func.constructor}`.includes("unction")) {
     }
 }else{
  Q(()=>{
-	declare(()=>eval.?(`${func}`),id);
+	declare(()=>eval?.(`${func}`),id);
  });
 }
   };
