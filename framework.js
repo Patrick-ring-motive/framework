@@ -378,13 +378,13 @@ if (`${func.constructor}`.includes("unction")) {
 
   declare(() => {
    
-      globalThis.page_html.updateAttribute("ready-state", "document.readyState");
+      globalThis.page_html.updateAttribute("ready-state", document.readyState);
 
   });
 
   declare(() => {
    
-      globalThis.page_html.updateAttribute("visibility-state", "document.visibilityState");
+      globalThis.page_html.updateAttribute("visibility-state", document.visibilityState);
 
   });
 
