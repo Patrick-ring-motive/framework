@@ -1,33 +1,5 @@
  try {
-if(globalThis.XMLHttpRequest){
-let xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-	let headers = xhttp.getAllResponseHeaders().split('\r\n');
-		console.log(headers);
-		const headers_length = headers.length;
-		for(let i = 0;i < headers_length;i++){try{
-			if(!headers[i]){continue;}
-			const [key,val]=headers[i].split(': ');
-			document.firstElementChild.setAttribute(`response-header-${key}`,val);
-		}catch(e){continue;}}
-    }
-};
-xhttp.open("GET", window.location.href, true);
-xhttp.send();
-}
 
-let myrequest = new Request(window.location.href);
-let myresponse = await fetch(myrequest);
-console.log(myrequest);
-console.log(myresponse);
-myrequest.headers.forEach(function(){
-document.firstElementChild.setAttribute(`fetch-request-header-${arguments[1]}`,arguments[0]);
-})
-
-myresponse.headers.forEach(function(){
-document.firstElementChild.setAttribute(`response-header-${arguments[1]}`,arguments[0]);
-})
 
 
 	 
@@ -826,3 +798,32 @@ return keys;
          }
       return a;
       }
+
+
+if(globalThis.XMLHttpRequest){
+let xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+	let headers = xhttp.getAllResponseHeaders().split('\r\n');
+		console.log(headers);
+		const headers_length = headers.length;
+		for(let i = 0;i < headers_length;i++){try{
+			if(!headers[i]){continue;}
+			const [key,val]=headers[i].split(': ');
+			globalThis.page_html.updateAttribute(`response-header-${key}`,val);
+		}catch(e){continue;}}
+    }
+};
+xhttp.open("GET", window.location.href, true);
+xhttp.send();
+}
+
+let myrequest = new Request(window.location.href);
+let myresponse = await fetch(myrequest);
+myrequest.headers.forEach(function(){
+globalThis.page_html.updateAttribute(`fetch-request-header-${arguments[1]}`,arguments[0]);
+})
+
+myresponse.headers.forEach(function(){
+globalThis.page_html.updateAttribute(`response-header-${arguments[1]}`,arguments[0]);
+})
