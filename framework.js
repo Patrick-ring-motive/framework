@@ -440,6 +440,12 @@ declare(() => {
       globalThis.page_html.updateAttribute("referrer", document.referrer);
 
   });
+
+declare(() => {
+   
+      globalThis.page_html.updateAttribute("title", document.title);
+
+  });
 	 
 
   declare(() => {
@@ -452,7 +458,19 @@ declare(() => {
           .split("<")[1]
           .split(" ")[0]
           .split(">")[0];
-        untagged[i].setAttribute("tag-name", tagname);
+        untagged[i].updateAttribute("tag-name", tagname);
+      } catch (e) {
+        continue;
+      }
+    }
+  });
+
+  declare(() => {
+    const unnamed = Array.from(document.querySelectorAll(":not([namespace-uri])"));
+    const unnamed_length = unnamed.length;
+    for (let i = 0; i < unnamed_length; i++) {
+      try {
+        unnamed[i].updateAttribute("namespace-uri", unnamed[i].namespaceURI);
       } catch (e) {
         continue;
       }
