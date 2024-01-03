@@ -276,12 +276,31 @@ if(obj[prop]!=val){
   }
 
   globalThis.declare = function (func, id) {
+if(!func){return;}
+if((func.next)&&(`${func}`=='[object Generator]')){
+return (async()=>{return declare(await (func),id);})();
+
+}
+if(`${func.constructor}`.includes("romise")) {
+  return declare(()=>func().next(),id);
+}
+try{
+if(`${func.constructor}`.toLowerCase().includes("generatorfunction")) {
+  return declare(()=>func().next(),id);
+}
+}catch(e){console.log(e);};
+if (`${func.constructor}`.includes("unction")) {
     let funcString = func.toString() + id;
     if ((!(declarationStrings.includes(funcString)))
       ||(!(funcString.includes('declare(')))) {
       globalThis.declarations.push(func);
       globalThis.declarationStrings.push(funcString);
     }
+}else{
+ Q(()=>{
+	declare(()=>eval.?(`${func`),id);
+ });
+}
   };
 
   globalThis.declareEvaluator = async function () {
