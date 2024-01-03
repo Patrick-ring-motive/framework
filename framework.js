@@ -61,6 +61,19 @@
     return pointer;
   };
 
+globalThis.updateProperty=function(obj,prop,val){
+
+if(!(obj[prop])){
+ obj[prop]=val;
+ return;
+}
+if(obj[prop]!=val){
+ obj[prop]=val;
+ return;
+}
+ 
+}
+  
   console.detail = function (stuff) {
     try {
       stuff.constructor.prototype._log = function () {
@@ -554,18 +567,7 @@ declare(()=>localStorage.updateItem(str,elem.getAttribute(attr)))
 
 }
 
-globalThis.updateProperty=function(obj,prop,val){
 
-if(!(obj[prop])){
- obj[prop]=val;
- return;
-}
-if(obj[prop]!=val){
- obj[prop]=val;
- return;
-}
- 
-}
 
 globalThis.toSansSerif=function(str){
 const abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
