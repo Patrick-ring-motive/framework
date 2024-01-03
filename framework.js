@@ -12,6 +12,19 @@
   globalThis.async = async (_) => {
     return await _;
   };
+
+Object.defineProperty(globalThis, "arguments", {
+  get() {
+	console.log('Attempting to retrieve arguments in the wrong context');
+    return [];
+  },
+  set(newValue) {
+    
+  },
+  enumerable: true,
+  configurable: true,
+});
+
   
   globalThis.asynt = (fn) => {
    setTimeout(fn,0);
