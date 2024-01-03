@@ -324,6 +324,37 @@
     });
   });
 
+
+  declare(() => {
+   if(!(document.querySelector('style.has-test'))){
+
+     let hasTestStyle = document.createElement('style');
+ 
+     hasTestStyle.className = 'has-test';
+ 
+     hasTestStyle.innerHTML = '.has-test:has(.supported){--has-supported:true;}';
+ 
+     document.body.appendChild(hasTestStyle);
+
+  }
+
+  if(!(document.querySelector('span.has-test'))){
+ 
+     let hasTestSpan = document.createElement('span');
+ 
+     hasTestSpan.className = 'has-test';
+ 
+     hasTestSpan.innerHTML = '<span class="supported"></span>';
+ 
+     document.body.appendChild(hasTestSpan);
+ 
+  }
+
+  let hasTest = !!(getComputedStyle(document.querySelector('span.has-test')).getPropertyValue('--has-supported'));
+  updateProperty(globalThis,'hasSupported',hasTest);
+  globalThis.page_html.updateAttribute('has-supported',hasTest);
+  });
+          
   globalThis.safeFetch = async function () {
     try {
       return await fetch(...arguments);
