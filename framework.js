@@ -275,7 +275,7 @@
     }
   }
   declare(() => {
-    if ((window.innerHeight = window.innerWidth)) {
+    if ((window.innerHeight == window.innerWidth)) {
       globalThis.page_html.updateAttribute("orientation", "square");
     }
     if (window.innerHeight > window.innerWidth) {
