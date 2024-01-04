@@ -756,3 +756,45 @@ Reactively style elements based on the document's state and supported features u
 
 ### Usage
 These dynamic attributes are set up automatically and require no manual intervention after initial declaration.
+
+# Module Support Detection
+## Introduction
+This functionality detects whether the browser supports JavaScript ES6 modules and updates an attribute on the page_html element (html element) accordingly. It uses a combination of a default assumption (modules are supported) and a nomodule script to set the attribute based on actual support.
+
+## Implementation
+- Initial Assumption:
+
+Initially, it assumes that ES6 modules are supported (`globalThis.modulesSupported = true`).
+This assumption is reflected by setting the modules-supported attribute on the `page_html` element to `true`.
+nomodule Script:
+
+A script element with the `nomodule` attribute is created. This script will only execute in browsers that do not support ES6 modules.
+Inside this script, `globalThis.modulesSupported` is set to false, and the `page_html` element's modules-supported attribute is updated accordingly.
+Append Script to `page_html`:
+
+The script is appended to the `page_html` element, ensuring it executes and updates the attribute if the browser doesn't support modules.
+## Example Usage
+```javascript
+// Check for module support and update the attribute
+if (globalThis.modulesSupported) {
+    console.log("ES6 Modules are supported");
+} else {
+    console.log("ES6 Modules are not supported");
+}
+
+// Use in CSS for conditional styling
+```
+## CSS Styling Based on Module Support
+```css
+/* Styles that only apply if modules are supported */
+html[modules-supported="true"] .some-class {
+  /* specific styles */
+}
+
+/* Styles for browsers that don't support modules */
+html[modules-supported="false"] .some-class {
+  /* fallback styles */
+}
+```
+## Note
+This method is a straightforward way to adapt the behavior or styling of your web application based on the browser's support for ES6 modules.
