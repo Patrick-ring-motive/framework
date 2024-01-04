@@ -537,6 +537,24 @@ declare(()=>{
 	}
 });
 
+function applyDynamicStyles(elem){
+	let output = ':root[dynamic-styles]{\n';
+        for (const attr of paragraph.attributes) {
+		if(attr.name.startsWith('css-')){
+           	output += `${attr.name.replace('css-','--')}: ${eval?.(attr.value)};\n`;
+		}
+         }
+	output += "}";
+	let s = elem.innerHTML.toString();
+	if(s.includes(':root[dynamic-styles]{')){
+		s=s.split(':root[dynamic-styles]{')[1].split('}').slice(1).join('}');
+	}
+	s=output+s;
+	if(s!=(elem.innerHTML.toString())){
+		elem.innerHTML = s;
+	}
+}
+	 
 declare(()=>{
 const dynamicStyles = document.querySelectorAll('style[dynamic]');
 const dynamicStyles_length = dynamicStyles.length;
@@ -698,7 +716,7 @@ globalThis.page_html.appendChild(nmscript);
   };
 
   /** async function object */
-  globalThis.AsyncFunction = async function () {}.constructor;
+  globalThis.AsyncFunction = async function(){}.constructor;
 
   /** extract a value from json 
 using string manipulation.
