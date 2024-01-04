@@ -766,7 +766,7 @@ Great for malformed json.
     return false;
   };
 
-  console.log("framework loaded successfully");
+
 if(!(globalThis.subscriberList)){
 	globalThis.subscriberList=[];
 }
@@ -892,7 +892,7 @@ myrequest.headers.forEach(function(){
 globalThis.page_html.updateAttribute(`fetch-request-header-${arguments[1]}`,arguments[0]);
 });
 
-
+  console.log("framework loaded successfully");
 
 	 } catch (e) {
   console.log("framework failed to load: ", e);
