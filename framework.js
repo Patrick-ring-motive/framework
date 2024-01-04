@@ -539,7 +539,7 @@ declare(()=>{
 
 function applyDynamicStyles(elem){
 	let output = ':root[dynamic-styles]{\n';
-        for (const attr of paragraph.attributes) {
+        for (const attr of elem.attributes) {
 		if(attr.name.startsWith('css-')){
            	output += `${attr.name.replace('css-','--')}: ${eval?.(attr.value)};\n`;
 		}
@@ -560,9 +560,9 @@ const dynamicStyles = document.querySelectorAll('style[dynamic]');
 const dynamicStyles_length = dynamicStyles.length;
 	for(let i=0;i<dynamicStyles_length;i++){try{
 		applyDynamicStyles(dynamicStyles[i]);
-	}catch(e){continue;}}
+	}catch(e){console.log(e);continue;}}
 	document.querySelector(':root').updateAttribute('dynamic-styles',true);
-}
+});
 
 globalThis.modulesSupported=true;
 globalThis.page_html.updateAttribute('modules-supported',true);
