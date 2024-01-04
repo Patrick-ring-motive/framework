@@ -708,3 +708,51 @@ console.log(globalThis.page_html.getAttribute('title')); // Reflects document.ti
 ## Implementation Note
 The declare function is used to set up these properties. It continuously checks for changes and updates the page_html attributes accordingly.
 This approach ensures that the page_html element always carries up-to-date information about the document's state, which can be utilized by other parts of your application.
+
+# Enhanced Declarative Properties for Document State
+## Introduction
+The series of declarative properties set up in the library dynamically updates attributes of the page_html element (which is the html element of the document) to reflect various states and properties of the document. This approach allows CSS selectors to reactively apply styles based on the document's state.
+
+## Refined Usage and CSS Styling
+By assigning these dynamic states as attributes on the html element, you can use CSS selectors to apply styles conditionally.
+For instance, `html[ready-state="complete"] div { visibility: visible; }` can be used to make all div elements visible only when the document's ready state is `"complete"`.
+## List of Declarative Properties (Refined)
+- Ready State, Visibility State, etc.:
+
+`ready-state`, `visibility-state`, and other attributes on `page_html` (i.e., the html element) reflect the current state of the document, such as readiness and visibility.
+## CSS Feature Detection (e.g., `:has()` Support):
+
+Attributes like `has-supported` indicate support for specific CSS features, allowing for feature-dependent styling.
+- Element-Specific Attributes:
+
+Attributes such as `tag-name`, `tag-name-js`, `element-prefix`, and `namespace-uri` on individual elements facilitate more precise and context-aware styling.
+## Example Usage with CSS
+```css
+/* CSS to apply styles based on the document's ready state */
+html[ready-state="complete"] div {
+  visibility: visible;
+}
+
+/* CSS to apply styles based on CSS feature detection */
+html[has-supported="true"] .some-class {
+  /* styles that rely on the :has() pseudo-class support */
+}
+```
+## Implementation Note
+The declare function continuously monitors and updates these attributes, ensuring that they accurately reflect the current state or properties of the document and its elements.
+## Enhanced Documentation
+
+## Dynamic State Reflection in `page_html` (`html` Element)
+
+The library updates the `html` element's attributes to reflect various states and properties of the document dynamically. This enables reactive CSS styling based on the document's state.
+
+### Key Features
+- **Dynamic Attribute Updates**: Reflects document states like readiness, visibility, content type, and more.
+- **Reactive CSS Styling**: Use CSS selectors to style elements based on the document's state.
+- **Element-Specific Attributes**: Enhances individual elements with custom attributes for more targeted styling.
+
+### CSS Styling Examples
+Reactively style elements based on the document's state and supported features using CSS attribute selectors.
+
+### Usage
+These dynamic attributes are set up automatically and require no manual intervention after initial declaration.
