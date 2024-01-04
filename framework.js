@@ -351,7 +351,8 @@ if (`${func.constructor}`.includes("unction")) {
           continue;
          }
         }
-        declareAsynt(declarations[i]);
+        //declareAsynt(declarations[i]);
+	declarations[i]();
       } catch (e) {
         await async("declareEvaluator");
         console.log(e);
@@ -731,6 +732,10 @@ s.attr=attr;
 globalThis.subscriberList[id] = s;
 }
 
+globalThis.unsubscribeState=function(id){
+	delete globalThis.subscriberList[id];
+}
+
 localStorage.updateItem = function(key,val){
 
 if(!(localStorage.getItem(key))){
@@ -759,8 +764,10 @@ s.attr=attr;
 globalThis.pubList[id]=s;
 }
 
-
-
+globalThis.unpublishState=function(id){
+	delete globalThis.publisherList[id];
+}
+	 
 
 globalThis.toSansSerif=function(str){
 const abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
