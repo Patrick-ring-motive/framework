@@ -653,3 +653,22 @@ Sanitizes attribute strings by replacing special characters.
 - `queryBindAll`: Binds a function to elements matching a query, avoiding duplicates.
 
 These functions add robustness and convenience to DOM manipulation and styling.
+
+## Enhanced `declare` Function
+
+Central to the library, `declare` now supports a wider range of function types including asynchronous functions, promises, and generator functions.
+
+### Usage
+`declare(function, identifier);`
+
+### Features
+- **Generator Function Support**: Handles generator functions for asynchronous iteration.
+- **Asynchronous and Promise Handling**: Correctly manages functions that are asynchronous or return promises.
+- **Regular Function Registration**: Continues to register regular functions for periodic execution.
+- **Dynamic Code Execution**: Evaluates string representations of code in a safe manner.
+
+### Error Handling
+Robust error handling is included to manage different function types and their exceptions.
+
+### Example
+Register different types of functions for periodic execution or evaluation within the application's lifecycle.
