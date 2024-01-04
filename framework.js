@@ -774,7 +774,7 @@ declare(()=>{
 	const subscriberList_length = globalThis.subscriberList.length;
 	for(let i = 0;i<subscriberList_length;i++){try{
 		let s = subscriberList[i];
-		s.elem.updateAttribute(s.attr,s.ocalStorage.getItem(s.str)));
+		s.elem.updateAttribute(s.attr,localStorage.getItem(s.str)));
 	}catch(e){continue;}}
  });
 globalThis.subscribeState=function(elem,attr,str){
@@ -795,11 +795,24 @@ localStorage.setItem(key,val);
 
 }
 
-globalThis.publishState=function(elem,attr,str){
-
-declare(()=>localStorage.updateItem(str,elem.getAttribute(attr)))
-
+if(!(globalThis.publisherList)){
+  globalThis.publisherList=[];
 }
+declare(()=>{
+  const publisherList_length = globalThis.publisherList.length;
+  for(let i = 0;i<publisherList_length;i++){try{
+    let s = publisherList[i];
+    localStorage.updateItem(s.str,s.elem.getAttribute(s.attr))
+  }catch(e){continue;}}
+ });
+globalThis.publishState=function(elem,attr,str){
+let s = Object.create(null);
+s.elem=elem;
+s.attr=attr;
+s.str=str;
+globalThis.publisherList.push(s);
+}
+
 
 
 
