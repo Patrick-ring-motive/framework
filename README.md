@@ -672,3 +672,39 @@ Robust error handling is included to manage different function types and their e
 
 ### Example
 Register different types of functions for periodic execution or evaluation within the application's lifecycle.
+
+# Declarative Properties for Document State
+## Introduction
+These properties are set up using the declare function to continuously update the `page_html` element's attributes based on various states and properties of the document. This dynamic reflection of the document's state into DOM attributes can be very useful for CSS styling and JavaScript operations that depend on these states.
+
+## List of Declarative Properties
+- Document Readiness, Visibility, and Character Set:
+
+Updates attributes related to document readiness (ready-state), visibility (visibility-state), and character set (character-set).
+- Document Compatibility Mode and Content Type:
+
+- Reflects the document's compatibility mode (compat-mode) and content type (content-type).
+Cookie, Design Mode, and Direction:
+
+Tracks changes in document cookies (cookie), design mode (design-mode), and text direction (dir).
+- Document Type, URI, and Referrer:
+
+Keeps track of the document type (doctype), URI (document-uri), and referrer (referrer).
+- Document Title and CSS Feature Detection:
+
+Updates the document title (title) and checks for CSS features like the :has() pseudo-class (has-supported).
+- Tag Names and Namespace Attributes:
+
+Applies custom attributes to elements without them, such as tag-name, tag-name-js, element-prefix, and namespace-uri, based on the element's properties.
+- Normalized Attributes:
+
+Normalizes attribute names for consistent CSS targeting and updates elements with these normalized attributes.
+## Example Usage
+```javascript
+// These properties are declared to automatically update.
+// For instance, the document's title is reflected as follows:
+console.log(globalThis.page_html.getAttribute('title')); // Reflects document.title
+```
+## Implementation Note
+The declare function is used to set up these properties. It continuously checks for changes and updates the page_html attributes accordingly.
+This approach ensures that the page_html element always carries up-to-date information about the document's state, which can be utilized by other parts of your application.
