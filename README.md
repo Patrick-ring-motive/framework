@@ -301,3 +301,89 @@ declare(() => {
 
 // The evaluator will periodically and reactively invoke this function,
 // with built-in safeguards against infinite loops and browser blocking.
+```
+# Dynamic HTML Attribute Updates
+## Introduction
+This portion of the library uses the declarative framework to continually update specific HTML attributes. These attributes provide additional information for CSS selectors, enhancing styling capabilities based on the current state of the window or other dynamic conditions.
+
+## Functional Breakdown
+Window Location and User-Agent Attributes:
+
+The HTML element is updated with attributes reflecting the current window location (`window.location.href`) and the user agent (`navigator.userAgent`).
+These attributes are continuously updated to reflect any changes, like navigation or user-agent alterations.
+- Frame Detection:
+
+An attribute framed is set to `true` if the current window is not the topmost window, indicating that the page is being rendered inside a frame or an iframe.
+- Window Orientation:
+
+The orientation of the window (square, portrait, landscape) is determined based on the comparison of `innerHeight` and `innerWidth`.
+The orientation attribute on the HTML element is updated accordingly, which can be particularly useful for responsive design.
+## Tag Name Attribute for Untagged Elements:
+
+Elements without a tag-name attribute are given one, set to their actual tag name. This allows for CSS targeting based on the tag name without using the tag itself as a selector.
+Normalized Attributes for All Elements:
+
+Iterates over all elements and their attributes, normalizing attribute names (e.g., replacing : with -) for consistent CSS targeting.
+This normalization process includes specific handling, like changing xmlns to xml-ns.
+## Example Usage
+```javascript
+// Automatically update the 'window-location' and 'user-agent' attributes
+// on the HTML element
+declare(() => page_html.updateAttribute("window-location", window.location.href));
+declare(() => page_html.updateAttribute("user-agent", navigator.userAgent));
+
+// Update the 'orientation' attribute based on window dimensions
+declare(() => {
+  if (window.innerHeight === window.innerWidth) {
+    page_html.updateAttribute("orientation", "square");
+  } else if (window.innerHeight > window.innerWidth) {
+    page_html.updateAttribute("orientation", "portrait");
+  } else {
+    page_html.updateAttribute("orientation", "landscape");
+  }
+});
+
+// Normalize attribute names for CSS targeting
+declare(() => {
+  queryApplyAll("*", (el) => {
+    // Attribute normalization logic
+  });
+});
+```
+## Notes
+This approach provides a powerful way to reactively adjust styling based on changing conditions.
+It's important to consider performance implications, especially when continuously updating attributes and querying the DOM.
+Enhanced CSS Selector Capabilities Using updateAttribute
+## Introduction
+This library extends CSS selector capabilities by normalizing attributes and adding custom attributes to elements. This allows for more flexible and powerful CSS targeting, especially in cases where standard selectors are limited.
+
+## Normalized Attributes
+- Purpose: Some attributes, particularly those with colons (like `xmlns:xlink`), can't be directly used in CSS selectors. Normalizing these attributes (e.g., replacing colons with hyphens) makes them accessible for CSS styling.
+- Implementation: The library iterates over all elements and their attributes, normalizing names for consistent CSS targeting. This normalization includes specific cases, such as changing `xmlns` to `xml-ns`.
+## Tag Name Attribute
+- Purpose: To enable wildcard queries on tag names, which isn't possible with standard CSS selectors.
+## - Usage Examples:
+- `document.querySelectorAll('[tag-name^="h"]:not([tag-name^="head"])')`: Selects all heading elements (`<h1>`, `<h2>`, etc.), excluding `<head>`.
+- `document.querySelectorAll('[tag-name^="t"]')`: Selects all elements that make up a table (like `<table>`, `<tr>`, `<td>`, etc.).
+
+## Enhanced CSS Selector Capabilities
+
+## Normalized Attributes
+Attributes with special characters, like colons, are normalized for CSS compatibility. For example, attributes containing colons are transformed by replacing colons with hyphens, making them selectable in CSS.
+
+## `tag-name` Attribute for Wildcard Tag Queries
+A custom attribute `tag-name` is added to elements without it, set to their actual tag name. This enables advanced CSS queries using attribute selectors, particularly for wildcard matching of tag names.
+
+## Example Usage
+```javascript
+// Normalized attribute usage in CSS
+// [xml-ns] { ... }
+
+// Using the `tag-name` attribute for wildcard tag queries in JavaScript
+let headings = document.querySelectorAll('[tag-name^="h"]:not([tag-name^="head"])');
+let tableElements = document.querySelectorAll('[tag-name^="t"]');
+
+// These selectors allow for targeting specific groups of elements based on their tag names, offering a level of flexibility not available with standard CSS selectors.
+```
+## Performance Consideration
+The updateAttribute function plays a crucial role in maintaining performance by avoiding unnecessary DOM updates. It ensures attributes are only modified when there's an actual change, reducing the computational cost of these dynamic attribute updates.
