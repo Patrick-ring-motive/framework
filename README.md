@@ -798,3 +798,26 @@ html[modules-supported="false"] .some-class {
 ```
 ## Note
 This method is a straightforward way to adapt the behavior or styling of your web application based on the browser's support for ES6 modules.
+
+The `updateProperty` function you've created is a utility for updating the properties of an object. It ensures that the property is only updated if it doesn't already exist or if its current value differs from the new value. This can be useful for optimizing performance by avoiding unnecessary updates.
+
+# `updateProperty` Function
+## Introduction
+updateProperty is a utility function designed to update a property of an object only if necessary. It checks if the property exists and if its value differs from the new value, thereby preventing redundant updates.
+
+# Usage
+```javascript
+```updateProperty(myObject, "propertyName", newValue);
+```
+# Implementation Details
+The function first checks if the property does not exist on the object. If it doesn't, the property is added with the given value.
+If the property exists, its value is compared with the new value. The update is performed only if the values differ.
+This approach helps in optimizing object property updates, which is particularly beneficial for objects that are frequently modified or are bound to reactive systems.
+# Example Usage
+```javascript
+let myObject = { a: 1, b: 2 };
+updateProperty(myObject, 'c', 3);  // Adds a new property 'c'
+updateProperty(myObject, 'a', 10); // Updates the value of property 'a'
+```
+Note
+This function is helpful in scenarios where object properties are linked to DOM updates or other reactive mechanisms, as it minimizes unnecessary changes.
