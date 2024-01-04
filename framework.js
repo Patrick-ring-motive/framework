@@ -1,14 +1,5 @@
  try {
 
-declare(()=>{
-	if(!(document.querySelector('style[template-styles]'))){
-		let sty = document.createElement('style');
-		sty.setAttribute('template-styles',true);
-		sty.innerHTML=`for{display:none !important;}`;
-		document.body.appendChild(sty);
-	}
-}
-
 	 
   globalThis.await = (promise) => {
     console.log("Uncaught SyntaxError: await is only valid in async functions and the top level bodies of modules", promise);
@@ -537,6 +528,23 @@ if (`${func.constructor}`.includes("unction")) {
   });
 
 
+declare(()=>{
+	if(!(document.querySelector('style[template-styles]'))){
+		let sty = document.createElement('style');
+		sty.setAttribute('template-styles',true);
+		sty.innerHTML=`for{display:none !important;}`;
+		document.body.appendChild(sty);
+	}
+});
+
+declare(()=>{
+const dynamicStyles = document.querySelectorAll('style[dynamic]');
+const dynamicStyles_length = dynamicStyles.length;
+	for(let i=0;i<dynamicStyles_length;i++){try{
+		applyDynamicStyles(dynamicStyles[i]);
+	}catch(e){continue;}}
+	document.querySelector(':root').updateAttribute('dynamic-styles',true);
+}
 
 globalThis.modulesSupported=true;
 globalThis.page_html.updateAttribute('modules-supported',true);
