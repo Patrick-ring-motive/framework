@@ -714,21 +714,21 @@ Great for malformed json.
 
 
 if(!(globalThis.subscriberList)){
-	globalThis.subscriberList=[];
+	globalThis.subscriberList=Object.create(null);
 }
 declare(()=>{
-	const subscriberList_length = globalThis.subscriberList.length;
-	for(let i = 0;i<subscriberList_length;i++){try{
-		let s = subscriberList[i];
-		s.elem.updateAttribute(s.attr,localStorage.getItem(s.str));
+	const subList = Object.keys(globalThis.subscriberList);
+	const subList_length = subList.length;
+	for(let i = 0;i<subList_length;i++){try{
+		let s = subList[subList[i]];
+		s.elem.updateAttribute(s.attr,localStorage.getItem(subList[i]));
 	}catch(e){continue;}}
  });
-globalThis.subscribeState=function(elem,attr,str){
+globalThis.subscribeState=function(elem,attr,id){
 let s = Object.create(null);
 s.elem=elem;
 s.attr=attr;
-s.str=str;
-globalThis.subscriberList.push(s);
+globalThis.subscriberList[id] = s;
 }
 
 localStorage.updateItem = function(key,val){
@@ -742,21 +742,21 @@ localStorage.setItem(key,val);
 }
 
 if(!(globalThis.publisherList)){
-  globalThis.publisherList=[];
+  globalThis.publisherList=Object.create(null);
 }
 declare(()=>{
-  const publisherList_length = globalThis.publisherList.length;
-  for(let i = 0;i<publisherList_length;i++){try{
-    let s = publisherList[i];
-    localStorage.updateItem(s.str,s.elem.getAttribute(s.attr));
+  const pubList = Object.keys(globalThis.publisherList);
+  const pubList_length = pubList.length;
+  for(let i = 0;i<pubList_length;i++){try{
+    let s = pubList[pubList[i]];
+    localStorage.updateItem(pubList[i],s.elem.getAttribute(s.attr));
   }catch(e){continue;}}
  });
-globalThis.publishState=function(elem,attr,str){
+globalThis.publishState=function(elem,attr,id){
 let s = Object.create(null);
 s.elem=elem;
 s.attr=attr;
-s.str=str;
-globalThis.publisherList.push(s);
+globalThis.pubList[id]=s;
 }
 
 
