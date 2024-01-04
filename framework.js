@@ -406,74 +406,20 @@ if (`${func.constructor}`.includes("unction")) {
   });
 
   declare(() => {
-   
       globalThis.page_html.updateAttribute("ready-state", document.readyState);
-
-  });
-
-  declare(() => {
-   
       globalThis.page_html.updateAttribute("visibility-state", document.visibilityState);
-
-  });
-
-  declare(() => {
-   
       globalThis.page_html.updateAttribute("character-set", document.characterSet);
-
-  });
-
-  declare(() => {
-   
       globalThis.page_html.updateAttribute("compat-mode", document.compatMode);
-
-  });
-
-declare(() => {
-   
       globalThis.page_html.updateAttribute("content-type", document.contentType);
-
-  });
-
-declare(() => {
-   
       globalThis.page_html.updateAttribute("cookie", document.cookie);
-
-  });
-
-declare(() => {
-   
       globalThis.page_html.updateAttribute("design-mode", document.designMode);
-
-  });
-
-declare(() => {
-   
       globalThis.page_html.updateAttribute("dir", document.dir);
-
-  });
-
-declare(() => {
-   
       globalThis.page_html.updateAttribute("doctype", document.doctype);
-
-  });
-declare(() => {
-   
       globalThis.page_html.updateAttribute("document-uri", document.documentURI);
-
-  });
-
-declare(() => {
-   
       globalThis.page_html.updateAttribute("referrer", document.referrer);
-
-  });
-
-declare(() => {
-   
       globalThis.page_html.updateAttribute("title", document.title);
-
+      globalThis.page_html.updateAttribute("history-state", (Q(()=>JSON.stringify(history.state))||history.state));
+      globalThis.page_html.updateAttribute("online",navigator.onLine);
   });
 	 
 
@@ -897,6 +843,8 @@ myresponse.headers.forEach(function(){
 globalThis.page_html.updateAttribute(`response-header-${arguments[1]}`,arguments[0]);
 })
 
+
+	 
   console.log("framework loaded successfully");
 
 	 } catch (e) {
