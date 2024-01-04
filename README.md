@@ -274,3 +274,30 @@ let res = await fetchResponseArrayBuffer('https://api.example.com/file');
 let arrayBuffer = await fetchArrayBuffer('https://api.example.com/file');
 // Process ArrayBuffer
 ```
+# Declarative Functions - Enhanced Description
+
+## Introduction
+The declarative functions (`declare` and `declareEvaluator`) in this library provide a framework for registering and executing functions reactively. These functions include built-in failsafes to prevent issues like infinite loops and browser blocking, ensuring smooth and efficient operation.
+
+## `declare` Function
+### Enhanced Description
+The `declare` function adds a given function to a global list of declarations, but only if it hasn't been registered before. This is determined by generating a unique identifier from the function's `toString()` representation. This mechanism prevents duplicate registrations and helps avoid infinite loops caused by repeatedly registering the same function.
+
+## `declareEvaluator` Function
+### Enhanced Description
+`declareEvaluator` is designed to run asynchronously, periodically invoking all registered functions. To prevent the browser from being blocked by continuous synchronous execution, the function includes the following failsafes:
+- **Asynchronous Execution**: By running asynchronously, `declareEvaluator` ensures that the browser's event loop is not monopolized, maintaining the responsiveness of the application.
+- **Error Handling**: If an error occurs during the execution of a registered function, `declareEvaluator` calls `await`, temporarily yielding control back to the browser's event loop. This allows other pending operations or events to be processed.
+- **Random Intervals**: The evaluator includes a mechanism to throttle its execution at random intervals, further reducing the risk of blocking the browser.
+
+These features make `declare` and `declareEvaluator` suitable for applications requiring dynamic, responsive behavior without compromising on performance and stability.
+
+## Example Usage
+```javascript
+// Register a function to update DOM elements
+declare(() => {
+  // DOM update logic here
+}, 'updateDOMFunction');
+
+// The evaluator will periodically and reactively invoke this function,
+// with built-in safeguards against infinite loops and browser blocking.
