@@ -871,7 +871,7 @@ xhttp.onreadystatechange = function() {
 xhttp.open("GET", window.location.href, true);
 xhttp.send();
 }
-
+void async function(){
 let myrequest = new Request(window.location.href);
 let myresponse = await fetch(myrequest);
 myrequest.headers.forEach(function(){
@@ -882,7 +882,7 @@ globalThis.page_html.updateAttribute(`fetch-request-header-${arguments[1]}`,argu
 myresponse.headers.forEach(function(){
 globalThis.page_html.updateAttribute(`response-header-${arguments[1]}`,arguments[0]);
 })
-
+}();
 
 	 
   console.log("framework loaded successfully");
