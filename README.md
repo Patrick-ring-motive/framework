@@ -387,3 +387,74 @@ let tableElements = document.querySelectorAll('[tag-name^="t"]');
 ```
 ## Performance Consideration
 The updateAttribute function plays a crucial role in maintaining performance by avoiding unnecessary DOM updates. It ensures attributes are only modified when there's an actual change, reducing the computational cost of these dynamic attribute updates.
+
+# `console.lag`
+- Purpose: An asynchronous wrapper around console.log.
+- Usage: Use console.lag to log messages asynchronously.
+## - Example:
+```javascript
+await console.lag("Message");
+```
+## `ifTry` and `$ifTry`
+- Purpose: Conditional execution with error handling. $ifTry is the asynchronous version of ifTry.
+- Usage: Use these functions to execute code based on a condition and handle errors gracefully.
+## - Example:
+```javascript
+ifTry(() => condition, () => thenFunction(), (e) => elseCatchFunction(e));
+await $ifTry(() => asyncCondition(), async () => thenFunction(), async (e) => elseCatchFunction(e));
+```
+## `sleep`
+- Purpose: A utility function to pause execution for a given number of milliseconds.
+- Usage: Use sleep in asynchronous functions to introduce delays.
+## - Example:
+```javascript
+await sleep(1000); // Sleep for 1 second
+```
+## `AsyncFunction`
+- Purpose: A reference to the constructor of asynchronous functions.
+- Usage: Useful for dynamic creation of async functions or type checking.
+## `JSON.extract`
+- Purpose: Extracts a value from JSON using string manipulation, useful for malformed JSON.
+- Usage: Apply when standard JSON parsing is not feasible.
+## - Example:
+```javascript
+let value = JSON.extract(malformedJson, "key");
+```
+## `String.prototype.setCharAt`
+- Purpose: Changes the character at a specific index in a string.
+- Usage: Useful for string manipulation where direct character replacement is needed.
+## - Example:
+```javascript
+let str = "Hello";
+str = str.setCharAt(1, 'a'); // "Hallo"
+```
+## `String.prototype.includesAny`
+
+- Purpose: Checks if a string includes any of the elements in a given array.
+- Usage: Useful for checking against multiple substrings in a single call.
+## - Example:
+```javascript
+let str = "Hello world!";
+let result = str.includesAny(["world", "test"]); // true
+```
+## Additional Utilities and Enhancements
+
+## `console.lag`
+An asynchronous version of `console.log`.
+
+## Conditional Execution Functions
+- `ifTry`: Conditionally executes functions with synchronous error handling.
+- `$ifTry`: The asynchronous variant of `ifTry`.
+
+## `sleep`
+A utility function for introducing delays in async functions.
+
+## `AsyncFunction`
+A reference to the constructor of asynchronous functions.
+
+## JSON and String Utilities
+- `JSON.extract`: Extracts values from JSON using string manipulation.
+- `String.prototype.setCharAt`: Changes a character at a specific index in a string.
+- `String.prototype.includesAny`: Checks if the string includes any of the specified substrings.
+
+These utilities enhance the JavaScript standard library with additional functionality, making it easier to perform common tasks and handle specific scenarios.
