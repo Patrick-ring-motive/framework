@@ -1,6 +1,13 @@
  try {
 
-
+declare(()=>{
+	if(!(document.querySelector('style[template-styles]'))){
+		let sty = document.createElement('style');
+		sty.setAttribute('template-styles',true);
+		sty.innerHTML=`for{display:none !important;}`;
+		document.body.appendChild(sty);
+	}
+}
 
 	 
   globalThis.await = (promise) => {
@@ -9,7 +16,7 @@
   };
 
   globalThis.yield = (next) => {
-    console.log("Uncaught SyntaxError: yild is only valid in generator functions", next);
+    console.log("Uncaught SyntaxError: yield is only valid in generator functions", next);
     return next;
   };
 
