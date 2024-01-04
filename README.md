@@ -552,3 +552,46 @@ swapText("hello", "world");
 ## Note
 - Case Sensitivity: The function is case-insensitive, meaning it will replace all variations of `startText` regardless of case.
 - Return Value: Returns an array of text nodes that were modified.
+
+# `Object.descriptorKeys` Function
+## Introduction
+`Object.descriptorKeys` is a utility function that retrieves all property keys of an object, including non-enumerable properties, by accessing their property descriptors.
+
+## Usage
+```javascript
+let keys = Object.descriptorKeys(myObject);
+```
+## Implementation Details
+The function uses `Object.getOwnPropertyDescriptors` to get descriptors of all properties, including non-enumerable ones, and then extracts their keys.
+It's a robust way to list all properties of an object, as opposed to `Object.keys`, which only lists enumerable properties.
+## Error Handling
+In case of an error (e.g., if the argument is not an object), the function safely returns an empty array.
+## Example Usage
+```javascript
+let myObject = { a: 1, b: 2 };
+Object.defineProperty(myObject, 'c', {
+    value: 3,
+    enumerable: false
+});
+let keys = Object.descriptorKeys(myObject); // ['a', 'b', 'c']
+```
+# `Object.forInKeys` Function
+## Introduction
+`Object.forInKeys` retrieves all enumerable properties of an object, similar to a `for...in` loop, but in a safe and array-formatted manner.
+
+## Usage
+```javascript
+let keys = Object.forInKeys(myObject);
+```
+## Implementation Details
+The function iterates over all properties of an object using a `for...in` loop and collects the keys.
+It's particularly useful for cases where you need to consider properties inherited from the object's prototype.
+## Error Handling
+The function continues iterating even if an error occurs for a particular property, ensuring that all possible keys are collected.
+## Example Usage
+```javascript
+let myObject = { a: 1, b: 2 };
+let prototype = { d: 4 };
+Object.setPrototypeOf(myObject, prototype);
+let keys = Object.forInKeys(myObject); // ['a', 'b', 'd']
+```
