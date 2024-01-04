@@ -884,6 +884,16 @@ globalThis.page_html.updateAttribute(`response-header-${arguments[1]}`,arguments
 })
 }();
 
+globalThis.mouseX = 0;
+globalThis.mouseY = 0;
+function updateMouseLocation(event) {
+  globalThis.mouseX = event.pageX;
+  globalThis.mouseY = event.pageY;
+}
+
+window.addEventListener("mousemove",updateMouseLocation, false);
+window.addEventListener("mouseenter", updateMouseLocation, false);
+window.addEventListener("mouseleave", updateMouseLocation, false);	 
 	 
   console.log("framework loaded successfully");
 
