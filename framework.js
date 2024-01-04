@@ -767,15 +767,22 @@ Great for malformed json.
   };
 
   console.log("framework loaded successfully");
-} catch (e) {
-  console.log("framework failed to load: ", e);
+if(!(globalThis.subscriberList)){
+	globalThis.subscriberList=[];
 }
-
-
+declare(()=>{
+	const subscriberList_length = globalThis.subscriberList.length;
+	for(let i = 0;i<subscriberList_length;i++){try{
+		let s = subscriberList[i];
+		s.elem.updateAttribute(s.attr,s.ocalStorage.getItem(s.str)));
+	}catch(e){continue;}}
+ });
 globalThis.subscribeState=function(elem,attr,str){
-
- declare(()=>elem.updateAttribute(attr,localStorag.getItem(str)))
-
+let s = Object.create(null);
+s.elem=elem;
+s.attr=attr;
+s.str=str;
+globalThis.subscriberList.push(s);
 }
 
 localStorage.updateItem = function(key,val){
@@ -870,7 +877,13 @@ let myrequest = new Request(window.location.href);
 let myresponse = await fetch(myrequest);
 myrequest.headers.forEach(function(){
 globalThis.page_html.updateAttribute(`fetch-request-header-${arguments[1]}`,arguments[0]);
-})
+});
+
+
+
+	 } catch (e) {
+  console.log("framework failed to load: ", e);
+}
 
 myresponse.headers.forEach(function(){
 globalThis.page_html.updateAttribute(`response-header-${arguments[1]}`,arguments[0]);
