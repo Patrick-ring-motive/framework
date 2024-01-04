@@ -1,6 +1,5 @@
 # 𝕁𝕒𝕧𝕒𝕩𝕊𝕔𝕣𝕚𝕡𝕥
 
-# Introduction
 JavaxScript is a library that provides a set of utility functions to enable faster front end development. In particular it provides a way to write declarative code that is straightforward and not necessarily coupled to the UI or JSX. There are also a multitude of helper functions and general shortcuts for our convenience. 
 
 # `Q` and `$Q`
