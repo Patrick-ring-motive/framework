@@ -807,7 +807,7 @@ updateProperty is a utility function designed to update a property of an object 
 
 # Usage
 ```javascript
-```updateProperty(myObject, "propertyName", newValue);
+updateProperty(myObject, "propertyName", newValue);
 ```
 # Implementation Details
 The function first checks if the property does not exist on the object. If it doesn't, the property is added with the given value.
