@@ -595,3 +595,61 @@ let prototype = { d: 4 };
 Object.setPrototypeOf(myObject, prototype);
 let keys = Object.forInKeys(myObject); // ['a', 'b', 'd']
 ```
+
+# `sanitizeAttr` Function
+## Introduction
+`sanitizeAttr` is used to sanitize attribute strings by replacing special characters with predefined substitutes. This is particularly useful for ensuring attribute strings are safe and conform to certain standards.
+
+Usage
+```javascript
+let safeAttribute = sanitizeAttr("example:attribute");
+```
+## Implementation Details
+Replaces various special characters with designated substitutes.
+Ensures that the resulting string is free from characters that might cause issues in certain contexts.
+## Element Prototype Extensions
+- `updateAttribute`:
+
+Adds or updates an attribute of a DOM element, but only if necessary (i.e., if the attribute doesn't exist or its value needs to be changed).
+Prevents unnecessary DOM updates.
+- `approveAttribute`:
+
+Similar to `updateAttribute`, but with an additional check to ensure the provided value is truthy before updating.
+- `getStyle`:
+
+Retrieves the computed style of an element for a given CSS property.
+Returns undefined if the style cannot be retrieved.
+- `updateStyle`:
+
+Updates the style of an element, similar to `updateAttribute`, but for CSS styles.
+## Query Functions
+- `queryApplyAll`:
+
+Applies a given function to all elements matching a specified CSS query.
+Handles errors gracefully and continues with the next elements.
+- `queryAttrAll`:
+
+Similar to `queryApplyAll`, but also updates an attribute of the elements with a specified value.
+- `queryBindAll`:
+
+Binds a function to all elements matching a CSS query that do not already have a specific attribute.
+Uses `sanitizeAttr` to create a unique attribute name based on the query and function, marking elements as "bound" to prevent duplicate bindings.
+## Enhanced Documentation
+
+## Additional Utilities and Element Prototype Extensions
+
+### `sanitizeAttr`
+Sanitizes attribute strings by replacing special characters.
+
+### Element Prototype Methods
+- `updateAttribute`: Conditionally adds or updates an element's attribute.
+- `approveAttribute`: Adds or updates an attribute only if the value is truthy.
+- `getStyle`: Retrieves computed styles for a specific CSS property.
+- `updateStyle`: Conditionally updates an element's style.
+
+### Query Functions
+- `queryApplyAll`: Applies a function to each element matching a CSS query.
+- `queryAttrAll`: Similar to `queryApplyAll`, with additional attribute updates.
+- `queryBindAll`: Binds a function to elements matching a query, avoiding duplicates.
+
+These functions add robustness and convenience to DOM manipulation and styling.
