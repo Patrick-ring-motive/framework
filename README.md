@@ -526,3 +526,29 @@ console.log(sansSerifText); // Displays the transformed text
 ```
 ## Note
 This function covers the basic English alphabet. Characters outside this range, including special characters, numbers, and symbols, are not transformed.
+
+# `swapText` Function
+## Introduction
+`swapText` is a utility function that searches for and replaces all instances of a specified text (`startText`) in the document's body and title with another text (`endText`). It's designed to handle cases where the replacement text (`endText`) might include the original text (`startText`), which could lead to infinite recursion.
+
+## Usage
+```javascript
+swapText("original", "replacement");
+```
+## Implementation Details
+- Text Replacement in Body:
+The function creates a `TreeWalker` to traverse all text nodes in the document's body.
+It replaces instances of `startText` with `endText` in each text node.
+If `endText` contains `startText`, it converts `endText` to its sans-serif form using `toSansSerif` to prevent potential infinite recursion.
+- Text Replacement in Title:
+The function also replaces instances of `startText` in the document's title.
+- Regular Expression:
+Uses a regular expression with the global and case-insensitive flags (`gi`) for finding all occurrences of `startText`.
+## Example Usage
+```javascript
+// Replaces all instances of "hello" with "world" in the document body and title
+swapText("hello", "world");
+```
+## Note
+- Case Sensitivity: The function is case-insensitive, meaning it will replace all variations of `startText` regardless of case.
+- Return Value: Returns an array of text nodes that were modified.
