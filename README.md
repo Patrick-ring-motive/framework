@@ -75,7 +75,7 @@ Returns a sealed object with a single property `*` that references the passed ob
 
 This function is useful for scenarios where you want to ensure that multiple parts of your code are referring to and modifying the same object, emulating pointer-like behavior found in other programming languages.
 
-##Example
+## Example
 ```javascript
 
 let originalObject = { key: 'value' };
