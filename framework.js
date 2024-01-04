@@ -774,7 +774,7 @@ declare(()=>{
 	const subscriberList_length = globalThis.subscriberList.length;
 	for(let i = 0;i<subscriberList_length;i++){try{
 		let s = subscriberList[i];
-		s.elem.updateAttribute(s.attr,localStorage.getItem(s.str)));
+		s.elem.updateAttribute(s.attr,localStorage.getItem(s.str));
 	}catch(e){continue;}}
  });
 globalThis.subscribeState=function(elem,attr,str){
@@ -802,7 +802,7 @@ declare(()=>{
   const publisherList_length = globalThis.publisherList.length;
   for(let i = 0;i<publisherList_length;i++){try{
     let s = publisherList[i];
-    localStorage.updateItem(s.str,s.elem.getAttribute(s.attr))
+    localStorage.updateItem(s.str,s.elem.getAttribute(s.attr));
   }catch(e){continue;}}
  });
 globalThis.publishState=function(elem,attr,str){
@@ -892,12 +892,13 @@ myrequest.headers.forEach(function(){
 globalThis.page_html.updateAttribute(`fetch-request-header-${arguments[1]}`,arguments[0]);
 });
 
+
+myresponse.headers.forEach(function(){
+globalThis.page_html.updateAttribute(`response-header-${arguments[1]}`,arguments[0]);
+})
+
   console.log("framework loaded successfully");
 
 	 } catch (e) {
   console.log("framework failed to load: ", e);
 }
-
-myresponse.headers.forEach(function(){
-globalThis.page_html.updateAttribute(`response-header-${arguments[1]}`,arguments[0]);
-})
