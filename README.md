@@ -228,3 +228,49 @@ fetchData('https://api.example.com/data').$X(processData).then(processedData => 
     console.log(processedData);
 });
 ```
+# Fetch API Extensions Documentation
+## Introduction
+These set of functions extend the native Fetch API, simplifying error handling and response processing. They provide a more robust way to work with fetch requests, handling common use cases and errors gracefully.
+
+## `safeFetch`
+- Purpose: Enhances fetch by handling errors and returning a custom response when exceptions occur.
+- Usage: Replace fetch with safeFetch for added error handling.
+## Example:
+```javascript
+let response = await safeFetch('https://api.example.com/data');
+if (!response.ok) {
+  // Handle custom error response
+}
+```
+## `fetchResponseText`
+- Purpose: Retrieves the full response body as text along with the original response object.
+- Usage: Use when you need both the response object and its text content.
+## Example:
+```javascript
+let res = await fetchResponseText('https://api.example.com/data');
+console.log(res.fullBody); // Full text of the response
+```
+## `fetchText`
+- Purpose: A shorthand function to directly fetch the response body as text.
+- Usage: Use for quickly retrieving text content.
+## Example:
+```javascript
+let text = await fetchText('https://api.example.com/data');
+console.log(text);
+```
+## `fetchResponseArrayBuffer`
+- Purpose: Retrieves the full response body as an ArrayBuffer along with the original response object.
+- Usage: Useful for binary data like images or files.
+## Example:
+```javascript
+let res = await fetchResponseArrayBuffer('https://api.example.com/file');
+// Use res.fullBody as ArrayBuffer
+```
+## `fetchArrayBuffer`
+- Purpose: A shorthand function to directly fetch the response body as an `ArrayBuffer`.
+- Usage: Streamlines fetching binary data.
+## Example:
+```javascript
+let arrayBuffer = await fetchArrayBuffer('https://api.example.com/file');
+// Process ArrayBuffer
+```
