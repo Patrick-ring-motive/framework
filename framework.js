@@ -440,11 +440,11 @@ if (`${func.constructor}`.includes("unction")) {
   });
 
   declare(() => {
-    const untagged = Array.from(document.querySelectorAll(":not([tag-name-js])"));
+    const untagged = Array.from(document.querySelectorAll(":not([tag])"));
     const untagged_length = untagged.length;
     for (let i = 0; i < untagged_length; i++) {
       try {
-        untagged[i].updateAttribute("tag-name-js",untagged[i].tagName);
+        untagged[i].updateAttribute("tag",untagged[i].tagName);
       } catch (e) {
         continue;
       }
