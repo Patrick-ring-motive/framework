@@ -56,7 +56,7 @@ console.log(result); // Outputs fetched data or undefined on error
 These functions are especially useful for reducing the need for repetitive try-catch blocks and for simplifying error handling in both synchronous and asynchronous operations.
 
 
-# `ptr` Function Documentation
+# Pointers
 
 ## Introduction
 The `ptr` function is designed to emulate pointers in JavaScript. It creates a sealed object that acts as a reference to another object, allowing for pointer-like behavior.
@@ -87,7 +87,7 @@ console.log(pointerToObject['*']); // Outputs: { key: 'newValue' }
 ```
 In this example, `pointerToObject` acts as a pointer to `originalObject`. Any changes made to `originalObject` are reflected when accessing `pointerToObject['*']`.
 
-# Enhanced Console Functions Documentation
+# Enhanced Console Functions
 
 
 # `console.detail`
@@ -160,3 +160,71 @@ myElement.updateAttribute('data-status', 'active');
 In this example, `updateAttribute` will only set the `'data-status'` attribute to `'active'` if it's not already set to this value, preventing unnecessary DOM operations.
 
 This function can be a valuable addition to any front-end toolkit, particularly in applications with dynamic content where attributes of DOM elements are frequently updated.
+
+# Forward Piping Operator-like Function (X) Documentation
+## Introduction
+This library introduces a method named X on several built-in JavaScript prototypes, including `Function`, `String`, `Array`, `Boolean`, `Number`, `BigInt`, `Symbol`, `Node`, `Window` and `Map`. This method emulates the behavior of a forward piping operator, allowing values to be piped into functions for streamlined processing.
+
+## Syntax
+```javascript
+value.X(function, ...additionalArguments)
+```
+## Parameters
+- `function`: The function to which the value should be piped. The value upon which X is called becomes the first argument of this function.
+additionalArguments: Optional. Additional arguments to pass to the function.
+Description
+The `X` method enables a functional style of coding where operations can be chained in a readable and expressive manner. It effectively allows the value of the object to be passed as the first argument to the provided function, along with any additional arguments.
+This method is inspired by the proposed forward piping operator in JavaScript and provides similar functionality in a method form.
+## Usage
+Common use cases include chaining transformations, computations, or any operations where a value needs to be passed through a series of functions.
+
+## Example
+```javascript
+let result = "Hello, World!".X(s => s.toUpperCase()).X(s => s.split(","));
+console.log(result); // Outputs: ["HELLO", " WORLD!"]
+
+let sum = [1, 2, 3].X(arr => arr.reduce((a, b) => a + b, 0));
+console.log(sum); // Outputs: 6
+```
+## Forward Piping Operator-like Function (`X`)
+
+The `X` method extends several JavaScript prototypes to enable a functional, expressive style of chaining operations. It allows values to be piped forward into functions, emulating a forward piping operator.
+
+### Syntax
+The general form is `value.X(function, ...additionalArguments)`, where `value` is the value to be piped forward.
+
+### Supported Types
+This functionality is added to `Function`, `String`, `Array`, `Boolean`, `Number`, `BigInt`, `Symbol`, `Node`, `Window`, and `Map` prototypes.
+
+### Example Usage
+```javascript
+// Using `X` with a string
+let upperCasedAndSplit = "Hello, World!".X(s => s.toUpperCase()).X(s => s.split(","));
+console.log(upperCasedAndSplit); // ["HELLO", " WORLD!"]
+
+// Using `X` with an array
+let sum = [1, 2, 3].X(arr => arr.reduce((a, b) => a + b, 0));
+console.log(sum); // 6
+This method opens up a more functional approach to JavaScript coding, allowing for cleaner and more intuitive code, especially in scenarios involving multiple transformations or operations on a single value.
+```
+# Asynchronous Forward Piping Operator-like Function ($X)
+## Introduction
+`$X` extends the concept of `X` to handle asynchronous operations. It allows values to be piped into asynchronous functions, facilitating a functional style with promises and async operations.
+## Syntax
+```avascript
+asyncValue.$X(asyncFunction, ...additionalArguments)
+```
+## Parameters
+- `asyncFunction`: An async function or a function that returns a promise.
+- `additionalArguments`: Optional. Additional arguments to pass to the async function.
+## Usage
+Ideal for chaining asynchronous operations, such as API calls, file operations, or any promise-based logic.
+## Example
+```javascript
+let fetchData = async url => fetch(url).then(res => res.json());
+let processData = async data => { /* ... processing ... */ };
+
+fetchData('https://api.example.com/data').$X(processData).then(processedData => {
+    console.log(processedData);
+});
+```
