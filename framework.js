@@ -359,19 +359,19 @@ if (`${func.constructor}`.includes("unction")) {
     }
   };
 
-  globalThis.declareEvaluator();
+  Q(()=>globalThis.declareEvaluator());
   if (globalThis.document) {
     document.addEventListener("DOMContentLoaded", (event) => {
-      globalThis.declareEvaluator();
+      Q(()=>globalThis.declareEvaluator());
     });
     document.addEventListener("readystatechange", (event) => {
-      globalThis.declareEvaluator();
+      Q(()=>globalThis.declareEvaluator());
     });
     window.addEventListener("load", (event) => {
-      globalThis.declareEvaluator();
+      Q(()=>globalThis.declareEvaluator());
     });
     setInterval(function () {
-      globalThis.declareEvaluator();
+      Q(()=>globalThis.declareEvaluator());
     }, 100);
 
     globalThis.page_html = document.querySelector("html")||document.firstElementChild;
