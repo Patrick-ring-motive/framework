@@ -359,6 +359,30 @@ if (`${func.constructor}`.includes("unction")) {
     }
   };
 
+if (!(globalThis.deferations)) {
+    globalThis.deferations = [];
+    globalThis.deferationStrings = [];
+  }
+
+
+
+globalThis.deferEvaluator = async function () {
+    const deferations_length = deferations.length;
+    for (let i = 0; i < deferations_length; i++) {
+      if (`${new Date().getTime()}`.endsWith("10")) {
+        await async("deferEvaluator");
+      }
+   
+        }
+	deferations.shift()?.();
+      } catch (e) {
+        await async("deferEvaluator");
+        console.log(e);
+        continue;
+      }
+    }
+  };
+
   Q(()=>globalThis.declareEvaluator());
   if (globalThis.document) {
     document.addEventListener("DOMContentLoaded", (event) => {
