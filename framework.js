@@ -364,7 +364,33 @@ if (!(globalThis.deferations)) {
     globalThis.deferationStrings = [];
   }
 
+globalThis.defer = function (func, id) {
+if(!func){return;}
+if((func.next)&&(`${func}`=='[object Generator]')){
+return (async()=>{return defer(await (func),id);})();
 
+}
+if(`${func.constructor}`.includes("romise")) {
+  return defer(()=>func().next(),id);
+}
+try{
+if(`${func.constructor}`.toLowerCase().includes("generatorfunction")) {
+  return defer(()=>func().next(),id);
+}
+}catch(e){console.log(e);};
+if (`${func.constructor}`.includes("unction")) {
+    let funcString = func.toString() + id;
+    if ((!(deferationStrings.includes(funcString)))
+      ||(!(funcString.includes('defer(')))) {
+      globalThis.deferations.push(func);
+      globalThis.deferationStrings.push(funcString);
+    }
+}else{
+ Q(()=>{
+	defer(()=>eval?.(`${func}`),id);
+ });
+}
+  };
 
 globalThis.deferEvaluator = async function () {
     const deferations_length = deferations.length;
@@ -384,18 +410,23 @@ globalThis.deferEvaluator = async function () {
   };
 
   Q(()=>globalThis.declareEvaluator());
+  Q(()=>globalThis.deferEvaluator());
   if (globalThis.document) {
     document.addEventListener("DOMContentLoaded", (event) => {
       Q(()=>globalThis.declareEvaluator());
+       Q(()=>globalThis.deferEvaluator());
     });
     document.addEventListener("readystatechange", (event) => {
       Q(()=>globalThis.declareEvaluator());
+      Q(()=>globalThis.deferEvaluator());
     });
     window.addEventListener("load", (event) => {
       Q(()=>globalThis.declareEvaluator());
+      Q(()=>globalThis.deferEvaluator());
     });
     setInterval(function () {
       Q(()=>globalThis.declareEvaluator());
+      Q(()=>globalThis.deferEvaluator());
     }, 100);
 
     globalThis.page_html = document.querySelector("html")||document.firstElementChild;
