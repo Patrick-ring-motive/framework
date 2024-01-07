@@ -394,12 +394,12 @@ if (`${func.constructor}`.includes("unction")) {
 
 globalThis.deferEvaluator = async function () {
     const deferations_length = deferations.length;
-    for (let i = 0; i < deferations_length; i++) {
+    for (let i = 0; i < deferations_length; i++) {try{
       if (`${new Date().getTime()}`.endsWith("10")) {
         await async("deferEvaluator");
       }
    
-        }
+        
 	deferations.shift()?.();
       } catch (e) {
         await async("deferEvaluator");
