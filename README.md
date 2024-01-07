@@ -4,7 +4,6 @@ JavaxScript is a library that provides a set of utility functions to enable fast
 
 # `Q` and `$Q`
 
-## Introduction
 - `Q` is a utility function for safely executing a function and returning its result, or `undefined` if an error occurs.
 - `$Q` is the asynchronous counterpart to `Q`, designed for handling async functions or promises.
 
@@ -57,7 +56,6 @@ These functions are especially useful for reducing the need for repetitive try-c
 
 # Pointers
 
-## Introduction
 The `ptr` function is designed to emulate pointers in JavaScript. It creates a sealed object that acts as a reference to another object, allowing for pointer-like behavior.
 
 ## Syntax
@@ -91,7 +89,6 @@ In this example, `pointerToObject` acts as a pointer to `originalObject`. Any ch
 
 # `console.detail`
 
-## Introduction
 `console.detail` is a custom logging function that enhances the display of primitive values and objects in the Chrome Developer Console. It attaches a log method to the object's prototype and then executes it, causing primitives to display as full JavaScript objects.
 
 ## Syntax
@@ -113,7 +110,6 @@ console.list
 
 # `console.list`
 
-## Introduction
 `console.list` is a function that logs items as elements of an array. This alters their representation in the Chrome Developer Console, particularly for HTML elements, displaying them as JavaScript objects rather than showing their outerHTML.
 
 ## Syntax
@@ -135,7 +131,6 @@ These enhanced console functions offer alternative ways of viewing and debugging
 
 # `Element.prototype.updateAttribute` Function
 
-## Introduction
 `Element.prototype.updateAttribute` is an extension to the DOM Element prototype. It optimizes the process of updating an element's attribute by checking if the attribute's current value is different from the new value. This avoids unnecessary DOM updates, which can be computationally expensive.
 
 ## Syntax
@@ -161,7 +156,7 @@ In this example, `updateAttribute` will only set the `'data-status'` attribute t
 This function can be a valuable addition to any front-end toolkit, particularly in applications with dynamic content where attributes of DOM elements are frequently updated.
 
 # Forward Piping Operator-like Function (X) Documentation
-## Introduction
+
 This library introduces a method named X on several built-in JavaScript prototypes, including `Function`, `String`, `Array`, `Boolean`, `Number`, `BigInt`, `Symbol`, `Node`, `Window` and `Map`. This method emulates the behavior of a forward piping operator, allowing values to be piped into functions for streamlined processing.
 
 ## Syntax
@@ -207,7 +202,7 @@ console.log(sum); // 6
 This method opens up a more functional approach to JavaScript coding, allowing for cleaner and more intuitive code, especially in scenarios involving multiple transformations or operations on a single value.
 ```
 # Asynchronous Forward Piping Operator-like Function ($X)
-## Introduction
+ 
 `$X` extends the concept of `X` to handle asynchronous operations. It allows values to be piped into asynchronous functions, facilitating a functional style with promises and async operations.
 ## Syntax
 ```avascript
@@ -227,8 +222,9 @@ fetchData('https://api.example.com/data').$X(processData).then(processedData => 
     console.log(processedData);
 });
 ```
-# Fetch API Extensions Documentation
-## Introduction
+
+# Fetch API Extensions
+
 These set of functions extend the native Fetch API, simplifying error handling and response processing. They provide a more robust way to work with fetch requests, handling common use cases and errors gracefully.
 
 ## `safeFetch`
@@ -273,9 +269,9 @@ let res = await fetchResponseArrayBuffer('https://api.example.com/file');
 let arrayBuffer = await fetchArrayBuffer('https://api.example.com/file');
 // Process ArrayBuffer
 ```
+
 # Declarative Functions - Enhanced Description
 
-## Introduction
 The declarative functions (`declare` and `declareEvaluator`) in this library provide a framework for registering and executing functions reactively. These functions include built-in failsafes to prevent issues like infinite loops and browser blocking, ensuring smooth and efficient operation.
 
 ## `declare` Function
@@ -302,7 +298,7 @@ declare(() => {
 // with built-in safeguards against infinite loops and browser blocking.
 ```
 # Dynamic HTML Attribute Updates
-## Introduction
+ 
 This portion of the library uses the declarative framework to continually update specific HTML attributes. These attributes provide additional information for CSS selectors, enhancing styling capabilities based on the current state of the window or other dynamic conditions.
 
 ## Functional Breakdown
@@ -353,7 +349,7 @@ declare(() => {
 This approach provides a powerful way to reactively adjust styling based on changing conditions.
 It's important to consider performance implications, especially when continuously updating attributes and querying the DOM.
 Enhanced CSS Selector Capabilities Using updateAttribute
-## Introduction
+ 
 This library extends CSS selector capabilities by normalizing attributes and adding custom attributes to elements. This allows for more flexible and powerful CSS targeting, especially in cases where standard selectors are limited.
 
 ## Normalized Attributes
@@ -459,7 +455,7 @@ A reference to the constructor of asynchronous functions.
 These utilities enhance the JavaScript standard library with additional functionality, making it easier to perform common tasks and handle specific scenarios.
 
 # State Subscription and Publishing System
-## Introduction
+ 
 This system allows DOM elements to subscribe to changes in `localStorage` and vice versa. Elements can update their attributes based on `localStorage` values, and changes in element attributes can be reflected in localStorage.
 
 ## `subscribeState` Function
@@ -506,7 +502,7 @@ Links changes in a DOM element's attribute to a `localStorage` item. Whenever th
 - Periodic checks ensure synchronization, using `declare` to handle updates efficiently and responsively.
 
 # `toSansSerif` Function
-## Introduction
+ 
 The `toSansSerif` function converts regular alphabetic characters in a string to their sans-serif equivalents. It's useful for stylizing text dynamically within a JavaScript environment.
 
 Usage
@@ -527,7 +523,7 @@ console.log(sansSerifText); // Displays the transformed text
 This function covers the basic English alphabet. Characters outside this range, including special characters, numbers, and symbols, are not transformed.
 
 # `swapText` Function
-## Introduction
+ 
 `swapText` is a utility function that searches for and replaces all instances of a specified text (`startText`) in the document's body and title with another text (`endText`). It's designed to handle cases where the replacement text (`endText`) might include the original text (`startText`), which could lead to infinite recursion.
 
 ## Usage
@@ -553,7 +549,7 @@ swapText("hello", "world");
 - Return Value: Returns an array of text nodes that were modified.
 
 # `Object.descriptorKeys` Function
-## Introduction
+ 
 `Object.descriptorKeys` is a utility function that retrieves all property keys of an object, including non-enumerable properties, by accessing their property descriptors.
 
 ## Usage
@@ -575,7 +571,7 @@ Object.defineProperty(myObject, 'c', {
 let keys = Object.descriptorKeys(myObject); // ['a', 'b', 'c']
 ```
 # `Object.forInKeys` Function
-## Introduction
+ 
 `Object.forInKeys` retrieves all enumerable properties of an object, similar to a `for...in` loop, but in a safe and array-formatted manner.
 
 ## Usage
@@ -596,7 +592,7 @@ let keys = Object.forInKeys(myObject); // ['a', 'b', 'd']
 ```
 
 # `sanitizeAttr` Function
-## Introduction
+ 
 `sanitizeAttr` is used to sanitize attribute strings by replacing special characters with predefined substitutes. This is particularly useful for ensuring attribute strings are safe and conform to certain standards.
 
 Usage
@@ -673,7 +669,7 @@ Robust error handling is included to manage different function types and their e
 Register different types of functions for periodic execution or evaluation within the application's lifecycle.
 
 # Declarative Properties for Document State
-## Introduction
+ 
 These properties are set up using the declare function to continuously update the `page_html` element's attributes based on various states and properties of the document. This dynamic reflection of the document's state into DOM attributes can be very useful for CSS styling and JavaScript operations that depend on these states.
 
 ## List of Declarative Properties
@@ -709,7 +705,7 @@ The declare function is used to set up these properties. It continuously checks 
 This approach ensures that the page_html element always carries up-to-date information about the document's state, which can be utilized by other parts of your application.
 
 # Enhanced Declarative Properties for Document State
-## Introduction
+ 
 The series of declarative properties set up in the library dynamically updates attributes of the page_html element (which is the html element of the document) to reflect various states and properties of the document. This approach allows CSS selectors to reactively apply styles based on the document's state.
 
 ## Refined Usage and CSS Styling
@@ -757,7 +753,7 @@ Reactively style elements based on the document's state and supported features u
 These dynamic attributes are set up automatically and require no manual intervention after initial declaration.
 
 # Module Support Detection
-## Introduction
+ 
 This functionality detects whether the browser supports JavaScript ES6 modules and updates an attribute on the page_html element (html element) accordingly. It uses a combination of a default assumption (modules are supported) and a nomodule script to set the attribute based on actual support.
 
 ## Implementation
@@ -801,7 +797,7 @@ This method is a straightforward way to adapt the behavior or styling of your we
 The `updateProperty` function you've created is a utility for updating the properties of an object. It ensures that the property is only updated if it doesn't already exist or if its current value differs from the new value. This can be useful for optimizing performance by avoiding unnecessary updates.
 
 # `updateProperty` Function
-## Introduction
+ 
 updateProperty is a utility function designed to update a property of an object only if necessary. It checks if the property exists and if its value differs from the new value, thereby preventing redundant updates.
 
 # Usage
