@@ -582,12 +582,37 @@ globalThis.deferEvaluator = async function () {
   globalThis.page_html.updateAttribute('has-supported',hasTest);
   });
 
+declare(()=>{
+	queryApplyAll('dynamic-styles',(el)=>{
+	const dynamicStyles = JSON.parse(el.querySelector('style-json').innerHTML)["dynamic-styles"]
+	const dynamicStyleKeys = Object.keys(dynamicStyles);
+		const dynamicStyleKeys_length = dynamicStyleKeys.length;
+		for(let i=0;i<dynamicStyleKeys_length;i++){try{
+		let ds = el.querySelector(`[id="${dynamicStyleKeys[i]}"]`);
+		if(!ds){
+		ds = document.createElement('style');
+		ds.id = dynamicStyleKeys[i];
+		ds.innerHTML = `:root{${dynamicStyleKeys[i]}:${eval(dynamicStyles[dynamicStyleKeys[i]])};`;
+		el.appendChild(ds);
+		}else{
+			let updatedStyle=`:root{${dynamicStyleKeys[i]}:${eval(dynamicStyles[dynamicStyleKeys[i]])};`;
+			if((updatedStyle)&&(ds.innerHTML.toString()!=updatedStyle)){
+				ds.innerHTML=updatedStyle;
+			}
+			
+		}
+		}catch(e){continue;}}
+
+
+	});
+});
+
 
 declare(()=>{
 	if(!(document.querySelector('style[template-styles]'))){
 		let sty = document.createElement('style');
 		sty.setAttribute('template-styles',true);
-		sty.innerHTML=`for{display:none !important;}`;
+		sty.innerHTML=`for,dynamic-styles{display:none !important;}`;
 		document.body.appendChild(sty);
 	}
 });
