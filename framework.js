@@ -607,6 +607,22 @@ declare(()=>{
 	});
 });
 
+	 /*
+  <dynamic-styles>
+<style-json>
+{
+"dynamic-styles" : {
+"--window-height" : "`${window.innerHeight}px`"
+}
+}
+</style-json>
+<style id="--window-height">
+:root{--window.innerHeight:963px;}
+</style>
+</dynamic-styles>
+
+  */
+
 
 declare(()=>{
 	if(!(document.querySelector('style[template-styles]'))){
