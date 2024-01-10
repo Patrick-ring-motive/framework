@@ -622,6 +622,7 @@ globalThis.deferEvaluator = async function () {
 
 declare(()=>{
 	queryApplyAll('dynamic-styles',async (el)=>{
+
 	let instructions = el.querySelector('style-json');
 	if(!instructions){
 	try{
@@ -646,7 +647,7 @@ declare(()=>{
 		return;
 	}	
 	}
-	const dynamicStyles = JSON.parse(instructions.innerHTML)["dynamic-styles"]
+	const dynamicStyles = JSON.parse(instructions.innerHTML)["dynamic-styles"];
 	const dynamicStyleKeys = Object.keys(dynamicStyles);
 		const dynamicStyleKeys_length = dynamicStyleKeys.length;
 		for(let i=0;i<dynamicStyleKeys_length;i++){try{
@@ -663,7 +664,7 @@ declare(()=>{
 			}
 			
 		}
-		}catch(e){continue;}}
+		}catch(e){console.log(e);continue;}}
 
 
 	});
