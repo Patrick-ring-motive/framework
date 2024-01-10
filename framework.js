@@ -117,12 +117,12 @@ Object.defineProperty(globalThis, "as", {
   globalThis.N = (U) => {
     if (`${U.constructor}`.includes("unction")) {
       try {
-        return (U()*1)|0;
+        return (U()*1)||0;
       } catch (e) {
         return 0;
       }
     } else {
-      return (U*1)|0;
+      return (U*1)||0;
     }
   };
 
@@ -130,7 +130,7 @@ Object.defineProperty(globalThis, "as", {
     try {
       if (`${U.constructor}`.includes("unction")) {
         try {
-          return ((await U())*1)|0;
+          return ((await U())*1)||0;
         } catch (e) {
           return 0;
         }
@@ -138,12 +138,12 @@ Object.defineProperty(globalThis, "as", {
         let U = await U;
         if (`${U.constructor}`.includes("unction")) {
           try {
-            return ((U())*1)|0;
+            return ((U())*1)||0;
           } catch (e) {
             return 0;
           }
         }
-        return (U*1)|0;
+        return (U*1)||0;
       }
     } catch (e) {
       return 0;
@@ -154,12 +154,12 @@ Object.defineProperty(globalThis, "as", {
   globalThis.S = (U) => {
     if (`${U.constructor}`.includes("unction")) {
       try {
-        return (U())|'';
+        return (U())||'';
       } catch (e) {
         return '';
       }
     } else {
-      return (U)|'';
+      return (U)||'';
     }
   };
 
@@ -167,7 +167,7 @@ Object.defineProperty(globalThis, "as", {
     try {
       if (`${U.constructor}`.includes("unction")) {
         try {
-          return ((await U()))|'';
+          return ((await U()))||'';
         } catch (e) {
           return '';
         }
@@ -175,12 +175,12 @@ Object.defineProperty(globalThis, "as", {
         let U = await U;
         if (`${U.constructor}`.includes("unction")) {
           try {
-            return ((U()))|'';
+            return ((U()))||'';
           } catch (e) {
             return '';
           }
         }
-        return (U)|'';
+        return (U)||'';
       }
     } catch (e) {
       return '';
@@ -190,12 +190,12 @@ Object.defineProperty(globalThis, "as", {
   globalThis.A = (U) => {
     if (`${U.constructor}`.includes("unction")) {
       try {
-        return Array.from(U())|[];
+        return Array.from(U())||[];
       } catch (e) {
         return [];
       }
     } else {
-      return Array.from(U)|[];
+      return Array.from(U)||[];
     }
   };
 
@@ -203,7 +203,7 @@ Object.defineProperty(globalThis, "as", {
     try {
       if (`${U.constructor}`.includes("unction")) {
         try {
-          return Array.from(await U())|[];
+          return Array.from(await U())||[];
         } catch (e) {
           return [];
         }
@@ -211,12 +211,12 @@ Object.defineProperty(globalThis, "as", {
         let U = await U;
         if (`${U.constructor}`.includes("unction")) {
           try {
-            return Array.from(U())|[];
+            return Array.from(U())||[];
           } catch (e) {
             return [];
           }
         }
-        return Array.from(U)|[];
+        return Array.from(U)||[];
       }
     } catch (e) {
       return [];
