@@ -1274,7 +1274,7 @@ items = eval(`A(${items})`);
     for(let i = 0;i<items_length;i++){try{
       let temp = template.content.cloneNode(true);
     //  Object.assign(temp,items[i]);
-	if (`${items[i].constructor}`.includes("unction")) {
+	if ((typeof items[i])=='function') {
 	  await items[i](temp,i);
 	}
       fragment.appendChild(temp)
