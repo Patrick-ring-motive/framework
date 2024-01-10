@@ -114,6 +114,42 @@ Object.defineProperty(globalThis, "as", {
   };
   globalThis.AQ = globalThis.$Q;
 
+  globalThis.N = (U) => {
+    if (`${U.constructor}`.includes("unction")) {
+      try {
+        return (U()*1)|0;
+      } catch (e) {
+        return 0;
+      }
+    } else {
+      return (U*1)|0;
+    }
+  };
+
+    globalThis.$N = async (U) => {
+    try {
+      if (`${U.constructor}`.includes("unction")) {
+        try {
+          return ((await U())*1)|0;
+        } catch (e) {
+          return 0;
+        }
+      } else if (`${U.constructor}`.includes("romise")) {
+        let U = await U;
+        if (`${U.constructor}`.includes("unction")) {
+          try {
+            return ((U())*1)|0;
+          } catch (e) {
+            return 0;
+          }
+        }
+        return (U*1)|0;
+      }
+    } catch (e) {
+      return 0;
+    }
+  };
+
   globalThis.ptr = function (obj) {
     let pointer = Object.create(null);
     pointer["*"] = obj;
