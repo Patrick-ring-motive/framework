@@ -637,7 +637,7 @@ declare(()=>{
 		el.updateAttribute('fetching','in progress');
 		let dynSty = await fetchText(dataSrc);
 		let styleJSON = document.createElement('style-json');
-		styleJSON.innerHTML = dynSty;
+		styleJSON.innerHTML = `<style>${dynSty}</style>`;
 		el.appendChild(styleJSON);
 		el.removeAttribute('fetching');
 		instructions = styleJSON;
@@ -647,15 +647,19 @@ declare(()=>{
 		return;
 	}	
 	}
-	const dynamicStyles = JSON.parse(instructions.innerHTML)["dynamic-styles"];
+	const dynamicStyles = JSON.parse(instructions.querySelector('style').innerHTML)["dynamic-styles"];
 	const dynamicStyleKeys = Object.keys(dynamicStyles);
 		const dynamicStyleKeys_length = dynamicStyleKeys.length;
 		for(let i=0;i<dynamicStyleKeys_length;i++){try{
+			console.log(dynamicStyles);
 		let ds = el.querySelector(`[id="${dynamicStyleKeys[i]}"]`);
 		if(!ds){
 		ds = document.createElement('style');
 		ds.id = dynamicStyleKeys[i];
+		
+			try{
 		ds.innerHTML = `:root{${dynamicStyleKeys[i]}:${eval(dynamicStyles[dynamicStyleKeys[i]])};`;
+			}catch(e){console.log(dynamicStyles);}
 		el.appendChild(ds);
 		}else{
 			let updatedStyle=`:root{${dynamicStyleKeys[i]}:${eval(dynamicStyles[dynamicStyleKeys[i]])};`;
@@ -673,11 +677,13 @@ declare(()=>{
 	 /*
   <dynamic-styles>
 <style-json>
+<style>
 {
 "dynamic-styles" : {
 "--window-height" : "`${window.innerHeight}px`"
 }
 }
+</style>
 </style-json>
 <style id="--window-height">
 :root{--window.innerHeight:963px;}
