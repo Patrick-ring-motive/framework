@@ -1269,7 +1269,7 @@ items = eval(`A(${items})`);
   template = document.createElement('template');
   template.innerHTML = FOR.innerHTML;
   }
-  	const fragment = new DocumentFragment();
+  	const fragment = document.createElement('template');
   	const items_length = items.length;
     for(let i = 0;i<items_length;i++){try{
       let temp = template.content.cloneNode(true);
@@ -1277,9 +1277,10 @@ items = eval(`A(${items})`);
 	if ((typeof items[i])=='function') {
 	  await items[i](temp,i);
 	}
-      fragment.appendChild(temp)
+      fragment.content.appendChild(temp)
     }catch(e){continue;}}
-FOR.replaceWith(fragment);
+    FOR.parentElement.insertBefore(fragment.content, FOR);
+		FOR.remove();
 
 }catch(e){
 console.log(e);
