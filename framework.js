@@ -154,12 +154,12 @@ Object.defineProperty(globalThis, "as", {
   globalThis.S = (U) => {
     if (`${U.constructor}`.includes("unction")) {
       try {
-        return (U())||'';
+        return `${(U())||''}`;
       } catch (e) {
         return '';
       }
     } else {
-      return (U)||'';
+      return `${(U)||''}`;
     }
   };
 
@@ -167,7 +167,7 @@ Object.defineProperty(globalThis, "as", {
     try {
       if (`${U.constructor}`.includes("unction")) {
         try {
-          return ((await U()))||'';
+          return `${((await U()))||''}`;
         } catch (e) {
           return '';
         }
@@ -175,12 +175,12 @@ Object.defineProperty(globalThis, "as", {
         let U = await U;
         if (`${U.constructor}`.includes("unction")) {
           try {
-            return ((U()))||'';
+            return `${((U()))||''}`;
           } catch (e) {
             return '';
           }
         }
-        return (U)||'';
+        return `${(U)||''}`;
       }
     } catch (e) {
       return '';
