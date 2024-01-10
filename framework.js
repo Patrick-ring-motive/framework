@@ -268,6 +268,21 @@ if(obj[prop]!=val){
       .replace(/\s/g, "_")
       .replace(/[^a-zA-Z0-9_-]/g, "�");
   };
+
+    EventTarget.prototype.addDeferEventListener = function (type, listener, options) {
+      const target = this;
+	const deferListener = (event)=>{
+		defer(event)=>{
+			listener(event);
+		},`${listener}`);
+	};
+	if(options === undefined){
+		target.addEventListener(type, deferListener);
+	}else{
+		target.addEventListener(type, deferListener, options);
+	}
+
+    };
   if (globalThis.Element) {
     Element.prototype.updateAttribute = function (attr, val) {
       const el = this;
