@@ -1059,6 +1059,24 @@ function updateMouseLocation(event) {
 window.addEventListener("mousemove",updateMouseLocation, false);
 window.addEventListener("mouseenter", updateMouseLocation, false);
 window.addEventListener("mouseleave", updateMouseLocation, false);	 
+
+globalThis.screenX = 0;
+globalThis.screenY = 0;
+function updateTouchScreenLocation(event) {
+  defer(()=>{
+	const event_touches_length = event.touches.length;
+    for (let i = 0; i < event_touches_length; i++) {try{
+     globalThis.screenX = event.touches[i].screenX;
+     globalThis.screenY = event.touches[i].screenY;
+    }catch(e){continue;}}
+  });
+}
+
+document.firstElementChild.addEventListener("touchstart",updateTouchScreenLocation, false);
+document.firstElementChild.addEventListener("touchend", updateTouchScreenLocation, false);
+document.firstElementChild.addEventListener("touchmove", updateTouchScreenLocation, false);	 
+document.firstElementChild.addEventListener("touchcancel", updateTouchScreenLocation, false);
+
 	 
   console.log("framework loaded successfully");
 
