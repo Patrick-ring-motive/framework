@@ -757,6 +757,11 @@ declare(()=>{
 		return;
 	}	
 	}
+  
+  if(Math.floor(Math.random() * 10) < 8){}
+
+
+  
 	const dynamicStyles = JSON.parse(instructions.querySelector('style').innerHTML)["dynamic-styles"];
 	const dynamicStyleKeys = Object.keys(dynamicStyles);
 		const dynamicStyleKeys_length = dynamicStyleKeys.length;
