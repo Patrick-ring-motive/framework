@@ -749,7 +749,7 @@ declare(()=>{
 	if(!(document.querySelector('style[template-styles]'))){
 		let sty = document.createElement('style');
 		sty.setAttribute('template-styles',true);
-		sty.innerHTML=`for,dynamic-styles{display:none !important;}`;
+		sty.innerHTML=`if,else,for,dynamic-styles{display:none !important;}`;
 		document.body.appendChild(sty);
 	}
 });
