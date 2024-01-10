@@ -1,5 +1,5 @@
 {
   "dynamic-styles" : {
-    "--page-colors" : "`hue-rotate(${N(()=>window.innerHeight) + N(()=>window.innerWidth) + N(()=>mouseX) + N(()=>mouseY)}deg)`"
+    "--page-colors" : "`hue-rotate(${(N(()=>window.innerHeight) - N(()=>window.innerWidth)) + N(()=>mouseX) + N(()=>mouseY)}deg)`"
     }
 }
