@@ -599,6 +599,7 @@ declare(()=>{
 		el.appendChild(styleJSON);
 		el.updateAttribute('fetching','done');
 	}catch(e){
+		el.updateAttribute('fetching','error');
 		console.log(e);
 		return;
 	}	
