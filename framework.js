@@ -78,7 +78,7 @@ Object.defineProperty(globalThis, "as", {
   }
 
   globalThis.Q = (U) => {
-    if (`${U.constructor}`.includes("unction")) {
+    if ((typeof U)=='function') {
       try {
         return U();
       } catch (e) {
@@ -91,7 +91,7 @@ Object.defineProperty(globalThis, "as", {
 
     globalThis.$Q = async (U) => {
     try {
-      if (`${U.constructor}`.includes("unction")) {
+      if ((typeof U)=='function') {
         try {
           return await U();
         } catch (e) {
@@ -99,7 +99,7 @@ Object.defineProperty(globalThis, "as", {
         }
       } else if (`${U.constructor}`.includes("romise")) {
         let U = await U;
-        if (`${U.constructor}`.includes("unction")) {
+        if ((typeof U)=='function') {
           try {
             return U();
           } catch (e) {
@@ -115,7 +115,7 @@ Object.defineProperty(globalThis, "as", {
   globalThis.AQ = globalThis.$Q;
 
   globalThis.N = (U) => {
-    if (`${U.constructor}`.includes("unction")) {
+    if ((typeof U)=='function') {
       try {
         return (U()*1)||0;
       } catch (e) {
@@ -128,7 +128,7 @@ Object.defineProperty(globalThis, "as", {
 
     globalThis.$N = async (U) => {
     try {
-      if (`${U.constructor}`.includes("unction")) {
+      if ((typeof U)=='function') {
         try {
           return ((await U())*1)||0;
         } catch (e) {
@@ -136,7 +136,7 @@ Object.defineProperty(globalThis, "as", {
         }
       } else if (`${U.constructor}`.includes("romise")) {
         let U = await U;
-        if (`${U.constructor}`.includes("unction")) {
+        if ((typeof U)=='function') {
           try {
             return ((U())*1)||0;
           } catch (e) {
@@ -152,7 +152,7 @@ Object.defineProperty(globalThis, "as", {
 
 
   globalThis.S = (U) => {
-    if (`${U.constructor}`.includes("unction")) {
+    if ((typeof U)=='function') {
       try {
         return `${(U())||''}`;
       } catch (e) {
@@ -165,7 +165,7 @@ Object.defineProperty(globalThis, "as", {
 
     globalThis.$S = async (U) => {
     try {
-      if (`${U.constructor}`.includes("unction")) {
+      if ((typeof U)=='function') {
         try {
           return `${((await U()))||''}`;
         } catch (e) {
@@ -173,7 +173,7 @@ Object.defineProperty(globalThis, "as", {
         }
       } else if (`${U.constructor}`.includes("romise")) {
         let U = await U;
-        if (`${U.constructor}`.includes("unction")) {
+        if ((typeof U)=='function') {
           try {
             return `${((U()))||''}`;
           } catch (e) {
@@ -188,20 +188,27 @@ Object.defineProperty(globalThis, "as", {
   };
 
   globalThis.A = (U) => {
-    if (`${U.constructor}`.includes("unction")) {
+    if ((typeof U)=='function') {
       try {
         return Array.from(U())||[];
       } catch (e) {
         return [];
       }
     } else {
+	 if ((typeof U)=='string') {
+		try{
+		 return Array.from(eval(u))||[];
+		}catch(e){
+		 return Array.from(U)||[];	
+		}
+	 }
       return Array.from(U)||[];
     }
   };
 
     globalThis.$A = async (U) => {
     try {
-      if (`${U.constructor}`.includes("unction")) {
+      if ((typeof U)=='function') {
         try {
           return Array.from(await U())||[];
         } catch (e) {
@@ -209,15 +216,30 @@ Object.defineProperty(globalThis, "as", {
         }
       } else if (`${U.constructor}`.includes("romise")) {
         let U = await U;
-        if (`${U.constructor}`.includes("unction")) {
+        if ((typeof U)=='function') {
           try {
             return Array.from(U())||[];
           } catch (e) {
             return [];
           }
         }
-        return Array.from(U)||[];
+      if ((typeof U)=='string') {
+		try{
+		 return Array.from(await eval(u))||[];
+		}catch(e){
+		 return Array.from(U)||[];	
+		}
+	 }
+      return Array.from(U)||[];
       }
+	if ((typeof U)=='string') {
+		try{
+		 return Array.from(await eval(u))||[];
+		}catch(e){
+		 return Array.from(U)||[];	
+		}
+	 }
+      return Array.from(U)||[];
     } catch (e) {
       return [];
     }
