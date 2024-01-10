@@ -639,6 +639,7 @@ declare(()=>{
 		styleJSON.innerHTML = dynSty;
 		el.appendChild(styleJSON);
 		el.removeAttribute('fetching');
+		instructions = styleJSON;
 	}catch(e){
 		el.updateAttribute('fetching','error');
 		console.log(e);
