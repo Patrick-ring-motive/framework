@@ -43,11 +43,11 @@ Moving the mouse or using touch inputs causes a visually engaging hue-rotation e
 }
 ```
 ## Overview
-- Dynamic Styles: The `dynamic-styles` element, along with the external JSON file, sets up a dynamic CSS variable `--page-colors`.
+- **Dynamic Styles**: The `dynamic-styles` element, along with the external JSON file, sets up a dynamic CSS variable `--page-colors`.
 Framework Integration: The example utilizes the framework.js script to enable dynamic styling capabilities.
-- Global Variables: The style definition in the JSON file leverages the global variables like `mouseX`, `mouseY`, `screenX`, and `screenY`, as well as the window dimensions, to dynamically calculate a hue rotation value for the body filter style.
-- Visual Effect: As a result, moving the mouse or interacting with the touch screen changes the hue of the page, creating an interactive visual effect.
+- **Global Variables**: The style definition in the JSON file leverages the global variables like `mouseX`, `mouseY`, `screenX`, and `screenY`, as well as the window dimensions, to dynamically calculate a hue rotation value for the body filter style.
+- **Visual Effect**: As a result, moving the mouse or interacting with the touch screen changes the hue of the page, creating an interactive visual effect.
 ## Explanation
-The CSS filter hue-rotate is dynamically updated based on a combination of window dimensions and cursor/touch positions.
+The CSS filter `hue-rotate` is dynamically updated based on a combination of window dimensions and cursor/touch positions.
 The `N` function is used to ensure all values are safely converted to numbers before being used in the calculation.
 The image serves as a visual content over which the hue-rotation effect is noticeable.
