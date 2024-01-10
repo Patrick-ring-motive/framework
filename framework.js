@@ -628,7 +628,7 @@ declare(()=>{
 	   if(el.getAttribute('fetching')){return;}
 	   let dataSrc = el.getAttribute('dataSrc');
 	   if(!dataSrc){return;}
-		if(!dataSrc.startsWith('http'){
+		if(!dataSrc.startsWith('http')){
 		  let a = document.createElement('a');
   			a.setAttribute('href',dataSrc);
 			dataSrc = a.href;	
