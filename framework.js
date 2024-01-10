@@ -1218,7 +1218,7 @@ if(condition){
   }
   IF.remove();
 }
-catch(e){
+}catch(e){
 console.log(e);
 IF.setAttribute('evaluation','error');
 }
