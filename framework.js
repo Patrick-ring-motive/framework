@@ -638,7 +638,7 @@ declare(()=>{
 		let styleJSON = document.createElement('style-json');
 		styleJSON.innerHTML = dynSty;
 		el.appendChild(styleJSON);
-		el.updateAttribute('fetching','done');
+		el.removeAttribute('fetching');
 	}catch(e){
 		el.updateAttribute('fetching','error');
 		console.log(e);
