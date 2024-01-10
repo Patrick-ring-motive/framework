@@ -1145,6 +1145,45 @@ document.firstElementChild.addEventListener("touchstart",updateTouchclientLocati
 document.firstElementChild.addEventListener("touchend", updateTouchclientLocation, false);
 document.firstElementChild.addEventListener("touchmove", updateTouchclientLocation, false);	 
 document.firstElementChild.addEventListener("touchcancel", updateTouchclientLocation, false);	 
+
+
+declare(()=>{
+
+
+queryApplyAll('if',async (IF)=>{
+let ELSE = false;
+if(IF.nextElementSibling.tagName.toLowerCase()=='else'){
+	ELSE = IF.nextElementSibling;
+}
+let condition = IF.getAttribute('condition');
+if(IF.hasAttribute('async')){
+condition = !!(await $Q(async ()=>await eval(condition)));
+}else{
+condition = !!(Q(()=>eval(condition)));
+}
+if(condition){
+	let template = IF.querySelector('template');
+  if(template){
+  	IF.replaceWith(template.content);
+  }else{
+    IF.outerHTML = IF.innerHTML;
+  }
+  if(ELSE){
+    ELSE.remove();
+  }
+}else{
+	let template = ELSE.querySelector('template');
+  if(template){
+  	ELSE.replaceWith(template.content);
+  }else{
+    ELSE.outerHTML = ELSE.innerHTML;
+  }
+  IF.remove();
+}
+
+});
+	
+});
 	 
   console.log("JavaxScript loaded successfully");
 
