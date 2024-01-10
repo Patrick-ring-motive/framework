@@ -1227,6 +1227,44 @@ IF.setAttribute('evaluation','error');
 });
 	
 });
+
+declare(()=>{
+
+
+queryApplyAll('for:not([evaluation])',async (FOR)=>{
+FOR.setAttribute('evaluation','in progress');
+try{
+
+let items = FOR.getAttribute('items');
+if(!items){return FOR.remove();}
+if(FOR.hasAttribute('async')){
+items = await eval(`$A(${items})`);
+}else{
+items = eval(`A(${items})`);
+}
+	let template = FOR.querySelector('template');
+  if(!template){
+  template = document.createElement('template');
+  template.innerHTML = FOR.innerHTML;
+  }
+  	const fragment = new DocumentFragment();
+  	const items_length = items.length;
+    for(let i = 0;i<items_length;i++){try{
+      let temp = template.content.cloneNode(true);
+      Object.assign(temp,items[i]);
+      fragment.appendChild(temp)
+    }catch(e){continue;}}
+FOR.replaceWith(fragment);
+
+}catch(e){
+console.log(e);
+FOR.setAttribute('evaluation','error');
+}
+
+	
+});
+	
+});
 	 
   console.log("JavaxScript loaded successfully");
 
