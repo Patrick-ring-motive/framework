@@ -732,9 +732,10 @@ globalThis.deferEvaluator = async function () {
 
 declare(()=>{
 	queryApplyAll('dynamic-styles',async (el)=>{
-
+  let firstRun = false;
 	let instructions = el.querySelector('style-json');
 	if(!instructions){
+    firstRun=true;
 	try{
 	   if(el.getAttribute('fetching')){return;}
 	   let dataSrc = el.getAttribute('data-src');
@@ -758,7 +759,7 @@ declare(()=>{
 	}	
 	}
   
-  if(Math.floor(Math.random() * 10) < 8){}
+  if((!firstRun)&&(!(document.readyState=='complete'))&&(Math.floor(Math.random() * 10) < 8)){return;}
 
 
   
