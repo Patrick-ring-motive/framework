@@ -1251,7 +1251,7 @@ items = eval(`A(${items})`);
   	const items_length = items.length;
     for(let i = 0;i<items_length;i++){try{
       let temp = template.content.cloneNode(true);
-      Object.assign(temp,items[i]);
+    //  Object.assign(temp,items[i]);
 	if (`${items[i].constructor}`.includes("unction")) {
 	  await items[i](temp,i);
 	}
