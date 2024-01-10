@@ -651,15 +651,11 @@ declare(()=>{
 	const dynamicStyleKeys = Object.keys(dynamicStyles);
 		const dynamicStyleKeys_length = dynamicStyleKeys.length;
 		for(let i=0;i<dynamicStyleKeys_length;i++){try{
-			console.log(dynamicStyles);
 		let ds = el.querySelector(`[id="${dynamicStyleKeys[i]}"]`);
 		if(!ds){
 		ds = document.createElement('style');
 		ds.id = dynamicStyleKeys[i];
-		
-			try{
 		ds.innerHTML = `:root{${dynamicStyleKeys[i]}:${eval(dynamicStyles[dynamicStyleKeys[i]])};`;
-			}catch(e){console.log(dynamicStyles);}
 		el.appendChild(ds);
 		}else{
 			let updatedStyle=`:root{${dynamicStyleKeys[i]}:${eval(dynamicStyles[dynamicStyleKeys[i]])};`;
