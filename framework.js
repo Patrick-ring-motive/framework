@@ -626,7 +626,7 @@ declare(()=>{
 	if(!instructions){
 	try{
 	   if(el.getAttribute('fetching')){return;}
-	   let dataSrc = el.getAttribute('dataSrc');
+	   let dataSrc = el.getAttribute('data-src');
 	   if(!dataSrc){return;}
 		if(!dataSrc.startsWith('http')){
 		  let a = document.createElement('a');
