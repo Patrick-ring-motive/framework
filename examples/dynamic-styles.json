@@ -1,0 +1,5 @@
+{
+  "dynamic-styles" : {
+    "--page-colors" : "`hue-rotate${window.innerHeight + window.innerWidth + mouseX + mouseY}deg)`"
+    }
+}
