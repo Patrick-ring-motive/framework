@@ -15,7 +15,9 @@
     return await _;
   };
 
-
+  globalThis.fetchText = async function () {
+    return (await fetch(...arguments)).text();
+  };
 
 globalThis.get=key=>globalThis[key];
 globalThis.set=(key,val)=>globalThis[key]=val;
@@ -583,8 +585,25 @@ globalThis.deferEvaluator = async function () {
   });
 
 declare(()=>{
-	queryApplyAll('dynamic-styles',(el)=>{
-	const dynamicStyles = JSON.parse(el.querySelector('style-json').innerHTML)["dynamic-styles"]
+	queryApplyAll('dynamic-styles',async (el)=>{
+	let instructions = el.querySelector('style-json');
+	if(!instructions){
+	try{
+	   if(el.getAttribute('fetching')){return;}
+	   let dataSrc = el.getAttribute('dataSrc');
+	   if(!dataSrc){return;}
+		el.updateAttribute('fetching','in progress');
+		let dynSty = await fetchText(dataSrc);
+		let styleJSON = document.createElement('style-json');
+		styleJSON.innerHTML = dynSty;
+		el.appendChild(styleJSON);
+		el.updateAttribute('fetching','done');
+	}catch(e){
+		console.log(e);
+		return;
+	}	
+	}
+	const dynamicStyles = JSON.parse(instructions.innerHTML)["dynamic-styles"]
 	const dynamicStyleKeys = Object.keys(dynamicStyles);
 		const dynamicStyleKeys_length = dynamicStyleKeys.length;
 		for(let i=0;i<dynamicStyleKeys_length;i++){try{
@@ -686,9 +705,7 @@ globalThis.page_html.appendChild(nmscript);
     return res;
   };
 
-  globalThis.fetchText = async function () {
-    return (await fetch(...arguments)).text();
-  };
+
 
   globalThis.fetchResponseArrayBuffer = async function () {
     let res = await fetch(...arguments);
