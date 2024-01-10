@@ -1150,8 +1150,10 @@ document.firstElementChild.addEventListener("touchcancel", updateTouchclientLoca
 declare(()=>{
 
 
-queryApplyAll('if',async (IF)=>{
+queryApplyAll('if:not([evaluation])',async (IF)=>{
+IF.setAttribute('evaluation','in progress');
 let ELSE = false;
+try{
 if(IF.nextElementSibling.tagName.toLowerCase()=='else'){
 	ELSE = IF.nextElementSibling;
 }
@@ -1180,7 +1182,12 @@ if(condition){
   }
   IF.remove();
 }
+catch(e){
+console.log(e);
+IF.setAttribute('evaluation','error');
+}
 
+	
 });
 	
 });
