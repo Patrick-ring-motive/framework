@@ -272,7 +272,7 @@ if(obj[prop]!=val){
     EventTarget.prototype.addDeferEventListener = function (type, listener, options) {
       const target = this;
 	const deferListener = (event)=>{
-		defer(event)=>{
+		defer((event)=>{
 			listener(event);
 		},`${listener}`);
 	};
