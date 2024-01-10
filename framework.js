@@ -653,6 +653,10 @@ declare(()=>{
 		for(let i=0;i<dynamicStyleKeys_length;i++){try{
 		let ds = el.querySelector(`[id="${dynamicStyleKeys[i]}"]`);
 		if(!ds){
+		let dst = document.createElement('style');
+		dst.id = `${dynamicStyleKeys[i]}-transition`;
+		dst.innerHTML = `:root{transition: ${dynamicStyleKeys[i]} 100ms;`;
+		el.appendChild(dst);
 		ds = document.createElement('style');
 		ds.id = dynamicStyleKeys[i];
 		ds.innerHTML = `:root{${dynamicStyleKeys[i]}:${eval(dynamicStyles[dynamicStyleKeys[i]])};`;
