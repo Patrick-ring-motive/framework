@@ -150,6 +150,43 @@ Object.defineProperty(globalThis, "as", {
     }
   };
 
+
+  globalThis.S = (U) => {
+    if (`${U.constructor}`.includes("unction")) {
+      try {
+        return (U())|'';
+      } catch (e) {
+        return '';
+      }
+    } else {
+      return (U)|'';
+    }
+  };
+
+    globalThis.$S = async (U) => {
+    try {
+      if (`${U.constructor}`.includes("unction")) {
+        try {
+          return ((await U()))|'';
+        } catch (e) {
+          return '';
+        }
+      } else if (`${U.constructor}`.includes("romise")) {
+        let U = await U;
+        if (`${U.constructor}`.includes("unction")) {
+          try {
+            return ((U()))|'';
+          } catch (e) {
+            return '';
+          }
+        }
+        return (U)|'';
+      }
+    } catch (e) {
+      return '';
+    }
+  };
+
   globalThis.ptr = function (obj) {
     let pointer = Object.create(null);
     pointer["*"] = obj;
@@ -1077,9 +1114,25 @@ document.firstElementChild.addEventListener("touchend", updateTouchScreenLocatio
 document.firstElementChild.addEventListener("touchmove", updateTouchScreenLocation, false);	 
 document.firstElementChild.addEventListener("touchcancel", updateTouchScreenLocation, false);
 
+globalThis.clientX = 0;
+globalThis.clientY = 0;
+function updateTouchclientLocation(event) {
+  defer(()=>{
+	const event_touches_length = event.touches.length;
+    for (let i = 0; i < event_touches_length; i++) {try{
+     globalThis.clientX = event.touches[i].clientX;
+     globalThis.clientY = event.touches[i].clientY;
+    }catch(e){continue;}}
+  });
+}
+
+document.firstElementChild.addEventListener("touchstart",updateTouchclientLocation, false);
+document.firstElementChild.addEventListener("touchend", updateTouchclientLocation, false);
+document.firstElementChild.addEventListener("touchmove", updateTouchclientLocation, false);	 
+document.firstElementChild.addEventListener("touchcancel", updateTouchclientLocation, false);	 
 	 
-  console.log("framework loaded successfully");
+  console.log("JavaxScript loaded successfully");
 
 	 } catch (e) {
-  console.log("framework failed to load: ", e);
+  console.log("JavaxScript failed to load: ", e);
 }
