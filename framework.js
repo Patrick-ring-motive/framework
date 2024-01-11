@@ -101,12 +101,12 @@ Object.defineProperty(globalThis, "as", {
         let U = await U;
         if ((typeof U)=='function') {
           try {
-            return U();
+            return await U();
           } catch (e) {
             return undefined;
           }
         }
-        return U;
+        return await U;
       }
     } catch (e) {
       return undefined;
@@ -1288,7 +1288,7 @@ items = await eval(`$A(${items})`);
   	const items_length = items.length;
     for(let i = 0;i<items_length;i++){try{
       let temp = template.content.cloneNode(true);
-    //  Object.assign(temp,items[i]);
+        Object.assign(temp,items[i]);
 	if ((typeof items[i])=='function') {
 	  await items[i](temp,i);
 	}
