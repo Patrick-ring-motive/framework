@@ -146,6 +146,7 @@ Object.defineProperty(globalThis, "as", {
         }
         return (U*1)||0;
       }
+	return (U*1)||0;
     } catch (e) {
       return 0;
     }
@@ -183,6 +184,7 @@ Object.defineProperty(globalThis, "as", {
         }
         return `${(U)||''}`;
       }
+	return `${(U)||''}`;
     } catch (e) {
       return '';
     }
