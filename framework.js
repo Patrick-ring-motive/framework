@@ -481,6 +481,14 @@ if (`${func.constructor}`.includes("unction")) {
   };
 
   globalThis.declareEvaluator = async function () {
+    if(!(globalThis.declareStartup)){
+      globalThis.declareStartup=0;
+      }
+      if(declareStartup<3){
+        declareStartup++;
+        }else{
+          if((!(document.readyState=='complete'))&&(Math.floor(Math.random() * 10) < 8)){return;}
+        }
     const declarations_length = declarations.length;
     for (let i = 0; i < declarations_length; i++) {
       if (`${new Date().getTime()}`.endsWith("10")) {
@@ -759,7 +767,7 @@ declare(()=>{
 	}	
 	}
   
-  if((!firstRun)&&(!(document.readyState=='complete'))&&(Math.floor(Math.random() * 10) < 8)){return;}
+  //if((!firstRun)&&(!(document.readyState=='complete'))&&(Math.floor(Math.random() * 10) < 8)){return;}
 
 
   
