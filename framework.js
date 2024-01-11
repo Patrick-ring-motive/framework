@@ -1282,6 +1282,7 @@ if(ELSE){
 }catch(e){
 console.log(e);
 IF.setAttribute('evaluation','error');
+IF.setAttribute('error',e.message);
 }
 
 	
@@ -1313,6 +1314,12 @@ items = await eval(`$A(${items})`);
 	if ((typeof items[i])=='function') {
 	  await items[i](temp,i);
 	}
+  let apply = FOR.getAttribute('apply');
+  console.log(apply);
+  if(apply){
+  	apply = eval(apply);
+    await apply(temp,i,items);
+  }
       fragment.content.appendChild(temp)
     }catch(e){continue;}}
     FOR.parentElement.insertBefore(fragment.content, FOR);
@@ -1321,6 +1328,7 @@ items = await eval(`$A(${items})`);
 }catch(e){
 console.log(e);
 FOR.setAttribute('evaluation','error');
+FOR.setAttribute('error',e.message);
 }
 
 	
