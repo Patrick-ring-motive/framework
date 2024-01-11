@@ -146,7 +146,6 @@ Object.defineProperty(globalThis, "as", {
         }
         return (U*1)||0;
       }
-	return (U*1)||0;
     } catch (e) {
       return 0;
     }
@@ -184,7 +183,6 @@ Object.defineProperty(globalThis, "as", {
         }
         return `${(U)||''}`;
       }
-	return `${(U)||''}`;
     } catch (e) {
       return '';
     }
@@ -1239,27 +1237,34 @@ if(IF.nextElementSibling.tagName.toLowerCase()=='else'){
 let condition = IF.getAttribute('condition');
 if(IF.hasAttribute('async')){
 condition = !!(await $Q(async()=>await eval(condition)));
+console.log(condition)
 }else{
 condition = !!(Q(()=>eval(condition)));
+console.log(condition)
 }
 if(condition){
 	let template = IF.querySelector('template');
-  if(template){
-  	IF.replaceWith(template.content);
-  }else{
-    IF.outerHTML = IF.innerHTML;
+  if(!template){
+  template = document.createElement('template');
+  template.innerHTML = IF.innerHTML;
   }
-  if(ELSE){
-    ELSE.remove();
-  }
+  	IF.parentElement.insertBefore(template.content, IF);
+		IF.updateAttribute('evaluation','done');
+    if(ELSE){
+    ELSE.updateAttribute('evaluation','done');
+    }
+  
 }else{
+if(ELSE){
 	let template = ELSE.querySelector('template');
-  if(template){
-  	ELSE.replaceWith(template.content);
-  }else{
-    ELSE.outerHTML = ELSE.innerHTML;
+  if(!template){
+  template = document.createElement('template');
+  template.innerHTML = ELSE.innerHTML;
   }
-  IF.remove();
+  	IF.parentElement.insertBefore(template.content, IF);
+		IF.updateAttribute('evaluation','done');
+    ELSE.updateAttribute('evaluation','done');
+}
 }
 }catch(e){
 console.log(e);
