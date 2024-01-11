@@ -1222,7 +1222,7 @@ document.firstElementChild.addEventListener("touchcancel", updateTouchclientLoca
 declare(()=>{
 
 
-queryApplyAll('if:not([evaluation])',async (IF)=>{
+queryApplyAll(':not(template) if:not([evaluation])',async (IF)=>{
 IF.setAttribute('evaluation','in progress');
 let ELSE = false;
 try{
@@ -1267,7 +1267,7 @@ IF.setAttribute('evaluation','error');
 declare(()=>{
 
 
-queryApplyAll('for:not([evaluation])',async (FOR)=>{
+queryApplyAll(':not(template) for:not([evaluation])',async (FOR)=>{
 FOR.setAttribute('evaluation','in progress');
 try{
 
