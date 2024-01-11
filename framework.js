@@ -1226,7 +1226,7 @@ document.firstElementChild.addEventListener("touchcancel", updateTouchclientLoca
 declare(()=>{
 
 
-queryApplyAll(':not(template) if:not([evaluation])',async (IF)=>{
+queryApplyAll(':not(template,for,if,else) if:not([evaluation])',async (IF)=>{
 IF.setAttribute('evaluation','in progress');
 let ELSE = false;
 try{
@@ -1271,18 +1271,15 @@ IF.setAttribute('evaluation','error');
 declare(()=>{
 
 
-queryApplyAll(':not(template) for:not([evaluation])',async (FOR)=>{
+queryApplyAll(':not(template,for,if,else) for:not([evaluation])',async (FOR)=>{
 FOR.setAttribute('evaluation','in progress');
 try{
 
 let items = FOR.getAttribute('items');
-if(!items){return FOR.remove();}
-if(FOR.hasAttribute('async')){
+if(!items){return FOR.updateAttribute('evaluation','missing items');}
 items = await eval(`$A(${items})`);
-}else{
-items = eval(`A(${items})`);
-}
-	let template = FOR.querySelector('template');
+
+ let template = FOR.querySelector('template');
   if(!template){
   template = document.createElement('template');
   template.innerHTML = FOR.innerHTML;
@@ -1298,7 +1295,7 @@ items = eval(`A(${items})`);
       fragment.content.appendChild(temp)
     }catch(e){continue;}}
     FOR.parentElement.insertBefore(fragment.content, FOR);
-		FOR.remove();
+		FOR.updateAttribute('evaluation','done');
 
 }catch(e){
 console.log(e);
