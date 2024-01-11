@@ -1243,7 +1243,7 @@ document.firstElementChild.addEventListener("touchcancel", updateTouchclientLoca
 declare(()=>{
 
 
-queryApplyAllAwait(':not(template,for,if,else) if:not([evaluation])',async (IF)=>{
+queryApplyAll('if:not([evaluation]):not(template if,for if,if if,else if)',async (IF)=>{
 IF.setAttribute('evaluation','in progress');
 let ELSE = false;
 try{
@@ -1251,15 +1251,12 @@ if(IF.nextElementSibling.tagName.toLowerCase()=='else'){
 	ELSE = IF.nextElementSibling;
 }
 let condition = IF.getAttribute('condition');
-if(IF.hasAttribute('async')){
+
 condition = !!(await $Q(async()=>await eval(condition)));
-console.log(condition)
-}else{
-condition = !!(Q(()=>eval(condition)));
-console.log(condition)
-}
+
 if(condition){
 	let template = IF.querySelector('template');
+ 
   if(!template){
   template = document.createElement('template');
   template.innerHTML = IF.innerHTML;
@@ -1295,7 +1292,7 @@ IF.setAttribute('evaluation','error');
 declare(()=>{
 
 
-queryApplyAllAwait(':not(template,for,if,else) for:not([evaluation])',async (FOR)=>{
+queryApplyAll('for:not([evaluation]):not(template for,for for,if for,else for)',async (FOR)=>{
 FOR.setAttribute('evaluation','in progress');
 try{
 
