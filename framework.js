@@ -405,6 +405,22 @@ Element.prototype.approveAttribute = function (attr, val) {
     };
   }
 
+globalThis.queryApplyAllAwait = async function (query, func) {
+      let elems = Array.from(document.querySelectorAll(query));
+      const elems_length = elems.length;
+      for (let i = 0; i < elems_length; i++) {
+        try {
+         await func(elems[i]);
+        } catch (e) {
+          await async("queryApplyAll");
+          console.log(e);
+          continue;
+        }
+      }
+    };
+  }
+
+
   globalThis.queryAttrAll = async function (query, attr, val, func) {
     let elems = Array.from(document.querySelectorAll(query));
     const elems_length = elems.length;
