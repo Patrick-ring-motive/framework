@@ -108,6 +108,7 @@ Object.defineProperty(globalThis, "as", {
         }
         return await U;
       }
+			return await U;
     } catch (e) {
       return undefined;
     }
@@ -1235,7 +1236,7 @@ if(IF.nextElementSibling.tagName.toLowerCase()=='else'){
 }
 let condition = IF.getAttribute('condition');
 if(IF.hasAttribute('async')){
-condition = !!(await $Q(async ()=>await eval(condition)));
+condition = !!(await $Q(async()=>await eval(condition)));
 }else{
 condition = !!(Q(()=>eval(condition)));
 }
