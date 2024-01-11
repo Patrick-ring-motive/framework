@@ -489,6 +489,10 @@ if (`${func.constructor}`.includes("unction")) {
         }else{
           if((!(document.readyState=='complete'))&&(Math.floor(Math.random() * 10) < 8)){return;}
         }
+        
+        if(document.hidden){return;}
+        if(document.visibilityState=='hidden'){return;}
+        
     const declarations_length = declarations.length;
     for (let i = 0; i < declarations_length; i++) {
       if (`${new Date().getTime()}`.endsWith("10")) {
