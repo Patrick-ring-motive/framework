@@ -418,7 +418,7 @@ globalThis.queryApplyAllAwait = async function (query, func) {
         }
       }
     };
-  }
+  
 
 
   globalThis.queryAttrAll = async function (query, attr, val, func) {
@@ -1243,7 +1243,7 @@ document.firstElementChild.addEventListener("touchcancel", updateTouchclientLoca
 declare(()=>{
 
 
-queryApplyAll(':not(template,for,if,else) if:not([evaluation])',async (IF)=>{
+queryApplyAllAwait(':not(template,for,if,else) if:not([evaluation])',async (IF)=>{
 IF.setAttribute('evaluation','in progress');
 let ELSE = false;
 try{
@@ -1295,7 +1295,7 @@ IF.setAttribute('evaluation','error');
 declare(()=>{
 
 
-queryApplyAll(':not(template,for,if,else) for:not([evaluation])',async (FOR)=>{
+queryApplyAllAwait(':not(template,for,if,else) for:not([evaluation])',async (FOR)=>{
 FOR.setAttribute('evaluation','in progress');
 try{
 
