@@ -1315,7 +1315,6 @@ items = await eval(`$A(${items})`);
 	  await items[i](temp,i);
 	}
   let apply = FOR.getAttribute('apply');
-  console.log(apply);
   if(apply){
   	apply = eval(apply);
     await apply(temp,i,items);
