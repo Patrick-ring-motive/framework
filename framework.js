@@ -333,7 +333,7 @@ if(obj[prop]!=val){
 	const deferListener = (event)=>{
 		defer(()=>{
 			listener(event);
-		},`${listener}`);
+		},`${listener}${S(()=>target.outerHTML)}`);
 	};
 	if(options === undefined){
 		target.addEventListener(type, deferListener);
@@ -1339,10 +1339,10 @@ declare(()=>{
 
 queryApplyAll(':is(html,body,head,script,link,style,img,image,source,src,frame,iframe,object,embed):not([load-state])',(el)=>{
 	
-	el.addDeferEventListener = ('load',(event)=>{
+	el.addDeferEventListener('load',(event)=>{
 		el.updateAttribute('load-state','loaded');
 	});
-	el.addDeferEventListener = ('error',(event)=>{
+	el.addDeferEventListener('error',(event)=>{
 		el.updateAttribute('load-state','error');
 	});
 	el.updateAttribute('load-state','listening');
