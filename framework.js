@@ -447,7 +447,13 @@ globalThis.queryApplyAllAwait = async function (query, func) {
       queryAttrAll(query, attr, "bound", func);
     }, query);
   };
-  
+  globalThis.idleDetectionAllowed = true;
+  globalThis.detector = new IdleDetector();
+  try{
+    detector.start();
+  }catch(e){
+    idleDetectionAllowed = false;
+  }
   globalThis.declareErrorQueue=[];
   globalThis.wrapDeclare = (fn) => {
    let wrapper = () => {
@@ -509,6 +515,10 @@ if (`${func.constructor}`.includes("unction")) {
         
         if(document.hidden){return;}
         if(document.visibilityState=='hidden'){return;}
+	if(idleDetectionAllowed){
+		if(detector.userState == 'idle'){return;}
+		if(detector.screenState == 'locked'){return;}
+	}
         
     const declarations_length = declarations.length;
     for (let i = 0; i < declarations_length; i++) {
