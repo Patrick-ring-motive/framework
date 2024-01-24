@@ -447,13 +447,16 @@ globalThis.queryApplyAllAwait = async function (query, func) {
       queryAttrAll(query, attr, "bound", func);
     }, query);
   };
-  globalThis.idleDetectionAllowed = true;
+  globalThis.idleDetectionAllowed = false;
   globalThis.detector = new IdleDetector();
+ void async function(){
   try{
-    detector.start();
+   await  detector.start();
+   idleDetectionAllowed = true;
   }catch(e){
     idleDetectionAllowed = false;
   }
+ }();
   globalThis.declareErrorQueue=[];
   globalThis.wrapDeclare = (fn) => {
    let wrapper = () => {
