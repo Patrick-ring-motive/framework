@@ -629,8 +629,12 @@ globalThis.deferEvaluator = async function () {
 	if(globalThis.declareEvaluationInProgress){return true;}
 	globalThis.declareEvaluationInProgress = true;
 	requestIdleCallback(()=>{
-	 requestAnimationFrame(()=>{
-         Q(()=>globalThis.declareEvaluator());
+	 requestAnimationFrame(async ()=>{
+        try{
+          await globalThis.declareEvaluator();
+          }catch(e){
+            await console.log(e);
+          }
          Q(()=>globalThis.deferEvaluator());
 	setTimeout(()=>globalThis.declareEvaluationInProgress = false,1);
 	 });
