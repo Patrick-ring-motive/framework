@@ -507,7 +507,7 @@ if (`${func.constructor}`.includes("unction")) {
   };
 globalThis.wasFocused=false;
 document.body.addEventListener("focusin", (event) => {
-if((document.readyState=='complete'){globalThis.wasFocused=true;}	
+if(document.readyState=='complete'){globalThis.wasFocused=true;}	
 });
   globalThis.declareEvaluator = async function () {
     if(!(globalThis.declareStartup)){
@@ -626,10 +626,13 @@ globalThis.deferEvaluator = async function () {
       Q(()=>globalThis.deferEvaluator());
     });
     setInterval(function () {
+	if(globalThis.declareEvaluationInProgress){return true;}
+	globalThis.declareEvaluationInProgress = true;
 	requestIdleCallback(()=>{
 	 requestAnimationFrame(()=>{
          Q(()=>globalThis.declareEvaluator());
          Q(()=>globalThis.deferEvaluator());
+	setTimeout(()=>globalThis.declareEvaluationInProgress = false,1);
 	 });
 	});    
     }, 100);
