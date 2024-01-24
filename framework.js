@@ -615,8 +615,10 @@ globalThis.deferEvaluator = async function () {
       Q(()=>globalThis.deferEvaluator());
     });
     setInterval(function () {
-      Q(()=>globalThis.declareEvaluator());
-      Q(()=>globalThis.deferEvaluator());
+	requestIdleCallback(()=>{
+         Q(()=>globalThis.declareEvaluator());
+         Q(()=>globalThis.deferEvaluator());
+	});    
     }, 100);
 
     globalThis.page_html = document.querySelector("html")||document.firstElementChild;
