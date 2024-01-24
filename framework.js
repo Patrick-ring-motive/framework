@@ -791,8 +791,9 @@ declare(()=>{
   //if((!firstRun)&&(!(document.readyState=='complete'))&&(Math.floor(Math.random() * 10) < 8)){return;}
 
 
-  
-	const dynamicStyles = JSON.parse(instructions.querySelector('style').innerHTML)["dynamic-styles"];
+  	const dynamicStylesJSON = JSON.parse(instructions.querySelector('style').innerHTML);
+	const dynamicStyles = dynamicStylesJSON["dynamic-styles"];
+	if(dynamicStyles){
 	const dynamicStyleKeys = Object.keys(dynamicStyles);
 		const dynamicStyleKeys_length = dynamicStyleKeys.length;
 		for(let i=0;i<dynamicStyleKeys_length;i++){try{
@@ -815,7 +816,32 @@ declare(()=>{
 		}
 		}catch(e){console.log(e);continue;}}
 
+	}
 
+	const dynamicSelectors = dynamicSelectorsJSON["dynamic-selectors"];
+	if(dynamicSelectors){
+	const dynamicSelectorKeys = Object.keys(dynamicSelectors);
+		const dynamicSelectorKeys_length = dynamicSelectorKeys.length;
+		for(let i=0;i<dynamicSelectorKeys_length;i++){try{
+		let ds = el.querySelector(`[id="${dynamicSelectorKeys[i]}"]`);
+		if(!ds){
+		ds = document.createElement('style');
+		ds.id = dynamicSelectorKeys[i];
+		ds.innerHTML = `${eval(dynamicSelectorKeys[i])}{${dynamicSelectors[dynamicSelectorKeys[i]]}}`;
+		el.appendChild(ds);
+		}else{
+			let updatedStyle=`${eval(dynamicSelectorKeys[i])}{${dynamicSelectors[dynamicSelectorKeys[i]]}}`;
+			if((updatedStyle)&&(ds.innerHTML.toString()!=updatedStyle)){
+				ds.innerHTML=updatedStyle;
+			}
+			
+		}
+		}catch(e){console.log(e);continue;}}
+
+	}
+
+
+		
 	});
 });
 
