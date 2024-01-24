@@ -707,7 +707,7 @@ globalThis.deferEvaluator = async function () {
     }
   });
 
-  declare(() => {
+ /* declare(() => {
     queryApplyAll("*", (el) => {
       const attrs = el.getAttributeNames();
       const attrs_length = attrs.length;
@@ -726,7 +726,7 @@ globalThis.deferEvaluator = async function () {
         }
       }
     });
-  });
+  });*/
 
 
   declare(() => {
