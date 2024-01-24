@@ -505,7 +505,10 @@ if (`${func.constructor}`.includes("unction")) {
  });
 }
   };
-
+globalThis.wasFocused=false;
+document.body.addEventListener("focusin", (event) => {
+if((document.readyState=='complete'){globalThis.wasFocused=true;}	
+});
   globalThis.declareEvaluator = async function () {
     if(!(globalThis.declareStartup)){
       globalThis.declareStartup=0;
@@ -523,7 +526,7 @@ if (`${func.constructor}`.includes("unction")) {
 		if(detector.screenState == 'locked'){return;}
 	}
 	if(document.readyState=='complete'){
-	if(window==window.top){
+	if(globalThis.wasFocused){
 		if(!navigator.userActivation.isActive) {return;}
 		if(!navigator.userActivation.hasBeenActive) {return;}
 		if(!document.hasFocus()){return;}
