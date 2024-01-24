@@ -514,7 +514,7 @@ if (`${func.constructor}`.includes("unction")) {
         declareStartup++;
         }else{
           if((!(document.readyState=='complete'))&&(Math.floor(Math.random() * 10) < 8)){return;}
-        }
+       
         
         if(document.hidden){return;}
         if(document.visibilityState=='hidden'){return;}
@@ -522,6 +522,10 @@ if (`${func.constructor}`.includes("unction")) {
 		if(detector.userState == 'idle'){return;}
 		if(detector.screenState == 'locked'){return;}
 	}
+	if(!navigator.userActivation.isActive) {return;}
+	if(!navigator.userActivation.isActive) {return;}
+	if(!document.hasFocus()){return;}
+     }
         
     const declarations_length = declarations.length;
     for (let i = 0; i < declarations_length; i++) {
@@ -616,8 +620,10 @@ globalThis.deferEvaluator = async function () {
     });
     setInterval(function () {
 	requestIdleCallback(()=>{
+	 requestAnimationFrame(()=>{
          Q(()=>globalThis.declareEvaluator());
          Q(()=>globalThis.deferEvaluator());
+	 });
 	});    
     }, 100);
 
