@@ -523,9 +523,11 @@ if (`${func.constructor}`.includes("unction")) {
 		if(detector.screenState == 'locked'){return;}
 	}
 	if(document.readyState=='complete'){
-	if(!navigator.userActivation.isActive) {return;}
-	if(!navigator.userActivation.isActive) {return;}
-	if(!document.hasFocus()){return;}
+	if(window==window.top){
+		if(!navigator.userActivation.isActive) {return;}
+		if(!navigator.userActivation.hasBeenActive) {return;}
+		if(!document.hasFocus()){return;}
+	}
 	}
      }
         
@@ -841,7 +843,7 @@ declare(()=>{
 
 	}
 
-	const dynamicSelectors = dynamicSelectorsJSON["dynamic-selectors"];
+	const dynamicSelectors = dynamicStylesJSON["dynamic-selectors"];
 	if(dynamicSelectors){
 	const dynamicSelectorKeys = Object.keys(dynamicSelectors);
 		const dynamicSelectorKeys_length = dynamicSelectorKeys.length;
