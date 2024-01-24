@@ -522,9 +522,11 @@ if (`${func.constructor}`.includes("unction")) {
 		if(detector.userState == 'idle'){return;}
 		if(detector.screenState == 'locked'){return;}
 	}
+	if(document.readyState=='complete'){
 	if(!navigator.userActivation.isActive) {return;}
 	if(!navigator.userActivation.isActive) {return;}
 	if(!document.hasFocus()){return;}
+	}
      }
         
     const declarations_length = declarations.length;
