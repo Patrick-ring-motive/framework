@@ -836,10 +836,10 @@ declare(()=>{
 		el.appendChild(dst);
 		ds = document.createElement('style');
 		ds.id = dynamicStyleKeys[i];
-		ds.innerHTML = `:root{${dynamicStyleKeys[i]}:${eval(dynamicStyles[dynamicStyleKeys[i]])};`;
+		ds.innerHTML = `:root{${dynamicStyleKeys[i]}:${eval(decodeURIComponent(dynamicStyles[dynamicStyleKeys[i]]))};`;
 		el.appendChild(ds);
 		}else{
-			let updatedStyle=`:root{${dynamicStyleKeys[i]}:${eval(dynamicStyles[dynamicStyleKeys[i]])};`;
+			let updatedStyle=`:root{${dynamicStyleKeys[i]}:${eval(decodeURIComponent(dynamicStyles[dynamicStyleKeys[i]]))};`;
 			if((updatedStyle)&&(ds.innerHTML.toString()!=updatedStyle)){
 				ds.innerHTML=updatedStyle;
 			}
@@ -858,10 +858,10 @@ declare(()=>{
 		if(!ds){
 		ds = document.createElement('style');
 		ds.id = dynamicSelectorKeys[i];
-		ds.innerHTML = `${eval(dynamicSelectorKeys[i])}{${dynamicSelectors[dynamicSelectorKeys[i]]}}`;
+		ds.innerHTML = `${eval(decodeURIComponent(dynamicSelectorKeys[i]))}{${dynamicSelectors[dynamicSelectorKeys[i]]}}`;
 		el.appendChild(ds);
 		}else{
-			let updatedStyle=`${eval(dynamicSelectorKeys[i])}{${dynamicSelectors[dynamicSelectorKeys[i]]}}`;
+			let updatedStyle=`${eval(decodeURIComponent(dynamicSelectorKeys[i]))}{${dynamicSelectors[dynamicSelectorKeys[i]]}}`;
 			if((updatedStyle)&&(ds.innerHTML.toString()!=updatedStyle)){
 				ds.innerHTML=updatedStyle;
 			}
