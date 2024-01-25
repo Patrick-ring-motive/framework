@@ -57,20 +57,43 @@ Object.defineProperty(globalThis, "from", {
   enumerable: true,
   configurable: true,
 });
+globalThis.draggingSticky = false;
 globalThis.dragging=false;
 globalThis.addEventListener("dragstart", (event) => {
 	globalThis.dragging=true;
+	globalThis.draggingSticky = true;
 });
 globalThis.addEventListener("dragend", (event) => {
 	globalThis.dragging=false;
+	setTimeout(()=>{
+	if(!globalThis.dragging){globalThis.draggingSticky = false;}
+	},200);
 });
+globalThis.typingSticky = false;
 globalThis.typing=false;
 document.addEventListener("keydown", (event) => {
 	globalThis.typing = true;
+	globalThis.typingSticky = true;
 });
 document.addEventListener("keyup", (event) => {
 	globalThis.typing = false;
+	setTimeout(()=>{
+	if(!globalThis.typing){globalThis.typingSticky = false;}
+	},200);
 });
+globalThis.clickingSticky = false;
+globalThis.clicking=false;
+document.addEventListener("mousedown", (event) => {
+	globalThis.clicking = true;
+	globalThis.clickingSticky = true;
+});
+document.addEventListener("mouseup", (event) => {
+	globalThis.clicking = false;
+	setTimeout(()=>{
+	if(!globalThis.clicking){globalThis.clickingSticky = false;}
+	},200);
+});
+globalThis.coinflip=()=>Math.floor(Math.random()*2);
 Object.defineProperty(globalThis, "as", {
   get() {
 	console.log('Attempting to call "from" in the wrong context');
@@ -530,8 +553,9 @@ if(document.readyState=='complete'){globalThis.wasFocused=true;}
         }else{
           if((document.readyState!='complete')&&(Math.floor(Math.random() * 10) < 8)){return;}
        
-        if(dragging){return;}
-	if(typing){return;}
+        if(draggingSticky){return;}
+	if(typingSticky){return;}
+	if(clickingSticky){return;}
         if(document.hidden){return;}
         if(document.visibilityState=='hidden'){return;}
 	if(idleDetectionAllowed){
@@ -543,6 +567,10 @@ if(document.readyState=='complete'){globalThis.wasFocused=true;}
 		if(!navigator.userActivation.isActive) {return;}
 		if(!navigator.userActivation.hasBeenActive) {return;}
 		if(!document.hasFocus()){return;}
+		const sizeThrottle = Math.floor(document.querySelectorAll('*').length/1000);
+		for(let i=0;i<sizeThrottle;i++){
+			if(coinflip()){return;}
+		}
 	}
 	}
      }
