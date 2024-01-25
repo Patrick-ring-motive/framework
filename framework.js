@@ -57,8 +57,20 @@ Object.defineProperty(globalThis, "from", {
   enumerable: true,
   configurable: true,
 });
-
-
+globalThis.dragging=false;
+globalThis.addEventListener("dragstart", (event) => {
+	globalThis.dragging=true;
+});
+globalThis.addEventListener("dragend", (event) => {
+	globalThis.dragging=false;
+});
+globalThis.typing=false;
+document.addEventListener("keydown", (event) => {
+	globalThis.typing = true;
+});
+document.addEventListener("keyup", (event) => {
+	globalThis.typing = false;
+});
 Object.defineProperty(globalThis, "as", {
   get() {
 	console.log('Attempting to call "from" in the wrong context');
@@ -516,9 +528,10 @@ if(document.readyState=='complete'){globalThis.wasFocused=true;}
       if(declareStartup<3){
         declareStartup++;
         }else{
-          if((!(document.readyState=='complete'))&&(Math.floor(Math.random() * 10) < 8)){return;}
+          if((document.readyState!='complete')&&(Math.floor(Math.random() * 10) < 8)){return;}
        
-        
+        if(dragging){return;}
+	if(typing){return;}
         if(document.hidden){return;}
         if(document.visibilityState=='hidden'){return;}
 	if(idleDetectionAllowed){
