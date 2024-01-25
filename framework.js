@@ -537,7 +537,7 @@ if (`${func.constructor}`.includes("unction")) {
     }
 }else{
  Q(()=>{
-	declare(()=>(eval?.(`${func}`),id)||eval(`${func}`),id));
+	declare(()=>((eval?.(`${func}`),id)||eval(`${func}`),id));
  });
 }
   };
@@ -630,7 +630,7 @@ if (`${func.constructor}`.includes("unction")) {
     }
 }else{
  Q(()=>{
-	defer(()=>(eval?.(`${func}`),id)||eval(`${func}`),id));
+	defer(()=>((eval?.(`${func}`),id)||eval(`${func}`),id));
  });
 }
   };
