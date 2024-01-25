@@ -94,6 +94,7 @@ document.addEventListener("mouseup", (event) => {
 	},200);
 });
 globalThis.coinflip=()=>Math.floor(Math.random()*2);
+globalThis.nineflip=()=>(Math.floor(Math.random()*10)==9);
 Object.defineProperty(globalThis, "as", {
   get() {
 	console.log('Attempting to call "from" in the wrong context');
@@ -569,7 +570,7 @@ if(document.readyState=='complete'){globalThis.wasFocused=true;}
 		if(!document.hasFocus()){return;}
 		const sizeThrottle = Math.floor(document.querySelectorAll('*').length/1000);
 		for(let i=0;i<sizeThrottle;i++){
-			if(coinflip()){return;}
+			if(nineflip()){return;}
 		}
 	}
 	}
