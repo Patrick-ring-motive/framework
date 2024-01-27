@@ -151,6 +151,10 @@ Object.defineProperty(globalThis, "as", {
   };
   globalThis.AQ = globalThis.$Q;
 
+globalThis.extractNum=function(str){
+  return str.replace(/[^0-9-.]/g.'');
+  
+}
 
 globalThis.NoN=function(num){
 	if(isNaN(num)){return 0;}
