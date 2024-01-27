@@ -151,15 +151,21 @@ Object.defineProperty(globalThis, "as", {
   };
   globalThis.AQ = globalThis.$Q;
 
+
+globalThis.NoN=function(num){
+	if(isNaN(num)){return 0;}
+	return num;
+}
+
   globalThis.N = (U) => {
     if ((typeof U)=='function') {
       try {
-        return (U()*1)||0;
+        return NoN(parseFloat(U()))||0;
       } catch (e) {
         return 0;
       }
     } else {
-      return (U*1)||0;
+      return NoN(parseFloat(U()))||0;
     }
   };
 
