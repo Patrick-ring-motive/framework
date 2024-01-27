@@ -151,25 +151,35 @@ Object.defineProperty(globalThis, "as", {
   };
   globalThis.AQ = globalThis.$Q;
 
-globalThis.extractNum=function(str){
-  return str.replace(/[^0-9-.]/g.'');
-  
-}
-
 globalThis.NoN=function(num){
 	if(isNaN(num)){return 0;}
 	return num;
 }
 
+globalThis.extractNum=function(str){
+  str=str.replace(/[^0-9-.]/g,'');
+  if(str.includes('-')){
+    str='-'+str.replace('-','');
+  }
+  if(str.includes('.')){
+    let arr = str.split('.');
+    str = arr.shift();
+    str = str+'.'+arr.join('');
+  }
+  return NoN(parseFloat(str));
+}
+
+
+
   globalThis.N = (U) => {
     if ((typeof U)=='function') {
       try {
-        return NoN(parseFloat(U()))||0;
+        return extractNum(U())||0;
       } catch (e) {
         return 0;
       }
     } else {
-      return NoN(parseFloat(U()))||0;
+      return extractNum(U())||0;
     }
   };
 
@@ -177,7 +187,7 @@ globalThis.NoN=function(num){
     try {
       if ((typeof U)=='function') {
         try {
-          return ((await U())*1)||0;
+          return extractNum((await U()))||0;
         } catch (e) {
           return 0;
         }
@@ -185,12 +195,12 @@ globalThis.NoN=function(num){
         let U = await U;
         if ((typeof U)=='function') {
           try {
-            return ((U())*1)||0;
+            return extractNum((U()))||0;
           } catch (e) {
             return 0;
           }
         }
-        return (U*1)||0;
+        return extractNum(U)||0;
       }
     } catch (e) {
       return 0;
