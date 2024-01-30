@@ -513,6 +513,10 @@ globalThis.queryApplyAllAwait = async function (query, func) {
     idleDetectionAllowed = false;
   }
  }();
+globalThis.wasFocused=false;
+document.body.addEventListener("focusin", (event) => {
+if(document.readyState=='complete'){globalThis.wasFocused=true;}	
+});
   globalThis.declareErrorQueue=[];
   globalThis.wrapDeclare = (fn) => {
    let wrapper = () => {
@@ -561,10 +565,7 @@ if (`${func.constructor}`.includes("unction")) {
  });
 }
   };
-globalThis.wasFocused=false;
-document.body.addEventListener("focusin", (event) => {
-if(document.readyState=='complete'){globalThis.wasFocused=true;}	
-});
+
   globalThis.declareEvaluator = async function () {
     if(!(globalThis.declareStartup)){
       globalThis.declareStartup=0;
@@ -672,20 +673,95 @@ globalThis.deferEvaluator = async function () {
     }
   };
 
+  if (!(globalThis.designations)) {
+    globalThis.designations = [];
+    globalThis.designationStrings = [];
+  }
+
+  globalThis.design = function (func, id) {
+if(!func){return;}
+if((func.next)&&(`${func}`=='[object Generator]')){
+return (async()=>{return design(await (func),id);})();
+
+}
+if(`${func.constructor}`.includes("romise")) {
+  return design(()=>func().next(),id);
+}
+try{
+if(`${func.constructor}`.toLowerCase().includes("generatorfunction")) {
+  return design(()=>func().next(),id);
+}
+}catch(e){console.log(e);};
+if (`${func.constructor}`.includes("unction")) {
+    let funcString = func.toString() + id;
+    if ((!(designationStrings.includes(funcString)))
+      ||(!(funcString.includes('design(')))) {
+      globalThis.designations.push(func);
+      globalThis.designationStrings.push(funcString);
+    }
+}else{
+ Q(()=>{
+	design(()=>((eval?.(`${func}`),id)||eval(`${func}`),id));
+ });
+}
+  };
+
+  globalThis.designEvaluator = async function () {
+    if(!(globalThis.designStartup)){
+      globalThis.designStartup=0;
+      }
+      if(designStartup<3){
+        designStartup++;
+        }else{
+          if((document.readyState!='complete')&&(Math.floor(Math.random() * 10) < 8)){return;}
+        if(document.hidden){return;}
+        if(document.visibilityState=='hidden'){return;}
+	if(idleDetectionAllowed){
+		if(detector.userState == 'idle'){return;}
+		if(detector.screenState == 'locked'){return;}
+	}
+	if(document.readyState=='complete'){
+	if(globalThis.wasFocused){
+		if(!navigator.userActivation.isActive) {return;}
+		if(!navigator.userActivation.hasBeenActive) {return;}
+		if(!document.hasFocus()){return;}
+	}
+	}
+     }
+        
+    const designations_length = designations.length;
+    for (let i = 0; i < designations_length; i++) {
+      if (`${new Date().getTime()}`.endsWith("10")) {
+        await async("designEvaluator");
+      }
+      try {
+	designations[i]();
+      } catch (e) {
+        await async("designEvaluator");
+        console.log(e);
+        continue;
+      }
+    }
+  };
+
   Q(()=>globalThis.declareEvaluator());
   Q(()=>globalThis.deferEvaluator());
+  Q(()=>globalThis.designEvaluator());
   if (globalThis.document) {
     document.addEventListener("DOMContentLoaded", (event) => {
       Q(()=>globalThis.declareEvaluator());
-       Q(()=>globalThis.deferEvaluator());
+      Q(()=>globalThis.deferEvaluator());
+      Q(()=>globalThis.designEvaluator());
     });
     document.addEventListener("readystatechange", (event) => {
       Q(()=>globalThis.declareEvaluator());
       Q(()=>globalThis.deferEvaluator());
+      Q(()=>globalThis.designEvaluator());
     });
     window.addEventListener("load", (event) => {
       Q(()=>globalThis.declareEvaluator());
       Q(()=>globalThis.deferEvaluator());
+      Q(()=>globalThis.designEvaluator());
     });
     setInterval(function () {
 	if(globalThis.declareEvaluationInProgress){return true;}
@@ -702,6 +778,20 @@ globalThis.deferEvaluator = async function () {
 	 });
 	});    
     }, 100);
+    setInterval(function () {
+	if(globalThis.designEvaluationInProgress){return true;}
+	globalThis.designEvaluationInProgress = true;
+	requestIdleCallback(()=>{
+	 requestAnimationFrame(async ()=>{
+        try{
+          await globalThis.designEvaluator();
+          }catch(e){
+            await console.log(e);
+          }
+	setTimeout(()=>globalThis.designEvaluationInProgress = false,1);
+	 });
+	});    
+    }, 101);
 
     globalThis.page_html = document.querySelector("html")||document.firstElementChild;
 
@@ -856,7 +946,7 @@ globalThis.deferEvaluator = async function () {
   globalThis.page_html.updateAttribute('has-supported',hasTest);
   });
 
-declare(()=>{
+design(()=>{
 	queryApplyAll('dynamic-styles',async (el)=>{
   let firstRun = false;
 	let instructions = el.querySelector('style-json');
@@ -885,7 +975,6 @@ declare(()=>{
 	}	
 	}
   
-  //if((!firstRun)&&(!(document.readyState=='complete'))&&(Math.floor(Math.random() * 10) < 8)){return;}
 
 
   	const dynamicStylesJSON = JSON.parse(instructions.querySelector('style').innerHTML);
@@ -988,7 +1077,7 @@ function applyDynamicStyles(elem){
 	}
 }
 	 
-declare(()=>{
+design(()=>{
 const dynamicStyles = document.querySelectorAll('style[dynamic]');
 const dynamicStyles_length = dynamicStyles.length;
 	for(let i=0;i<dynamicStyles_length;i++){try{
