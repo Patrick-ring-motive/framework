@@ -1417,7 +1417,7 @@ mimic(globalThis,body(),Element.prototype);
 mimic(globalThis,body(),Node.prototype);
 mimic(globalThis,body(),EventTarget.prototype);
 globalThis.select = globalThis.querySelector;
-globalThis.selects = globalThis.querySelectorAll;
+globalThis.selectAll = globalThis.querySelectorAll;
   globalThis.swapText=function(startText,endText){
       let el=document.body;
       if(endText.toLowerCase().includes(startText.toLowerCase())){
