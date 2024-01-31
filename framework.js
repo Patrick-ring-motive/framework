@@ -1395,6 +1395,13 @@ const objKeys_length = objKeys.length;
 			target[objKeys[i]]=function(){
 			 return source[objKeys[i]](...arguments);
 			}
+		}else if((!target[objKeys[i]])&&(source[objKeys[i]])){
+			target[objKeys[i]]=function(){
+			if(arguments.length==1){
+			  source[objKeys[i]]=arguments[0];
+			}
+			 return source[objKeys[i]];
+			}
 		}
 	 }catch(e){continue;}}
 return target;
