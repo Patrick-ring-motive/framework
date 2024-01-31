@@ -1406,6 +1406,7 @@ assimilate(globalThis,Math);
 assimilate(globalThis,JSON);
 assimilate(globalThis,BigInt);
 assimilate(globalThis,Date);
+mimic(globalThis,navigator,Navigator.prototype);
 absorb(globalThis,document);
 mimic(globalThis,document,Document.prototype);
 mimic(globalThis,document,EventTarget.prototype);
@@ -1416,6 +1417,7 @@ mimic(globalThis,body(),HTMLElement.prototype);
 mimic(globalThis,body(),Element.prototype);
 mimic(globalThis,body(),Node.prototype);
 mimic(globalThis,body(),EventTarget.prototype);
+
 globalThis.select = globalThis.querySelector;
 globalThis.selectAll = globalThis.querySelectorAll;
   globalThis.swapText=function(startText,endText){
