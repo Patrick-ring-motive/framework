@@ -175,6 +175,9 @@ globalThis.NoN=function(num){
 }
 
 globalThis.extractNum=function(str){
+if(typeof str == 'number'){
+  return str;
+}
   str=str.replace(/[^0-9-.]/g,'');
   if(str.includes('-')){
     str='-'+str.replace('-','');
