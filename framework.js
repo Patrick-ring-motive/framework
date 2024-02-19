@@ -1,4 +1,5 @@
  try {
+if(!globalThis.requestIdleCallback){globalThis.requestIdleCallback=globalThis.requestAnimationFrame;}
 globalThis.body =()=>document.body||document.firstElementChild;
 globalThis.jot=$=>{
     let obj=Object.create(null);
