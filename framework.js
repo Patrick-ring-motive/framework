@@ -981,7 +981,7 @@ if (`${func.constructor}`.includes("unction")) {
  
      hasTestStyle.innerHTML = '.has-test:has(.supported){--has-supported:true;}';
 
-	doDom(()=>{
+	doDOM(()=>{
      		body().appendChild(hasTestStyle);
 	});
   }
@@ -993,7 +993,7 @@ if (`${func.constructor}`.includes("unction")) {
      hasTestSpan.className = 'has-test';
  
      hasTestSpan.innerHTML = '<span class="supported"></span>';
-	 doDom(()=>{
+	 doDOM(()=>{
 	     body().appendChild(hasTestSpan);
 	 });
   }
@@ -1112,7 +1112,7 @@ declare(()=>{
 		let sty = document.createElement('style');
 		sty.setAttribute('template-styles',true);
 		sty.innerHTML=`if,else,for,dynamic-styles{display:none !important;}`;
-		doDom(()=>{
+		doDOM(()=>{
 			body().appendChild(sty);
 		});
 	}
