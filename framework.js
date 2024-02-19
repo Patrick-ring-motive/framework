@@ -1408,7 +1408,9 @@ keys.push[i];
 }catch(e){continue;}}
 return keys;
 }
+	 
 globalThis.assimilate=function(target,source){
+if(!source){return;}
 const objKeys=Object.descriptorKeys(source);
 const objKeys_length = objKeys.length;
 	 for(let i=0;i<objKeys_length;i++){try{
@@ -1419,6 +1421,7 @@ const objKeys_length = objKeys.length;
 return target;
 }
 globalThis.absorb=function(target,source){
+if(!source){return;}
 const objKeys=Object.descriptorKeys(source);
 const objKeys_length = objKeys.length;
 	 for(let i=0;i<objKeys_length;i++){try{
@@ -1431,6 +1434,8 @@ const objKeys_length = objKeys.length;
 return target;
 }
 globalThis.mimic=function(target,source,proto){
+if(!source){return;}
+if(!proto){return;}
 const objKeys=Object.descriptorKeys(proto);
 const objKeys_length = objKeys.length;
 	 for(let i=0;i<objKeys_length;i++){try{
