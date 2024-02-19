@@ -538,6 +538,7 @@ globalThis.queryApplyAllAwait = async function (query, func) {
     }, query);
   };
   globalThis.idleDetectionAllowed = false;
+Q(()=>{
   globalThis.detector = new IdleDetector();
  void async function(){
   try{
@@ -547,6 +548,7 @@ globalThis.queryApplyAllAwait = async function (query, func) {
     idleDetectionAllowed = false;
   }
  }();
+});
 globalThis.wasFocused=false;
 Q(()=>{
 	if(document.body){
