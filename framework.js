@@ -1,4 +1,5 @@
  try {
+globalThis.body =()=>document.body||document.firstElementChild;
 globalThis.jot=$=>{
     let obj=Object.create(null);
     obj.$=$;
@@ -39,6 +40,18 @@ globalThis.fix=$=>{
 
 globalThis.get=key=>globalThis[key];
 globalThis.set=(key,val)=>globalThis[key]=val;
+
+globalThis.DOMContentLoaded = (fn)=>{
+	return (document||globalThis).addEventListener("DOMContentLoaded",fn);
+}
+globalThis.doDOM = (fn)=>{
+	try{
+		fn();
+	}catch(e){
+		(document||globalThis).addEventListener("DOMContentLoaded",fn);
+	}
+}
+
 	 
 Object.defineProperty(globalThis, "arguments", {
   get() {
@@ -967,9 +980,10 @@ if (`${func.constructor}`.includes("unction")) {
      hasTestStyle.className = 'has-test';
  
      hasTestStyle.innerHTML = '.has-test:has(.supported){--has-supported:true;}';
- 
-     document.body.appendChild(hasTestStyle);
 
+	doDom(()=>{
+     		body().appendChild(hasTestStyle);
+	});
   }
 
   if(!(document.querySelector('span.has-test'))){
@@ -979,9 +993,9 @@ if (`${func.constructor}`.includes("unction")) {
      hasTestSpan.className = 'has-test';
  
      hasTestSpan.innerHTML = '<span class="supported"></span>';
- 
-     document.body.appendChild(hasTestSpan);
- 
+	 doDom(()=>{
+	     body().appendChild(hasTestSpan);
+	 });
   }
 
   let hasTest = !!(getComputedStyle(document.querySelector('span.has-test')).getPropertyValue('--has-supported'));
@@ -1098,7 +1112,9 @@ declare(()=>{
 		let sty = document.createElement('style');
 		sty.setAttribute('template-styles',true);
 		sty.innerHTML=`if,else,for,dynamic-styles{display:none !important;}`;
-		document.body.appendChild(sty);
+		doDom(()=>{
+			body().appendChild(sty);
+		});
 	}
 });
 
