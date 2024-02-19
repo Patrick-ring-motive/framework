@@ -555,9 +555,15 @@ Q(()=>{
 		document.body.addEventListener("focusin", (event) => {
 			if(document.readyState=='complete'){globalThis.wasFocused=true;}	
 		});
+		document.body.addEventListener('mousedown',(event) => {
+			if(document.readyState=='complete'){globalThis.wasFocused=true;}	
+		});
 	}else{
 		(document||globalThis).addEventListener("DOMContentLoaded", (event) => {
 			document.body.addEventListener("focusin", (event) => {
+				if(document.readyState=='complete'){globalThis.wasFocused=true;}	
+			});
+			document.body.addEventListener('mousedown',(event) => {
 				if(document.readyState=='complete'){globalThis.wasFocused=true;}	
 			});
 		});
@@ -566,9 +572,15 @@ Q(()=>{
 		document.firstElementChild.addEventListener("focusin", (event) => {
 			if(document.readyState=='complete'){globalThis.wasFocused=true;}	
 		});
+		document.firstElementChild.addEventListener('mousedown',(event) => {
+			if(document.readyState=='complete'){globalThis.wasFocused=true;}	
+		});
 	}else{
 		(document||globalThis).addEventListener("DOMContentLoaded", (event) => {
 			document.firstElementChild.addEventListener("focusin", (event) => {
+				if(document.readyState=='complete'){globalThis.wasFocused=true;}	
+			});
+			document.firstElementChild.addEventListener('mousedown',(event) => {
 				if(document.readyState=='complete'){globalThis.wasFocused=true;}	
 			});
 		});
@@ -644,8 +656,8 @@ if (`${func.constructor}`.includes("unction")) {
 	}
 	if(document.readyState=='complete'){
 	if(globalThis.wasFocused){
-		if(!navigator.userActivation.isActive) {return;}
-		if(!navigator.userActivation.hasBeenActive) {return;}
+		if(navigator.userActivation?.isActive===false) {return;}
+		if(navigator.userActivation?.hasBeenActive===false) {return;}
 		if(!document.hasFocus()){return;}
 		const sizeThrottle = Math.floor(document.querySelectorAll('*').length/1000);
 		for(let i=0;i<sizeThrottle;i++){
@@ -780,8 +792,8 @@ if (`${func.constructor}`.includes("unction")) {
 	}
 	if(document.readyState=='complete'){
 	if(globalThis.wasFocused){
-		if(!navigator.userActivation.isActive) {return;}
-		if(!navigator.userActivation.hasBeenActive) {return;}
+		if(navigator.userActivation.isActive===false) {return;}
+		if(navigator.userActivation.hasBeenActive===false) {return;}
 		if(!document.hasFocus()){return;}
 	}
 	}
@@ -1550,7 +1562,8 @@ globalThis.screenX = 0;
 globalThis.screenY = 0;
 function updateTouchScreenLocation(event) {
   defer(()=>{
-	const event_touches_length = event.touches.length;
+	if(!globalThis.wasFocused){globalThis.wasFocused = true;}
+    const event_touches_length = event.touches.length;
     for (let i = 0; i < event_touches_length; i++) {try{
      globalThis.screenX = event.touches[i].screenX;
      globalThis.screenY = event.touches[i].screenY;
@@ -1586,7 +1599,8 @@ globalThis.clientX = 0;
 globalThis.clientY = 0;
 function updateTouchclientLocation(event) {
   defer(()=>{
-	const event_touches_length = event.touches.length;
+    if(!globalThis.wasFocused){globalThis.wasFocused = true;}
+    const event_touches_length = event.touches.length;
     for (let i = 0; i < event_touches_length; i++) {try{
      globalThis.clientX = event.touches[i].clientX;
      globalThis.clientY = event.touches[i].clientY;
