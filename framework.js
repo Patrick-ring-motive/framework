@@ -1058,7 +1058,7 @@ design(()=>{
 		if(!ds){
 		let dst = document.createElement('style');
 		dst.id = `${dynamicStyleKeys[i]}-transition`;
-		dst.innerHTML = `:root{transition: ${dynamicStyleKeys[i]} 100ms;`;
+		/*dst.innerHTML = `:root{transition: ${dynamicStyleKeys[i]} 100ms;`;*/
 		el.appendChild(dst);
 		ds = document.createElement('style');
 		ds.id = dynamicStyleKeys[i];
