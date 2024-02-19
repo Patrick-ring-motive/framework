@@ -535,9 +535,31 @@ globalThis.queryApplyAllAwait = async function (query, func) {
   }
  }();
 globalThis.wasFocused=false;
-document.body.addEventListener("focusin", (event) => {
-if(document.readyState=='complete'){globalThis.wasFocused=true;}	
+Q(()=>{
+	if(document.body){
+		document.body.addEventListener("focusin", (event) => {
+			if(document.readyState=='complete'){globalThis.wasFocused=true;}	
+		});
+	}else{
+		(document||globalThis).addEventListener("DOMContentLoaded", (event) => {
+			document.body.addEventListener("focusin", (event) => {
+				if(document.readyState=='complete'){globalThis.wasFocused=true;}	
+			});
+		});
+	}
+	if(document.firstElementChild){
+		document.firstElementChild.addEventListener("focusin", (event) => {
+			if(document.readyState=='complete'){globalThis.wasFocused=true;}	
+		});
+	}else{
+		(document||globalThis).addEventListener("DOMContentLoaded", (event) => {
+			document.firstElementChild.addEventListener("focusin", (event) => {
+				if(document.readyState=='complete'){globalThis.wasFocused=true;}	
+			});
+		});
+	}
 });
+	
   globalThis.declareErrorQueue=[];
   globalThis.wrapDeclare = (fn) => {
    let wrapper = () => {
@@ -769,12 +791,12 @@ if (`${func.constructor}`.includes("unction")) {
   Q(()=>globalThis.deferEvaluator());
   Q(()=>globalThis.designEvaluator());
   if (globalThis.document) {
-    document.addEventListener("DOMContentLoaded", (event) => {
+    (document||globalThis).addEventListener("DOMContentLoaded", (event) => {
       Q(()=>globalThis.declareEvaluator());
       Q(()=>globalThis.deferEvaluator());
       Q(()=>globalThis.designEvaluator());
     });
-    document.addEventListener("readystatechange", (event) => {
+    (document||globalThis).addEventListener("readystatechange", (event) => {
       Q(()=>globalThis.declareEvaluator());
       Q(()=>globalThis.deferEvaluator());
       Q(()=>globalThis.designEvaluator());
@@ -1512,11 +1534,30 @@ function updateTouchScreenLocation(event) {
   });
 }
 
-document.firstElementChild.addEventListener("touchstart",updateTouchScreenLocation, false);
-document.firstElementChild.addEventListener("touchend", updateTouchScreenLocation, false);
-document.firstElementChild.addEventListener("touchmove", updateTouchScreenLocation, false);	 
-document.firstElementChild.addEventListener("touchcancel", updateTouchScreenLocation, false);
+Q(()=>{
+   (document||globalThis).addEventListener("DOMContentLoaded", (event) => {
+	document.firstElementChild.addEventListener("touchstart",updateTouchScreenLocation, false);
+	document.firstElementChild.addEventListener("touchend", updateTouchScreenLocation, false);
+	document.firstElementChild.addEventListener("touchmove", updateTouchScreenLocation, false);	 
+	document.firstElementChild.addEventListener("touchcancel", updateTouchScreenLocation, false);
+	
+	document.body.addEventListener("touchstart",updateTouchScreenLocation, false);
+	document.body.addEventListener("touchend", updateTouchScreenLocation, false);
+	document.body.addEventListener("touchmove", updateTouchScreenLocation, false);	 
+	document.body.addEventListener("touchcancel", updateTouchScreenLocation, false);
+   });
+	document.firstElementChild.addEventListener("touchstart",updateTouchScreenLocation, false);
+	document.firstElementChild.addEventListener("touchend", updateTouchScreenLocation, false);
+	document.firstElementChild.addEventListener("touchmove", updateTouchScreenLocation, false);	 
+	document.firstElementChild.addEventListener("touchcancel", updateTouchScreenLocation, false);
+	
+	document.body.addEventListener("touchstart",updateTouchScreenLocation, false);
+	document.body.addEventListener("touchend", updateTouchScreenLocation, false);
+	document.body.addEventListener("touchmove", updateTouchScreenLocation, false);	 
+	document.body.addEventListener("touchcancel", updateTouchScreenLocation, false);
+});
 
+	 
 globalThis.clientX = 0;
 globalThis.clientY = 0;
 function updateTouchclientLocation(event) {
@@ -1529,10 +1570,29 @@ function updateTouchclientLocation(event) {
   });
 }
 
-document.firstElementChild.addEventListener("touchstart",updateTouchclientLocation, false);
-document.firstElementChild.addEventListener("touchend", updateTouchclientLocation, false);
-document.firstElementChild.addEventListener("touchmove", updateTouchclientLocation, false);	 
-document.firstElementChild.addEventListener("touchcancel", updateTouchclientLocation, false);	 
+
+Q(()=>{
+   (document||globalThis).addEventListener("DOMContentLoaded", (event) => {
+	document.firstElementChild.addEventListener("touchstart",updateTouchclientLocation, false);
+	document.firstElementChild.addEventListener("touchend", updateTouchclientLocation, false);
+	document.firstElementChild.addEventListener("touchmove", updateTouchclientLocation, false);	 
+	document.firstElementChild.addEventListener("touchcancel", updateTouchclientLocation, false);	 
+
+	document.body.addEventListener("touchstart",updateTouchclientLocation, false);
+	document.body.addEventListener("touchend", updateTouchclientLocation, false);
+	document.body.addEventListener("touchmove", updateTouchclientLocation, false);	 
+	document.body.addEventListener("touchcancel", updateTouchclientLocation, false);	 
+   });
+	document.firstElementChild.addEventListener("touchstart",updateTouchclientLocation, false);
+	document.firstElementChild.addEventListener("touchend", updateTouchclientLocation, false);
+	document.firstElementChild.addEventListener("touchmove", updateTouchclientLocation, false);	 
+	document.firstElementChild.addEventListener("touchcancel", updateTouchclientLocation, false);	 
+
+	document.body.addEventListener("touchstart",updateTouchclientLocation, false);
+	document.body.addEventListener("touchend", updateTouchclientLocation, false);
+	document.body.addEventListener("touchmove", updateTouchclientLocation, false);	 
+	document.body.addEventListener("touchcancel", updateTouchclientLocation, false);
+});
 
 
 declare(()=>{
