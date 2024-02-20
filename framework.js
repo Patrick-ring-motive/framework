@@ -45,6 +45,18 @@ globalThis.set=(key,val)=>globalThis[key]=val;
 globalThis.DOMContentLoaded = (fn)=>{
 	return (document||globalThis).addEventListener("DOMContentLoaded",fn);
 }
+globalThis.DOMInteractive = (fn)=>{
+	if((document.readyState=='complete')||(document.readyState=='interactive')){
+		return fn();
+	}
+	return (document||globalThis).addEventListener("DOMContentLoaded",fn);
+}
+globalThis.DOMComplete = (fn)=>{
+	if(document.readyState=='complete'){
+		return fn();
+	}
+	return (document||globalThis).addEventListener("load",fn);
+}
 globalThis.doDOM = (fn)=>{
 	try{
 		fn();
