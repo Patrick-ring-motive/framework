@@ -86,7 +86,6 @@
              return _ => _;
          },
          set(newValue) {
-
          },
          enumerable: true,
          configurable: true,
@@ -98,7 +97,6 @@
              return _ => _;
          },
          set(newValue) {
-
          },
          enumerable: true,
          configurable: true,
@@ -158,13 +156,9 @@
          enumerable: true,
          configurable: true,
      });
-
-
-
      globalThis.asynt = (fn) => {
          setTimeout(fn, 0);
      }
-
      globalThis.Q = (U) => {
          if ((typeof U) == 'function') {
              try {
@@ -367,7 +361,6 @@
      };
 
      globalThis.updateProperty = function(obj, prop, val) {
-
          if (!(obj[prop])) {
              obj[prop] = val;
              return;
@@ -376,7 +369,6 @@
              obj[prop] = val;
              return;
          }
-
      }
 
      globalThis.approveProperty = function(obj, prop, val) {
@@ -391,7 +383,6 @@
              obj[prop] = val;
              return;
          }
-
      }
 
      console.detail = function(stuff) {
@@ -455,7 +446,6 @@
          } else {
              target.addEventListener(type, deferListener, options);
          }
-
      };
      if (globalThis.Element) {
          Element.prototype.updateAttribute = function(attr, val) {
@@ -695,7 +685,6 @@
              if ((document.readyState != 'complete') && (Math.floor(Math.random() * 10) < 8)) {
                  return;
              }
-
              if (draggingSticky) {
                  return;
              }
