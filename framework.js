@@ -459,6 +459,11 @@
              }
          };
 
+          Element.prototype.replaceAttribute = function(attr, oldval, newval) {
+             const el = this;
+             el.updateAttribute(attr,el.getAttribute(attr).replace(oldval,newval));
+         };
+
          Element.prototype.approveAttribute = function(attr, val) {
              if (!val) {
                  return;
