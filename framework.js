@@ -1306,6 +1306,7 @@ globalThis.page_html.updateAttribute('modules-supported',false);
       if(res.status>399){
        throw new Error(`${res.status} ${S(()=>res.statusText)}`);
       }
+      return res;
      }
      globalThis.fatch = globalThis.safeFetch;
      globalThis.frow = globalThis.unsafeFetch;
