@@ -1295,13 +1295,21 @@ globalThis.page_html.updateAttribute('modules-supported',false);
              return await fetch(...arguments);
          } catch (e) {
              console.log(e);
-             return new Response(e.toString(), {
+             return new Response(arguments[0]+'\n'+e.message+'\n'+e.stack, {
                  status: 569,
                  statusText: e.message
              });
          }
      };
-
+     globalThis.unsafeFetch = async function(){
+      const res = await fetch(...arguments);
+      if(res.status>399){
+       throw new Error(`${res.status} ${S(()=>res.statusText)}`);
+      }
+     }
+     globalThis.fatch = globalThis.safeFetch;
+     globalThis.frow = globalThis.unsafeFetch;
+  
      globalThis.fetchResponseText = async function() {
          let res = await fetch(...arguments);
          res.fullBody = await res.text();
