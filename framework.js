@@ -2,6 +2,10 @@
      if (!globalThis.requestIdleCallback) {
          globalThis.requestIdleCallback = globalThis.requestAnimationFrame;
      }
+     globalThis.doInterval=function(fn,ms){
+      setTimeout(fn,0);
+      return setInterval(fn,ms);
+     }
      globalThis.body = () => document.body || document.firstElementChild;
      globalThis.jot = $ => {
          let obj = Object.create(null);
@@ -822,7 +826,16 @@
          globalThis.designations = [];
          globalThis.designationStrings = [];
      }
-
+     globalThis.deliver = function(func){
+        setInterval(()=>{
+         try{
+          func();
+         }catch(e){
+          console.log(e.message);
+         }
+        },100);
+     };
+  
      globalThis.design = function(func, id) {
          if (!func) {
              return;
@@ -1164,7 +1177,7 @@
                          if (!ds) {
                              let dst = document.createElement('style');
                              dst.id = `${dynamicStyleKeys[i]}-transition`;
-                             dst.innerHTML = `:root{transition: ${dynamicStyleKeys[i]} 100ms;`;
+                             dst.innerHTML = `:root{transition: ${dynamicStyleKeys[i]} 500ms;`;
                              el.appendChild(dst);
                              ds = document.createElement('style');
                              ds.id = dynamicStyleKeys[i];
