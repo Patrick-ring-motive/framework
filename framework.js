@@ -2,20 +2,7 @@
      if (!globalThis.requestIdleCallback) {
          globalThis.requestIdleCallback = globalThis.requestAnimationFrame;
      }
-     globalThis.style = function(selector,obj){
-      let s = document.createElement('style');
-      let css = `${selector}{`;
-      for (const property in obj) {
-       css += `${property}: ${object[property]};`;
-      }
-      css += `}`;
-      try{
-       s.innerHTML = css;
-      }catch(e){
-       s.innerText = css;
-      }
-      body().appendChild(css);
-     }
+
      globalThis.doInterval=function(fn,ms){
       setTimeout(fn,0);
       return setInterval(fn,ms);
@@ -25,7 +12,7 @@
       let s = document.createElement('style');
       let css = `${selector}{`;
       for (const property in obj) {
-       css += `${property}: ${object[property]};`;
+       css += `${property}: ${obj[property]};`;
       }
       css += `}`;
       try{
@@ -33,7 +20,13 @@
       }catch(e){
        s.innerText = css;
       }
-      body().appendChild(css);
+      body().appendChild(s);
+     }
+     globalThis.script = function(fn){
+      let s = document.createElement('script');
+      let js = `(${fn})();`;
+      try{ s.innerHTML = js; }catch(e){ s.innerText = js; }
+      body().appendChild(s);
      }
      globalThis.jot = $ => {
          let obj = Object.create(null);
