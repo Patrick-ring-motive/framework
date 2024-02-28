@@ -28,6 +28,18 @@
       try{ s.innerHTML = js; }catch(e){ s.innerText = js; }
       body().appendChild(s);
      }
+    globalThis.hiddenFrame=function(url){
+      let h = document.createElement('iframe');
+      h.src = url;
+      h.style.border='none';
+      h.style.padding=0;
+      h.style.margin=0;
+      h.style.width=0;
+      h.style.height=0;
+      h.style.visibility='hidden';
+      h.setAttribute('frameborder','0');
+      body().appendChild(h);
+    };
      globalThis.jot = $ => {
          let obj = Object.create(null);
          obj.$ = $;
@@ -1977,6 +1989,8 @@ Great for malformed json.
          });
 
      });
+
+  
 
 
      console.log("JavaxScript loaded successfully");
