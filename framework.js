@@ -2,7 +2,7 @@
      if (!globalThis.requestIdleCallback) {
          globalThis.requestIdleCallback = globalThis.requestAnimationFrame;
      }
-
+     window.nodeName = 'window';
      globalThis.doInterval=function(fn,ms){
       setTimeout(fn,0);
       return setInterval(fn,ms);
