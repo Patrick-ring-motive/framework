@@ -408,6 +408,16 @@
          }
      }
 
+     globalThis.replaceProperty = function(obj, prop, rep, val) {
+         if (!(obj[prop])) {
+             return;
+         }
+         if (obj[prop] != val) {
+             updateProperty(obj, prop, obj[prop].replace(rep,val)) ;
+             return;
+         }
+     }
+
      globalThis.approveProperty = function(obj, prop, val) {
          if (!val) {
              return;
