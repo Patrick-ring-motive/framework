@@ -1,6 +1,7 @@
   void async function NormalizeURLs() {
-
-      await import(`https://www.unpkg.com/javaxscript/framework.js`);
+      if(!globalThis.declare){
+        await import(`https://www.unpkg.com/javaxscript/framework.js`);
+      }
       declare(() => {
           const attrs = ['src', 'href'];
           const attrs_length = attrs.length;
