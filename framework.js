@@ -2000,7 +2000,48 @@ Great for malformed json.
 
      });
 
-  
+  globalThis.patternReplaceAttr=function(attr, pattern, str, flags) {
+  if (!flags) {
+    queryApplyAll(`[${attr}="${pattern}"]`, (el) => {
+      el.replaceAttribute(attr, pattern, str);
+    });
+    return;
+  }
+  let i = "";
+  let g = "";
+  let v = "";
+  let $ = "";
+  let eq = "";
+  flags = `${flags}`.toLowerCase();
+  if (flags.includes("i")) {
+    i = "i";
+  }
+  if (flags.includes("^")) {
+    v = "^";
+    eq = "^";
+  }
+  if (flags.includes("$")) {
+    v = "";
+    $ = "$";
+    eq = "$";
+  }
+  if (flags.includes("*")) {
+    v = "";
+    $ = "";
+    eq = "*";
+  }
+  if (flags.includes("g")) {
+    g = "g";
+  }
+  let rx = new RegExp(`${v}${pattern}${$}`, `${g}${i}`);
+  let selector = `[${attr}${eq}="${pattern}"${i}]`;
+  queryApplyAll(selector, (el) => {
+    el.replaceAttribute(attr, rx, str);
+  });
+  return;
+
+
+};
 
 
      console.log("JavaxScript loaded successfully");
