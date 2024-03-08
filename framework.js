@@ -2096,12 +2096,41 @@ Element.prototype.setValues=function(attr){
  }catch(e){return;}
 };
 
- globalThis.buildElement=function(tag,options){
+ Element.prototype.addChildren=function(lis){
+  for(let i = 0;i<lis.length;i++){try{
+   if(`${lis[i].constructor}`.toLowerCase().includes('element')){
+    try{    
+     this.appendChild(lis[i]);
+    }catch(e){
+     this.appendChild(buildElement(lis[i]));
+    }
+   }else{
+    this.appendChild(buildElement(lis[i]));
+   }
+  }catch(e){continue;}}
+ };
+  
+ globalThis.buildElement=function(item,options){
+  let tag=`${item}`;
+  if(item.tag){
+   tag=item.tag;
+   options=item;
+  }else{
+   if(item.tagName){
+    tag=item.tagName;
+    options=item;
+   }
+  }
+  
   let el = createElement(tag);
   if(!options){return el;}
-  if(options.attributes){el.setAttributes(options.attributes);}
-  if(options.styles){el.setStyles(options.styles);}
-  if(options.values){el.setValues(options.values);}
+  let opkeys = Object.keys(options);
+  for(let i=0;i<opkeys.length;i++){
+    if(opkeys[i].toLowerCase().includes('attr')){el.setAttributes(options[opkeys[i]]);}
+    if(opkeys[i].toLowerCase().includes('sty')){el.setStyles(options[opkeys[i]]);}
+    if(opkeys[i].toLowerCase().includes('val')){el.setValues(options[opkeys[i]]);}
+    if(opkeys[i].toLowerCase().startsWith('child')){el.addChildren(options[opkeys[i]]);}
+  }
   return el;
  };
 
