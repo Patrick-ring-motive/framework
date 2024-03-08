@@ -2133,7 +2133,7 @@ Element.prototype.setValues=function(attr){
    try{
      el = createElement(tag);
    }catch(e){
-    el = createElement(`${item.constructor}`.split('(')[0].trim());
+    el = createElement(`${item.constructor}`.split('(')[0].split(' ')[1].trim());
    }
   }
   if(!options){return el;}
