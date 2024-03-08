@@ -2096,6 +2096,15 @@ Element.prototype.setValues=function(attr){
  }catch(e){return;}
 };
 
+ globalThis.buildElement=function(tag,options){
+  let el = createElement(tag);
+  if(!options){return el;}
+  if(options.attributes){el.setAttributes(options.attributes;}
+  if(options.styles){el.setStyles(options.styles;}
+  if(options.values){el.setValues(options.values;}
+  return el;
+ };
+
      console.log("JavaxScript loaded successfully");
 
  } catch (e) {
