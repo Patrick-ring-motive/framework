@@ -562,6 +562,24 @@
                  }
              }
          };
+
+
+          globalThis.selectApplyAll = async function(query, func) {
+           let attr = `${query}${func}`.replaceAll('\n','').replace(/[^a-zA-Z]/g,'');
+           queryBuilder=`:is(${query}):not([${attr}]),:where(${query}):not([${attr}])`;
+             let elems = Array.from(document.querySelectorAll(queryBuilder));
+             const elems_length = elems.length;
+             for (let i = 0; i < elems_length; i++) {
+                 try {
+                     func(elems[i]);
+                     elems[i].setAttribute(attr,attr);
+                 } catch (e) {
+                     await async ("selectApplyAll");
+                     console.log(e);
+                     continue;
+                 }
+             }
+         };
      }
 
      globalThis.queryApplyAllAwait = async function(query, func) {
