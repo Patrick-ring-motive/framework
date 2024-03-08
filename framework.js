@@ -2063,11 +2063,35 @@ Great for malformed json.
 Element.prototype.setAttributes=function(attr){
  if(!attr){return;}
  try{
-  const attrkeys = Object.Keys(attr);
+  const attrkeys = Object.keys(attr);
   const attrkeys_length=attrkeys.length;
   for(let i=0;i<attrkeys_length;i++){try{
    const k = attrkeys[i];
    this.updateAttribute(sanitizeAttr(`${k}`),`${attr[k]}`);
+  }catch(e){continue;}}
+ }catch(e){return;}
+};
+
+Element.prototype.setStyles=function(attr){
+ if(!attr){return;}
+ try{
+  const attrkeys = Object.keys(attr);
+  const attrkeys_length=attrkeys.length;
+  for(let i=0;i<attrkeys_length;i++){try{
+   const k = attrkeys[i];
+   this.style[sanitizeAttr(`${k}`)]=`${attr[k]}`;
+  }catch(e){continue;}}
+ }catch(e){return;}
+};
+
+Element.prototype.setValues=function(attr){
+ if(!attr){return;}
+ try{
+  const attrkeys = Object.keys(attr);
+  const attrkeys_length=attrkeys.length;
+  for(let i=0;i<attrkeys_length;i++){try{
+   const k = attrkeys[i];
+   this[k]=attr[k];
   }catch(e){continue;}}
  }catch(e){return;}
 };
