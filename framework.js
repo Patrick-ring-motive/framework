@@ -3,6 +3,8 @@
          globalThis.requestIdleCallback = globalThis.requestAnimationFrame;
      }
      window.nodeName = 'window';
+     window.tagName = 'WINDOW';
+     window.tag = 'Window';
      globalThis.doInterval=function(fn,ms){
       setTimeout(fn,0);
       return setInterval(fn,ms);
@@ -2121,8 +2123,19 @@ Element.prototype.setValues=function(attr){
     options=item;
    }
   }
-  
-  let el = createElement(tag);
+  if(tag.startsWith('[object')){
+   tag=tag.split('[object ')[1].split(']')[0].trim();
+  }
+  let el;
+  if(item.cloneNode&&(tag.toLowerCase()!='window')){
+   el=item.cloneNode(true)
+  }else{
+   try{
+     el = createElement(tag);
+   }catch(e){
+    el = createElement(`${item.constructor}`.split('(')[0].trim());
+   }
+  }
   if(!options){return el;}
   let opkeys = Object.keys(options);
   for(let i=0;i<opkeys.length;i++){
