@@ -2060,7 +2060,17 @@ Great for malformed json.
 
 
 };
-
+Element.prototype.setAttributes=function(attr){
+ if(!attr){return;}
+ try{
+  const attrkeys = Object.Keys(attr);
+  const attrkeys_length=attrkeys.length;
+  for(let i=0;i<attrkeys_length;i++){try{
+   const k = attrkeys[i];
+   this.updateAttribute(sanitizeAttr(`${k}`),`${attr[k]}`);
+  }catch(e){continue;}}
+ }catch(e){return;}
+};
 
      console.log("JavaxScript loaded successfully");
 
