@@ -565,7 +565,7 @@
 
 
           globalThis.selectApplyAll = async function(query, func) {
-           let attr = `${query}${func}`.replaceAll('\n','').replace(/[^a-zA-Z]/g,'');
+           let attr = sanitizeAttr(`${query}${func}`.replaceAll('\n','')).replace(/[^a-zA-Z]/g,'');
            queryBuilder=`:is(${query}):not([${attr}]),:where(${query}):not([${attr}])`;
              let elems = Array.from(document.querySelectorAll(queryBuilder));
              const elems_length = elems.length;
