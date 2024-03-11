@@ -1,4 +1,7 @@
- try {
+if(!(globalThis?.JXSLOADER)){
+ globalThis.JXSLOADER-'loading';
+try {
+
      if (!globalThis.requestIdleCallback) {
          globalThis.requestIdleCallback = globalThis.requestAnimationFrame;
      }
@@ -2146,9 +2149,13 @@ Element.prototype.setValues=function(attr){
   }
   return el;
  };
-
+     globalThis.JXSLOADER='succeeded';
      console.log("JavaxScript loaded successfully");
 
  } catch (e) {
+      globalThis.JXSLOADER='failed';
      console.log("JavaxScript failed to load: ", e);
  }
+}else{
+ console.log(`JavaxScript already ${globalThis.JXSLOADER}`);
+}
