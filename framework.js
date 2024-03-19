@@ -1408,46 +1408,46 @@ globalThis.page_html.updateAttribute('modules-supported',false);
          return (await fetch(...arguments)).arrayBuffer();
      };
 
-     Function.prototype.X = function() {
+     Function.prototype.Þ = function() {
          return arguments[0](this, ...Array.from(arguments).slice(1));
      };
-     String.prototype.X = function() {
+     String.prototype.Þ = function() {
          return arguments[0](this, ...Array.from(arguments).slice(1));
      };
-     Array.prototype.X = function() {
+     Array.prototype.Þ = function() {
          return arguments[0](this, ...Array.from(arguments).slice(1));
      };
-     Boolean.prototype.X = function() {
+     Boolean.prototype.Þ = function() {
          return arguments[0](this, ...Array.from(arguments).slice(1));
      };
-     Number.prototype.X = function() {
+     Number.prototype.Þ = function() {
          return arguments[0](this, ...Array.from(arguments).slice(1));
      };
-     BigInt.prototype.X = function() {
+     BigInt.prototype.Þ = function() {
          return arguments[0](this, ...Array.from(arguments).slice(1));
      };
-     Symbol.prototype.X = function() {
+     Symbol.prototype.Þ = function() {
          return arguments[0](this, ...Array.from(arguments).slice(1));
      };
      if (globalThis.node) {
          Q(
              (U) =>
-             (Node.prototype.X = function() {
+             (Node.prototype.Þ = function() {
                  return arguments[0](this, ...Array.from(arguments).slice(1));
              }),
          );
          Q(
              (U) =>
-             (Window.prototype.X = function() {
+             (Window.prototype.Þ = function() {
                  return arguments[0](this, ...Array.from(arguments).slice(1));
              }),
          );
      }
-     Map.prototype.X = function() {
+     Map.prototype.Þ = function() {
          return arguments[0](this, ...Array.from(arguments).slice(1));
      };
      Q(()=>{
-      Object.prototype.X = function() {
+      Object.prototype.Þ = function() {
          return arguments[0](this, ...Array.from(arguments).slice(1));
      };
      });
