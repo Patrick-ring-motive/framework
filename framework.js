@@ -1739,10 +1739,14 @@ Great for malformed json.
      globalThis.selectAll = globalThis.querySelectorAll;
      globalThis.swapText = function(startText, endText) {
          let el = document.body;
-         if (endText.toLowerCase().includes(startText.toLowerCase())) {
+         if (endText.toLowerCase().includes(`${startText}`.toLowerCase())) {
              endText = toSansSerif(endText);
          }
          const reg = new RegExp(startText, "gi")
+         if(reg.test(endText)){
+             endText = toSansSerif(endText);
+         }
+         
          if (!el) {
              return;
          }
