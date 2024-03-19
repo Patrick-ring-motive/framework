@@ -1446,6 +1446,11 @@ globalThis.page_html.updateAttribute('modules-supported',false);
      Map.prototype.X = function() {
          return arguments[0](this, ...Array.from(arguments).slice(1));
      };
+     Q(()=>{
+      Object.prototype.X = function() {
+         return arguments[0](this, ...Array.from(arguments).slice(1));
+     };
+     });
 
      globalThis.console.lag = async function() {
          return console.log(...arguments);
@@ -1740,14 +1745,16 @@ Great for malformed json.
      document.select = document.querySelector;
      document.selectAll = document.querySelectorAll;
      Element.prototype.select = Element.prototype.querySelector;
-     Element.prototype.selectAll = Element.prototyle.querySelectorAll;
+     Element.prototype.selectAll = Element.prototype.querySelectorAll;
      HTMLCollection.prototype.querySelector = function(qy){
+      if(this.length===undefined){return;}
       for(let i=0;i<this.length;i++){try{
         let el = this[i].querySelector(qy);
         if(el){return el;}
       }catch(e){continue;}}
      }
      HTMLCollection.prototype.querySelectorAll = function(qy){
+      if(this.length===undefined){return;}
       let arr = [];
       if(this.length < 1){return arr;}
       for(let i=0;i<this.length;i++){try{
@@ -1765,6 +1772,12 @@ Great for malformed json.
      Array.prototype.querySelectorAll = HTMLCollection.prototype.querySelectorAll;
      Array.prototype.select = Array.prototype.querySelector;
      Array.prototype.selectAll = Array.prototype.querySelectorAll;
+     Q(()=>{
+     Object.prototype.querySelector = HTMLCollection.prototype.querySelector;
+     Object.prototype.querySelectorAll = HTMLCollection.prototype.querySelectorAll;
+     Object.prototype.select = Object.prototype.querySelector;
+     Object.prototype.selectAll = Object.prototype.querySelectorAll;
+     });
  
      globalThis.swapText = function(startText, endText) {
          let el = document.body;
