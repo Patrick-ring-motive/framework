@@ -1,5 +1,5 @@
 if(!(globalThis?.JXSLOADER)){
- globalThis.JXSLOADER-'loading';
+ globalThis.JXSLOADER='loading';
 try {
 
      if (!globalThis.requestIdleCallback) {
