@@ -1737,6 +1737,35 @@ Great for malformed json.
 
      globalThis.select = globalThis.querySelector;
      globalThis.selectAll = globalThis.querySelectorAll;
+     document.select = document.querySelector;
+     document.selectAll = document.querySelectorAll;
+     Element.prototype.select = Element.prototype.querySelector;
+     Element.prototype.selectAll = Element.prototyle.querySelectorAll;
+     HTMLCollection.prototype.querySelector = function(qy){
+      for(let i=0;i<this.length;i++){try{
+        let el = this[i].querySelector(qy);
+        if(el){return el;}
+      }catch(e){continue;}}
+     }
+     HTMLCollection.prototype.querySelectorAll = function(qy){
+      let arr = [];
+      if(this.length < 1){return arr;}
+      for(let i=0;i<this.length;i++){try{
+        arr = arr.concat(Array.from(this[i].querySelectorAll(qy)));
+      }catch(e){continue;}}
+      return arr;
+     }
+     HTMLCollection.prototype.select = HTMLCollection.prototype.querySelector;
+     HTMLCollection.prototype.selectAll = HTMLCollection.prototype.querySelectorAll;
+     NodeList.prototype.querySelector = HTMLCollection.prototype.querySelector;
+     NodeList.prototype.querySelectorAll = HTMLCollection.prototype.querySelectorAll;
+     NodeList.prototype.select = NodeList.prototype.querySelector;
+     NodeList.prototype.selectAll = NodeList.prototype.querySelectorAll;
+     Array.prototype.querySelector = HTMLCollection.prototype.querySelector;
+     Array.prototype.querySelectorAll = HTMLCollection.prototype.querySelectorAll;
+     Array.prototype.select = Array.prototype.querySelector;
+     Array.prototype.selectAll = Array.prototype.querySelectorAll;
+ 
      globalThis.swapText = function(startText, endText) {
          let el = document.body;
          if (endText.toLowerCase().includes(`${startText}`.toLowerCase())) {
