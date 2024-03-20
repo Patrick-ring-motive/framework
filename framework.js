@@ -1,7 +1,17 @@
 if(!(globalThis?.JXSLOADER)){
  globalThis.JXSLOADER='loading';
 try {
-
+     Object.prototype.setValue=function(key,val){this[key]=val;}
+     Object.prototype.getValue=function(key){return this[key];}
+     Object.prototype.delValue=function(key,val){delete this[key];}
+     Object.prototype.deleteValue=Object.prototype.delValue;
+     Object.prototype.runValue=function(key,args){
+        try{
+         return this[key](...args);
+        }catch(e){
+         return this[key](args);
+        }
+     }
      if (!globalThis.requestIdleCallback) {
          globalThis.requestIdleCallback = globalThis.requestAnimationFrame;
      }
