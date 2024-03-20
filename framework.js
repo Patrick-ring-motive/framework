@@ -12,6 +12,14 @@ try {
          return this[key](args);
         }
      }
+     Object.prototype.run=function(obj){
+      if(typeof obj == 'object'){
+         const key=Object.keys(obj)[0];
+         return this.runValue(key,obj[key]);
+      }else{
+       return this.runValue(obj);
+      }
+     }
      if (!globalThis.requestIdleCallback) {
          globalThis.requestIdleCallback = globalThis.requestAnimationFrame;
      }
