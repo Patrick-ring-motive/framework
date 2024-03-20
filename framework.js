@@ -34,7 +34,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
         return this.runValue(obj);
     }
 });
-
      if (!globalThis.requestIdleCallback) {
          globalThis.requestIdleCallback = globalThis.requestAnimationFrame;
      }
@@ -599,14 +598,15 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
                  }
              }
          };
-         globalThis.helpAppliedFunction=function(func){
+         globalThis.helpAppliedFunction=function(func){     
              if(typeof func == 'function'){
                 if(func.length == 0){
                   try{func=Function('el',`with(el){(${func})()}`);}catch(e){}
                 }
              }
              if(typeof func == 'object'){
-               try{func=(el)=>el.run(func);}catch(e){}
+              let obj=func;
+               try{func=(el)=>el.run(obj);}catch(e){}
              }
           return func;
          }
