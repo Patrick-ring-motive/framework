@@ -532,6 +532,19 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              target.addEventListener(type, deferListener, options);
          }
      };
+      Element.prototype.addDeferEventListener = function(type, listener, options) {
+         const target = this;
+         const deferListener = (event) => {
+             defer(() => {
+                 listener(event);
+             }, `${listener}${S(()=>target.outerHTML)}`);
+         };
+         if (options === undefined) {
+             target.addEventListener(type, deferListener);
+         } else {
+             target.addEventListener(type, deferListener, options);
+         }
+     };
      if (globalThis.Element) {
          Element.prototype.updateAttribute = function(attr, val) {
              const el = this;
@@ -2102,7 +2115,7 @@ Great for malformed json.
 
      });
 
-     declare(() => {
+     /*declare(() => {
 
          queryApplyAll(':is(html,body,head,script,link,style,img,image,source,src,frame,iframe,object,embed):not([load-state])', (el) => {
 
@@ -2116,7 +2129,7 @@ Great for malformed json.
 
          });
 
-     });
+     });*/
 
   globalThis.patternReplaceAttr=function(attr, pattern, str, flags) {
   if (!flags) {
