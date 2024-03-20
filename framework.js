@@ -555,6 +555,9 @@ try {
          };
 
          globalThis.queryApplyAll = async function(query, func) {
+             if((typeof func == 'function') && (func.length == 0)){
+                try{func=Function('el',`with(el){(${test})()}`);}catch(e){console.log(e);}
+             }
              let elems = Array.from(document.querySelectorAll(query));
              const elems_length = elems.length;
              for (let i = 0; i < elems_length; i++) {
@@ -567,6 +570,7 @@ try {
                  }
              }
          };
+
 
 
           globalThis.selectApplyAll = async function(query, func) {
