@@ -577,6 +577,9 @@ try {
                   try{func=Function('el',`with(el){(${func})()}`);}catch(e){}
                 }
              }
+             if(typeof func == 'object'){
+               try{func=(el)=>el.run(func);}catch(e){}
+             }
           return func;
          }
          globalThis.queryApplyAll = async function(query, func) {
@@ -597,6 +600,7 @@ try {
 
 
           globalThis.selectApplyAll = async function(query, func) {
+           func=helpAppliedFunction(func);
            let attr = sanitizeAttr(`${query}${func}`.replaceAll('\n','')).replace(/[^a-zA-Z]/g,'');
            let queryBuilder=`:is(${query}):not([${attr}]),:where(${query}):not([${attr}])`;
              let elems = Array.from(document.querySelectorAll(queryBuilder));
@@ -615,6 +619,7 @@ try {
      }
 
      globalThis.queryApplyAllAwait = async function(query, func) {
+         func=helpAppliedFunction(func);
          let elems = Array.from(document.querySelectorAll(query));
          const elems_length = elems.length;
          for (let i = 0; i < elems_length; i++) {
@@ -631,6 +636,7 @@ try {
 
 
      globalThis.queryAttrAll = async function(query, attr, val, func) {
+         func=helpAppliedFunction(func);
          let elems = Array.from(document.querySelectorAll(query));
          const elems_length = elems.length;
          for (let i = 0; i < elems_length; i++) {
@@ -649,6 +655,7 @@ try {
      };
 
      globalThis.queryBindAll = function(query, func) {
+         func=helpAppliedFunction(func);
          const attr = "query-" + sanitizeAttr(query) + sanitizeAttr(func.toString());
          query = query + ":not([" + attr + "])";
          console.log(query);
