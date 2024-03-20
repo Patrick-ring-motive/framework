@@ -553,11 +553,16 @@ try {
                  }
              }
          };
-
-         globalThis.queryApplyAll = async function(query, func) {
-             if((typeof func == 'function') && (func.length == 0)){
-                try{func=Function('el',`with(el){(${func})()}`);}catch(e){console.log(e);}
+         globalThis.helpAppliedFunction=function(func){
+             if(typeof func == 'function'){
+                if(func.length == 0){
+                  try{func=Function('el',`with(el){(${func})()}`);}catch(e){}
+                }
              }
+          return func;
+         }
+         globalThis.queryApplyAll = async function(query, func) {
+             func=helpAppliedFunction(func);
              let elems = Array.from(document.querySelectorAll(query));
              const elems_length = elems.length;
              for (let i = 0; i < elems_length; i++) {
