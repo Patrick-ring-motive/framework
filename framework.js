@@ -2217,6 +2217,7 @@ defineNonenumerable(Element.prototype,'setValues',function(attr){
  };
  globalThis.onExists=async function(query,func){
   await waitExists(query);
+  func=helpAppliedFunction(func);
   return func(select(query));
  };
      globalThis.JXSLOADER='succeeded';
