@@ -1,25 +1,40 @@
 if(!(globalThis?.JXSLOADER)){
  globalThis.JXSLOADER='loading';
 try {
-     Object.prototype.setValue=function(key,val){this[key]=val;}
-     Object.prototype.getValue=function(key){return this[key];}
-     Object.prototype.delValue=function(key,val){delete this[key];}
-     Object.prototype.deleteValue=Object.prototype.delValue;
-     Object.prototype.runValue=function(key,args){
-        try{
-         return this[key](...args);
-        }catch(e){
-         return this[key](args);
-        }
-     }
-     Object.prototype.run=function(obj){
-      if(typeof obj == 'object'){
-         const key=Object.keys(obj)[0];
-         return this.runValue(key,obj[key]);
-      }else{
-       return this.runValue(obj);
-      }
-     }
+ function defineNonenumerable(obj,prop,val){
+     Object.defineProperty(obj, prop, {
+     value: val,
+     writable: true,
+     configurable: true,
+     enumerable: false
+   });
+ }
+defineNonenumerable(Object.prototype, 'setValue', function(key, val) {
+    this[key] = val;
+});
+defineNonenumerable(Object.prototype, 'getValue', function(key) {
+    return this[key];
+});
+defineNonenumerable(Object.prototype, 'delValue', function(key) {
+    delete this[key];
+});
+defineNonenumerable(Object.prototype, 'deleteValue', Object.prototype.delValue);
+defineNonenumerable(Object.prototype, 'runValue', function(key, args) {
+    try {
+        return this[key](...args);
+    } catch (e) {
+        return this[key](args);
+    }
+});
+defineNonenumerable(Object.prototype, 'run', function(obj) {
+    if (typeof obj == 'object') {
+        const key = Object.keys(obj)[0];
+        return this.runValue(key, obj[key]);
+    } else {
+        return this.runValue(obj);
+    }
+});
+
      if (!globalThis.requestIdleCallback) {
          globalThis.requestIdleCallback = globalThis.requestAnimationFrame;
      }
@@ -1481,9 +1496,9 @@ globalThis.page_html.updateAttribute('modules-supported',false);
          return arguments[0](this, ...Array.from(arguments).slice(1));
      };
      Q(()=>{
-      Object.prototype.Þ = function() {
+      defineNonenumerable(Object.prototype,'Þ' , function() {
          return arguments[0](this, ...Array.from(arguments).slice(1));
-     };
+     });
      });
 
      globalThis.console.lag = async function() {
@@ -1780,14 +1795,14 @@ Great for malformed json.
      document.selectAll = document.querySelectorAll;
      Element.prototype.select = Element.prototype.querySelector;
      Element.prototype.selectAll = Element.prototype.querySelectorAll;
-     HTMLCollection.prototype.querySelector = function(qy){
+     defineNonenumerable(HTMLCollection.prototype,'querySelector',function(qy){
       if(this.length===undefined){return;}
       for(let i=0;i<this.length;i++){try{
         let el = this[i].querySelector(qy);
         if(el){return el;}
       }catch(e){continue;}}
-     }
-     HTMLCollection.prototype.querySelectorAll = function(qy){
+     });
+     defineNonenumerable(HTMLCollection.prototype,'querySelectorAll',function(qy){
       if(this.length===undefined){return;}
       let arr = [];
       if(this.length < 1){return arr;}
@@ -1795,7 +1810,7 @@ Great for malformed json.
         arr = arr.concat(Array.from(this[i].querySelectorAll(qy)));
       }catch(e){continue;}}
       return arr;
-     }
+     });
      HTMLCollection.prototype.select = HTMLCollection.prototype.querySelector;
      HTMLCollection.prototype.selectAll = HTMLCollection.prototype.querySelectorAll;
      NodeList.prototype.querySelector = HTMLCollection.prototype.querySelector;
