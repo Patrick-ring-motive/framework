@@ -2210,6 +2210,15 @@ defineNonenumerable(Element.prototype,'setValues',function(attr){
   }
   return el;
  };
+
+ globalThis.waitExists=async function(query){
+  while(!select(query)){await sleep(100);}
+  return true;
+ };
+ globalThis.onExists=async function(query,func){
+  await waitExists(query);
+  return func(select(query));
+ };
      globalThis.JXSLOADER='succeeded';
      console.log("JavaxScript loaded successfully");
 
