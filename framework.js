@@ -9,6 +9,12 @@ try {
      enumerable: false
    });
  }
+	defineNonenumerable(Element.prototype,'setTrait' , function(attr, val) {
+             const el = this;
+		el.setAttribute(attr,val);
+		el[attr]=val;
+         });
+	
 defineNonenumerable(Object.prototype, 'setValue', function(key, val) {
     this[key] = val;
 });
@@ -63,6 +69,26 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       body().appendChild(s);
          });
      }
+     globalThis.importScript = function(url){
+      return new Promise((resolve) => {
+      let s = document.createElement('script');
+      s.src=url;
+      s.onload = ()=>resolve(s);
+      s.onerror = ()=>resolve(s);
+      body().appendChild(s);
+      });  
+     }
+     globalThis.importModule = function(url){
+      return new Promise((resolve) => {
+      let s = document.createElement('script');
+      s.setAttribute('type','module');
+      s.type = 'module';
+      s.src=url;
+      s.onload = ()=>resolve(s);
+      s.onerror = ()=>resolve(s);
+      body().appendChild(s);
+      });  
+     }
      globalThis.script = function(fn){
       return new Promise((resolve) => {
       let s = document.createElement('script');
@@ -73,6 +99,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       body().appendChild(s);
         });
      }
+	defineNonenumerable(HTMLIFrameElement.prototype, 'iframeDocument', function(obj) {
+		return this.contentWindow?.document||this.contentDocument;
+	});
 	globalThis.hiddenFrame=function(url){
 	return new Promise((resolve) => {
 		  let h = document.createElement('iframe');
@@ -610,6 +639,8 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
                  }
              }
          });
+
+	     
          globalThis.helpAppliedFunction=function(func){     
              if(typeof func == 'function'){
                 if(func.length == 0){
