@@ -2220,6 +2220,11 @@ defineNonenumerable(Element.prototype,'setValues',function(attr){
   func=helpAppliedFunction(func);
   return func(select(query));
  };
+globalThis.onTrue=async function(bool,func){
+  while(!(await $Q(bool))){await sleep(100);}
+  func=helpAppliedFunction(func);
+  return func();
+ };
      globalThis.JXSLOADER='succeeded';
      console.log("JavaxScript loaded successfully");
 
