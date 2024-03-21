@@ -46,8 +46,11 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
      }
      globalThis.body = () => document.body || document.firstElementChild;
      globalThis.style = function(selector,obj){
+      return new Promise((resolve) => {
       let s = document.createElement('style');
       let css = `${selector}{`;
+      s.onload = ()=>resolve(s);
+		    s.onerror = ()=>resolve(s);
       for (const property in obj) {
        css += `${property}: ${obj[property]};`;
       }
@@ -58,24 +61,33 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
        s.innerText = css;
       }
       body().appendChild(s);
+         });
      }
      globalThis.script = function(fn){
+      return new Promise((resolve) => {
       let s = document.createElement('script');
       let js = `(${fn})();`;
+      s.onload = ()=>resolve(s);
+		    s.onerror = ()=>resolve(s);
       try{ s.innerHTML = js; }catch(e){ s.innerText = js; }
       body().appendChild(s);
+        });
      }
-    globalThis.hiddenFrame=function(url){
-      let h = document.createElement('iframe');
-      h.src = url;
-      h.style.border='none';
-      h.style.padding=0;
-      h.style.margin=0;
-      h.style.width=0;
-      h.style.height=0;
-      h.style.visibility='hidden';
-      h.setAttribute('frameborder','0');
-      body().appendChild(h);
+	globalThis.hiddenFrame=function(url){
+	return new Promise((resolve) => {
+		  let h = document.createElement('iframe');
+		  h.src = url;
+		  h.style.border='none';
+		  h.style.padding=0;
+		  h.style.margin=0;
+		  h.style.width=0;
+		  h.style.height=0;
+		  h.style.visibility='hidden';
+		  h.setAttribute('frameborder','0');
+		  h.onload = ()=>resolve(h);
+		  h.onerror = ()=>resolve(h);
+		  body().appendChild(h);
+	  });
     };
      globalThis.jot = $ => {
          let obj = Object.create(null);
