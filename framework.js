@@ -69,16 +69,17 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       body().appendChild(s);
          });
      }
-     globalThis.importScript = function(url){
+     globalThis.importScript = function(url,bdy){
       return new Promise((resolve) => {
       let s = document.createElement('script');
       s.src=url;
       s.onload = ()=>resolve(s);
       s.onerror = ()=>resolve(s);
-      body().appendChild(s);
+	if(!bdy){bdy=body();}
+      bdy.appendChild(s);
       });  
      }
-     globalThis.importModule = function(url){
+     globalThis.importModule = function(url,bdy){
       return new Promise((resolve) => {
       let s = document.createElement('script');
       s.setAttribute('type','module');
@@ -86,7 +87,8 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       s.src=url;
       s.onload = ()=>resolve(s);
       s.onerror = ()=>resolve(s);
-      body().appendChild(s);
+	      if(!bdy){bdy=body();}
+      bdy.appendChild(s);
       });  
      }
      globalThis.script = function(fn){
