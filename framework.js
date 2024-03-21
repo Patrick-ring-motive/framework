@@ -162,25 +162,44 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
      globalThis.set = (key, val) => globalThis[key] = val;
 
      globalThis.DOMContentLoaded = (fn) => {
-         return (document || globalThis).addEventListener("DOMContentLoaded", fn);
+	 if(!fn){fn=()=>{};}
+         return new Promise((resolve) => {
+		(document || globalThis).addEventListener("DOMContentLoaded", ()=>{
+			 try{resolve(fn());}catch(e){resolve(e);}
+		 });
+	 });
      }
      globalThis.DOMInteractive = (fn) => {
+	 if(!fn){fn=()=>{};}
          if ((document.readyState == 'complete') || (document.readyState == 'interactive')) {
              return fn();
          }
-         return (document || globalThis).addEventListener("DOMContentLoaded", fn);
+         return new Promise((resolve) => {
+		(document || globalThis).addEventListener("DOMContentLoaded", ()=>{
+			 try{resolve(fn());}catch(e){resolve(e);}
+		 });
+	 });
      }
      globalThis.DOMComplete = (fn) => {
+	 if(!fn){fn=()=>{};}
          if (document.readyState == 'complete') {
              return fn();
          }
-         return (document || globalThis).addEventListener("load", fn);
+	return new Promise((resolve) => {
+		 (document || globalThis).addEventListener("load", ()=>{
+			 try{resolve(fn());}catch(e){resolve(e);}
+		 });
+	 });
      }
      globalThis.doDOM = (fn) => {
          try {
-             fn();
+           return fn();
          } catch (e) {
-             (document || globalThis).addEventListener("DOMContentLoaded", fn);
+	        return new Promise((resolve) => {
+			(document || globalThis).addEventListener("DOMContentLoaded", ()=>{
+				 try{resolve(fn());}catch(e){resolve(e);}
+			 });
+		 });
          }
      }
 
