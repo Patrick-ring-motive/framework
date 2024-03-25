@@ -1350,7 +1350,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
                      el.removeAttribute('fetching');
                      instructions = styleJSON;
                  } catch (e) {
-                     el.updateAttribute('fetching', 'error');
+                     el.updateAttribute('ing', 'error');
                      console.log(e);
                      return;
                  }
@@ -1496,26 +1496,53 @@ globalThis.page_html.updateAttribute('modules-supported',false);
      globalThis.page_html.appendChild(nmscript);
 
      globalThis.safeFetch = async function() {
+	let res;
          try {
-             return await fetch(...arguments);
+             res = await fetch(...arguments);
+		 res.requested = arguments
+		 return res;
          } catch (e) {
              console.log(e);
-             return new Response(arguments[0]+'\n'+e.message+'\n'+e.stack, {
+             res = new Response(arguments[0]+'\n'+e.message+'\n'+e.stack, {
                  status: 569,
                  statusText: e.message
              });
+		res.requested = arguments;
          }
+	return res;
      };
      globalThis.unsafeFetch = async function(){
-      const res = await fetch(...arguments);
+      let res = await fetch(...arguments);
+	res.requested = arguments;
       if(res.status>399){
        throw new Error(`${res.status} ${S(()=>res.statusText)}`);
       }
       return res;
      }
      globalThis.fatch = globalThis.safeFetch;
-     globalThis.frow = globalThis.unsafeFetch;
-  
+     globalThis.zfetch = globalThis.safeFetch;
+     globalThis.frow = globalThis.unsafeFetch
+	globalThis.zfetchText = async function(){
+		try{
+			let res = await fetch(...arguments);
+			if(res.status > 399){
+				return res.statusText;
+			}
+			return await res.text();
+		}catch(e){
+			return e.message;
+		}
+	}
+
+	JSON.zparse = function(str){
+		try{
+			return JSON.parse(str);
+		}catch(e){
+			console.log(e,str);
+			e.inputText = str;
+			return e;
+		}
+	}
      globalThis.fetchResponseText = async function() {
          let res = await fetch(...arguments);
          res.fullBody = await res.text();
