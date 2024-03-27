@@ -106,6 +106,28 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       bdy.appendChild(s);
       });  
      }
+     globalThis.importStyle=function(url){
+	return new Promise((resolve) => {
+		  let l = document.createElement('link');
+		  l.rel='stylesheet';
+		  l.href=url;
+		  l.onload = ()=>resolve(l);
+		  l.onerror = ()=>resolve(l);
+		  let h = document.createElement('iframe');
+		  h.src = url;
+		  h.style.border='none';
+		  h.style.padding=0;
+		  h.style.margin=0;
+		  h.style.width=0;
+		  h.style.height=0;
+		  h.style.visibility='hidden';
+		  h.setAttribute('frameborder','0');
+		  h.onload = ()=>resolve(l);
+		  h.onerror = ()=>resolve(l);
+		  body().appendChild(l);
+		  body().appendChild(h);
+	  });
+    };
      globalThis.script = function(fn){
       return new Promise((resolve) => {
       let s = document.createElement('script');
@@ -135,6 +157,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 		  body().appendChild(h);
 	  });
     };
+	
      globalThis.jot = $ => {
          let obj = Object.create(null);
          obj.$ = $;
