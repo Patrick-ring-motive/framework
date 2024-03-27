@@ -40,6 +40,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
         return this.runValue(obj);
     }
 });
+     if(!globalThis.queueMicrotask){
+	globalThis.queueMicrotask = setTimeout;
+     }
      if(!globalThis.requestAnimationFrame){
 	globalThis.requestAnimationFrame = setTimeout;
      }
@@ -51,6 +54,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 	}
 	globalThis.nextFrame=function(){
 		return new Promise((resolve) => {requestAnimationFrame(resolve);});  
+	}
+	globalThis.nextTask=function(){
+		return new Promise((resolve) => {queueMicrotask(resolve);});  
 	}
      window.nodeName = 'window';
      window.tagName = 'WINDOW';
