@@ -40,9 +40,18 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
         return this.runValue(obj);
     }
 });
+     if(!globalThis.requestAnimationFrame){
+	globalThis.requestAnimationFrame = setTimeout;
+     }
      if (!globalThis.requestIdleCallback) {
          globalThis.requestIdleCallback = globalThis.requestAnimationFrame;
      }
+	globalThis.nextIdle=function(){
+		return new Promise((resolve) => {requestIdleCallback(resolve);});  
+	}
+	globalThis.nextFrame=function(){
+		return new Promise((resolve) => {requestAnimationFrame(resolve);});  
+	}
      window.nodeName = 'window';
      window.tagName = 'WINDOW';
      window.tag = 'Window';
