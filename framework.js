@@ -2318,7 +2318,7 @@ defineNonenumerable(Element.prototype,'setValues',function(attr){
  };
 
  globalThis.waitExists=async function(query){
-  while(!select(query)){await sleep(100);}
+  while(!select(query)){await sleep(100);await nextIdle();}
   return true;
  };
  globalThis.onExists=async function(query,func){
@@ -2328,7 +2328,7 @@ defineNonenumerable(Element.prototype,'setValues',function(attr){
  };
 globalThis.onTrue=async function(bool,func){
   if(!func){func = ()=>{};}
-  while(!(await $Q(bool))){await sleep(100);}
+  while(!(await $Q(bool))){await sleep(100);await nextIdle();}
   return func();
  };
      globalThis.JXSLOADER='succeeded';
