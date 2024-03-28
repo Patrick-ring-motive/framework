@@ -14,7 +14,9 @@ try {
 		el.setAttribute(attr,val);
 		el[attr]=val;
          });
-	
+	globalThis.createElement=function(){
+		return document.createElement(...arguments);
+	}
 defineNonenumerable(Object.prototype, 'setValue', function(key, val) {
     this[key] = val;
 });
@@ -2336,6 +2338,7 @@ defineNonenumerable(Element.prototype,'setValues',function(attr){
     if(opkeys[i].toLowerCase().includes('sty')){el.setStyles(options[opkeys[i]]);}
     if(opkeys[i].toLowerCase().includes('val')){el.setValues(options[opkeys[i]]);}
     if(opkeys[i].toLowerCase().startsWith('child')){el.addChildren(options[opkeys[i]]);}
+    if(opkeys[i].toLowerCase().includes('trait')){el.setValues(options[opkeys[i]]);{el.setAttributes(options[opkeys[i]]);}  
   }
   return el;
  };
