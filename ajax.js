@@ -276,32 +276,25 @@ let bfr = await this.nativeArrayBuffer();
 window.nativeFetch=window.fetch;
 
 window.customFetch=async function(request,headers){
-
-var req;
+  var req;
   var response;
   if(typeof request=='string'){
   
     req=new Request(request,headers);
-    response = await window.nativeFetch(req);
+    response = await window.nativeFetch.apply(this,[req]);
   
   }else{
-     response = await window.nativeFetch(request,headers);
+     response = await window.nativeFetch.apply(this,[request,headers]);
   }
-if(typeof request=='object'){
-
-response.requestInputObject=request;
-
-}else{
-
-response.requestInputURL=request;
-  response.requestInputObject=req;
-
+  if(typeof request=='object'){
+    response.requestInputObject=request;
+  }else{
+    response.requestInputURL=request;
+    response.requestInputObject=req;
+  }
+  if(headers){response.requestInputHeaders=headers;}
+    return response;
 }
 
-if(headers){response.requestInputHeaders=headers;}
-
-return response;
-
-}
-/*window.fetch=window.customFetch;*/
+window.fetch=window.customFetch;
 
