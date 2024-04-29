@@ -97,11 +97,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
        css += `${property}: ${obj[property]};`;
       }
       css += `}`;
-      try{
-       s.innerHTML = css;
-      }catch(e){
-       s.innerText = css;
-      }
+	s.innerHTM=css;
       body().appendChild(s);
          });
      }
@@ -1362,7 +1358,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 
              hasTestStyle.className = 'has-test';
 
-             hasTestStyle.innerHTML = '.has-test:has(.supported){--has-supported:true;}';
+             hasTestStyle.innerHTM = '.has-test:has(.supported){--has-supported:true;}';
 
              doDOM(() => {
                  body().appendChild(hasTestStyle);
@@ -1374,8 +1370,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              let hasTestSpan = document.createElement('span');
 
              hasTestSpan.className = 'has-test';
-
-             hasTestSpan.innerHTML = '<span class="supported"></span>';
+	     let hts=document.createElement('span');
+	     hts.setAttribute('class','supported');
+             hasTestSpanappendChild(hts);;
              doDOM(() => {
                  body().appendChild(hasTestSpan);
              });
@@ -1510,7 +1507,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
          if (!(document.querySelector('style[template-styles]'))) {
              let sty = document.createElement('style');
              sty.setAttribute('template-styles', true);
-             sty.innerHTML = `if,else,for,dynamic-styles{display:none !important;}`;
+             sty.innerHTM = `if,else,for,dynamic-styles{display:none !important;}`;
              doDOM(() => {
                  body().appendChild(sty);
              });
@@ -1531,7 +1528,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
          }
          s = output + s;
          if (s != (elem.innerHTML.toString())) {
-             elem.innerHTML = s;
+             elem.innerHTM = s;
          }
      }
 
@@ -1554,7 +1551,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 
      let nmscript = document.createElement('script');
      nmscript.setAttribute('nomodule', true);
-     nmscript.innerHTML = `
+     nmscript.innerHTM = `
 globalThis.modulesSupported=false;
 globalThis.page_html.updateAttribute('modules-supported',false);
 `;
@@ -2265,7 +2262,7 @@ defineNonenumerable(Object.prototype,'xpathAll',Object.prototype.xpathSelectorAl
 
                      if (!template) {
                          template = document.createElement('template');
-                         template.innerHTML = IF.innerHTML;
+                         template.innerHTM = IF.innerHTML;
                      }
                      IF.parentElement.insertBefore(template.content, IF);
                      IF.updateAttribute('evaluation', 'done');
@@ -2278,7 +2275,7 @@ defineNonenumerable(Object.prototype,'xpathAll',Object.prototype.xpathSelectorAl
                          let template = ELSE.querySelector('template');
                          if (!template) {
                              template = document.createElement('template');
-                             template.innerHTML = ELSE.innerHTML;
+                             template.innerHTM = ELSE.innerHTML;
                          }
                          IF.parentElement.insertBefore(template.content, IF);
                          IF.updateAttribute('evaluation', 'done');
@@ -2312,7 +2309,7 @@ defineNonenumerable(Object.prototype,'xpathAll',Object.prototype.xpathSelectorAl
                  let template = FOR.querySelector('template');
                  if (!template) {
                      template = document.createElement('template');
-                     template.innerHTML = FOR.innerHTML;
+                     template.innerHTM = FOR.innerHTML;
                  }
                  const fragment = document.createElement('template');
                  const items_length = items.length;
