@@ -720,7 +720,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
          globalThis.helpAppliedFunction=function(func){     
              if(typeof func == 'function'){
                 if(func.length == 0){
-                  try{func=Function('el',`with(el){(${func})()}`);}catch(e){}
+                  try{func=Function('el',`with(el){return(${func})()}`);}catch(e){}
                 }
              }
              if(typeof func == 'object'){
@@ -1815,6 +1815,41 @@ Great for malformed json.
          }
      }
 
+document.filterSelectorAll = function(filter) {
+  try{
+var resultList = [];
+    filter=helpAppliedFunction(filter);
+    let root = this instanceof Node ? this : document;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, {
+        acceptNode: node => filter(node) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP
+    }, false);
+    while (walker.nextNode()) {
+      try{
+        resultList.push(walker.currentNode);
+      }catch(e){continue;}
+    }
+  }catch(e){
+    resultList.error = e;
+  return resultList;
+  }
+    return resultList;
+};
+
+document.filterSelector = function(filter) {
+try{
+filter=helpAppliedFunction(filter);
+    let root = this instanceof Node ? this : document;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, {
+        acceptNode: node => filter(node) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP
+    }, false);
+    while (walker.nextNode()) {
+        return walker.currentNode;
+    }
+}catch(e){
+	return undefined;
+}
+
+};
 
      Object.forInKeys = function(obj) {
          let keys = [];
@@ -2020,11 +2055,19 @@ defineNonenumerable(Object.prototype,'cssSelectorAll', function(query){
 	}
 );
 
+
+	
 	globalThis.select = function(query){
-	return document.cssSelector(query)||document.xpath(query);
+	return document.cssSelector(query)||document.xpath(query)||document.filterSelector(query);
      }
      globalThis.selectAll = function(query){
-	return this.cssSelectorAll(query).concat(this.xpathAll(query));
+	     let resultList = [];
+	     try{
+		resultList=resultList.concat(document.cssSelectorAll(query)).concat(document.xpathAll(query)).concat(document.filterSelectorAll(query));
+	     }catch(e){
+		     resultList.error = e;
+	     }
+	     return resultList;
 	};
 
      defineNonenumerable(HTMLCollection.prototype,'querySelector',function(qy){
