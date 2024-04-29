@@ -1,6 +1,25 @@
 if(!(globalThis?.JXSLOADER)){
  globalThis.JXSLOADER='loading';
 try {
+			 
+Object.defineProperty(Element.prototype, "innerHTM", {
+  get() {
+    return innerHTML;
+  },
+  set(newValue) {
+    try{
+	this.innerHTML=newValue;
+	}catch(e){
+		try{
+			this.innerText=newValue;
+		}catch(e){
+			this.textContent=newValue;
+		}
+	}
+  },
+  enumerable: true,
+  configurable: true,
+});
  function defineNonenumerable(obj,prop,val){
      Object.defineProperty(obj, prop, {
      value: val,
@@ -715,8 +734,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
           return func;
          }
          globalThis.queryApplyAll = async function(query, func) {
+	     const sel = globalThis.selectAll||document.querySelectorAll;
              func=helpAppliedFunction(func);
-             let elems = Array.from(document.querySelectorAll(query));
+             let elems = Array.from(sel(query));
              const elems_length = elems.length;
              for (let i = 0; i < elems_length; i++) {
                  try {
@@ -732,10 +752,11 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 
 
           globalThis.selectApplyAll = async function(query, func) {
+	   const sel = globalThis.selectAll||document.querySelectorAll;
            func=helpAppliedFunction(func);
            let attr = sanitizeAttr(`${query}${func}`.replaceAll('\n','')).replace(/[^a-zA-Z]/g,'');
            let queryBuilder=`:is(${query}):not([${attr}]),:where(${query}):not([${attr}])`;
-             let elems = Array.from(document.querySelectorAll(queryBuilder));
+             let elems = Array.from(sel(queryBuilder));
              const elems_length = elems.length;
              for (let i = 0; i < elems_length; i++) {
                  try {
@@ -751,8 +772,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
      }
 
      globalThis.queryApplyAllAwait = async function(query, func) {
+	 const sel = globalThis.selectAll||document.querySelectorAll;
          func=helpAppliedFunction(func);
-         let elems = Array.from(document.querySelectorAll(query));
+         let elems = Array.from(sel(query));
          const elems_length = elems.length;
          for (let i = 0; i < elems_length; i++) {
              try {
@@ -768,8 +790,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 
 
      globalThis.queryAttrAll = async function(query, attr, val, func) {
+	 const sel = globalThis.selectAll||document.querySelectorAll;
          func=helpAppliedFunction(func);
-         let elems = Array.from(document.querySelectorAll(query));
+         let elems = Array.from(sel(query));
          const elems_length = elems.length;
          for (let i = 0; i < elems_length; i++) {
              let elem = elems[i];
@@ -1385,7 +1408,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
                      el.updateAttribute('fetching', 'in progress');
                      let dynSty = await fetchText(dataSrc);
                      let styleJSON = document.createElement('style-json');
-                     styleJSON.innerHTML = `<style>${dynSty}</style>`;
+		     let sjs = document.createElement('style');
+		     sjs.innerHTM=`${dynSty}`;
+                     styleJSON.appendChild(sjs);
                      el.appendChild(styleJSON);
                      el.removeAttribute('fetching');
                      instructions = styleJSON;
@@ -1409,16 +1434,16 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
                          if (!ds) {
                              let dst = document.createElement('style');
                              dst.id = `${dynamicStyleKeys[i]}-transition`;
-                             dst.innerHTML = `:root{transition: ${dynamicStyleKeys[i]} 500ms;`;
+                             dst.innerHTM = `:root{transition: ${dynamicStyleKeys[i]} 500ms;`;
                              el.appendChild(dst);
                              ds = document.createElement('style');
                              ds.id = dynamicStyleKeys[i];
-                             ds.innerHTML = `:root{${dynamicStyleKeys[i]}:${eval(decodeURIComponent(dynamicStyles[dynamicStyleKeys[i]]))};`;
+                             ds.innerHTM = `:root{${dynamicStyleKeys[i]}:${eval(decodeURIComponent(dynamicStyles[dynamicStyleKeys[i]]))};`;
                              el.appendChild(ds);
                          } else {
                              let updatedStyle = `:root{${dynamicStyleKeys[i]}:${eval(decodeURIComponent(dynamicStyles[dynamicStyleKeys[i]]))};`;
                              if ((updatedStyle) && (ds.innerHTML.toString() != updatedStyle)) {
-                                 ds.innerHTML = updatedStyle;
+                                 ds.innerHTM = updatedStyle;
                              }
 
                          }
@@ -1440,12 +1465,12 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
                          if (!ds) {
                              ds = document.createElement('style');
                              ds.id = dynamicSelectorKeys[i];
-                             ds.innerHTML = `${eval(decodeURIComponent(dynamicSelectorKeys[i]))}{${dynamicSelectors[dynamicSelectorKeys[i]]}}`;
+                             ds.innerHTM = `${eval(decodeURIComponent(dynamicSelectorKeys[i]))}{${dynamicSelectors[dynamicSelectorKeys[i]]}}`;
                              el.appendChild(ds);
                          } else {
                              let updatedStyle = `${eval(decodeURIComponent(dynamicSelectorKeys[i]))}{${dynamicSelectors[dynamicSelectorKeys[i]]}}`;
                              if ((updatedStyle) && (ds.innerHTML.toString() != updatedStyle)) {
-                                 ds.innerHTML = updatedStyle;
+                                 ds.innerHTM = updatedStyle;
                              }
 
                          }
@@ -1901,6 +1926,129 @@ Great for malformed json.
      document.selectAll = document.querySelectorAll;
      defineNonenumerable(Element.prototype,'select', Element.prototype.querySelector);
      defineNonenumerable(Element.prototype,'selectAll', Element.prototype.querySelectorAll);
+	defineNonenumerable(Object.prototype,'xpathSelector',function(query){
+
+                let node = this;
+
+                if(!(node instanceof Node)){
+
+                                node = document;
+
+                }
+
+                try{
+
+                                return document.evaluate(
+
+                                  query,
+
+                                  node,
+
+                                  null,
+
+                                  9,
+
+                                  null,
+
+                                ).singleNodeValue;
+
+ 
+
+                }catch(e){
+
+                                console.log(e);
+
+                }
+
+ 
+
+});
+
+defineNonenumerable(Object.prototype,'xpathSelectorAll', function(query){
+
+                let node = this;
+
+                if(!(node instanceof Node)){
+
+                                node = document;
+
+                }
+
+                let nodeList = [];
+
+                try{
+
+                                const nodeSnapshot = document.evaluate(
+
+                                  query,
+
+                                  node,
+
+                                  null,
+
+                                  6,
+
+                                  null,
+
+                                );
+
+                                const nodeSnapshot_length = nodeSnapshot?.snapshotLength ?? nodeSnapshot?.lengthnodeSnapshot?.snapshotLength ?? 0;
+
+                                for (let i = 0; i < nodeSnapshot_length; i++) {try{
+
+                                  nodeList.push(nodeSnapshot.snapshotItem(i));
+
+                                }catch(e){continue;}}
+
+                }catch(e){
+
+                                console.log(e);
+
+                }
+
+                return nodeList;
+
+}
+
+);
+
+ 
+
+defineNonenumerable(Object.prototype,'xpath',Object.prototype.xpathSelector);
+
+defineNonenumerable(Object.prototype,'xpathAll',Object.prototype.xpathSelectorAll);
+
+ 
+
+ 
+
+ globalThis.xpathApplyAll = async function(query, func) {
+
+     func=helpAppliedFunction(func);
+
+     let elems = xpathAll(query);
+
+     const elems_length = elems.length;
+
+     for (let i = 0; i < elems_length; i++) {
+
+	 try {
+
+	     func(elems[i]);
+
+	 } catch (e) {
+
+	     await async ("xpathApplyAll");
+
+	     console.log(e);
+
+	     continue;
+
+	 }
+
+     }
+
+ };
      defineNonenumerable(HTMLCollection.prototype,'querySelector',function(qy){
       if(this.length===undefined){return;}
       for(let i=0;i<this.length;i++){try{
