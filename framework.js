@@ -1372,7 +1372,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              hasTestSpan.className = 'has-test';
 	     let hts=document.createElement('span');
 	     hts.setAttribute('class','supported');
-             hasTestSpanappendChild(hts);;
+             hasTestSpan.appendChild(hts);
              doDOM(() => {
                  body().appendChild(hasTestSpan);
              });
