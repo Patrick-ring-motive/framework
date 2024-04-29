@@ -1917,108 +1917,56 @@ Great for malformed json.
      Q(() => mimic(globalThis, body(), Node.prototype));
      Q(() => mimic(globalThis, body(), EventTarget.prototype));
 
-     globalThis.select = globalThis.querySelector;
-     globalThis.selectAll = globalThis.querySelectorAll;
-     document.select = document.querySelector;
-     document.selectAll = document.querySelectorAll;
-     defineNonenumerable(Element.prototype,'select', Element.prototype.querySelector);
-     defineNonenumerable(Element.prototype,'selectAll', Element.prototype.querySelectorAll);
-	defineNonenumerable(Object.prototype,'xpathSelector',function(query){
+	
 
-                let node = this;
 
-                if(!(node instanceof Node)){
 
-                                node = document;
 
-                }
-
-                try{
-
-                                return document.evaluate(
-
-                                  query,
-
-                                  node,
-
-                                  null,
-
-                                  9,
-
-                                  null,
-
-                                ).singleNodeValue;
-
- 
-
-                }catch(e){
-
-                                console.log(e);
-
-                }
-
- 
-
-});
-
+     defineNonenumerable(Object.prototype,'xpathSelector',function(query){
+		let node = this;
+		if(!(node instanceof Node)){
+			node = document;
+		}
+		try{
+			return document.evaluate(
+				  query,
+				  node,
+				  null,
+				  9,
+				  null,
+				).singleNodeValue;
+		}catch(e){
+			return;
+		}
+	});
 defineNonenumerable(Object.prototype,'xpathSelectorAll', function(query){
-
                 let node = this;
-
                 if(!(node instanceof Node)){
-
                                 node = document;
-
                 }
-
                 let nodeList = [];
-
                 try{
-
-                                const nodeSnapshot = document.evaluate(
-
+                        const nodeSnapshot = document.evaluate(
                                   query,
-
                                   node,
-
                                   null,
-
                                   6,
-
                                   null,
-
                                 );
-
-                                const nodeSnapshot_length = nodeSnapshot?.snapshotLength ?? nodeSnapshot?.lengthnodeSnapshot?.snapshotLength ?? 0;
-
+                                const nodeSnapshot_length = nodeSnapshot?.snapshotLength ?? nodeSnapshot?.length ?? 0;
                                 for (let i = 0; i < nodeSnapshot_length; i++) {try{
-
                                   nodeList.push(nodeSnapshot.snapshotItem(i));
-
                                 }catch(e){continue;}}
-
                 }catch(e){
-
-                                console.log(e);
-
+                                return [];
                 }
-
                 return nodeList;
-
-}
-
+	}
 );
-
- 
-
 defineNonenumerable(Object.prototype,'xpath',Object.prototype.xpathSelector);
-
 defineNonenumerable(Object.prototype,'xpathAll',Object.prototype.xpathSelectorAll);
 
  
-
- 
-
  globalThis.xpathApplyAll = async function(query, func) {
 
      func=helpAppliedFunction(func);
@@ -2046,6 +1994,39 @@ defineNonenumerable(Object.prototype,'xpathAll',Object.prototype.xpathSelectorAl
      }
 
  };
+
+    defineNonenumerable(Object.prototype,'cssSelector',function(query){
+		let node = this;
+		if(!(node instanceof Node)){
+			node = document;
+		}
+		try{
+			return node.querySelector(query);
+		}catch(e){
+			return;
+		}
+	});
+defineNonenumerable(Object.prototype,'cssSelectorAll', function(query){
+                let node = this;
+                if(!(node instanceof Node)){
+                         node = document;
+                }
+                try{
+			return Array.from(node.querySelectorAll(query));
+                }catch(e){
+			return [];
+                }
+
+	}
+);
+
+	globalThis.select = function(query){
+	return document.cssSelector(query)||document.xpath(query);
+     }
+     globalThis.selectAll = function(query){
+	return this.cssSelectorAll(query).concat(this.xpathAll(query));
+	};
+
      defineNonenumerable(HTMLCollection.prototype,'querySelector',function(qy){
       if(this.length===undefined){return;}
       for(let i=0;i<this.length;i++){try{
