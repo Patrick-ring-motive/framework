@@ -2,7 +2,7 @@ if(!(globalThis?.JXSLOADER)){
  globalThis.JXSLOADER='loading';
 try {
 			 
-Object.defineProperty(Element.prototype, "innerHTM", {
+Object.defineProperty(Element?.prototype??{}, "innerHTM", {
   get() {
     return innerHTML;
   },
@@ -20,7 +20,7 @@ Object.defineProperty(Element.prototype, "innerHTM", {
   enumerable: true,
   configurable: true,
 });
- function defineNonenumerable(obj,prop,val){
+ function defineNonenumerable(obj={},prop,val){
      Object.defineProperty(obj, prop, {
      value: val,
      writable: true,
@@ -28,7 +28,7 @@ Object.defineProperty(Element.prototype, "innerHTM", {
      enumerable: false
    });
  }
-	defineNonenumerable((globalThis.Element??{}).prototype,'setTrait' , function(attr, val) {
+	defineNonenumerable(globalThis?.Element?.prototype,'setTrait' , function(attr, val) {
              const el = this;
 		el.setAttribute(attr,val);
 		el[attr]=val;
@@ -61,15 +61,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
         return this.runValue(obj);
     }
 });
-     if(!globalThis.queueMicrotask){
-	globalThis.queueMicrotask = setTimeout;
-     }
-     if(!globalThis.requestAnimationFrame){
-	globalThis.requestAnimationFrame = setTimeout;
-     }
-     if (!globalThis.requestIdleCallback) {
-         globalThis.requestIdleCallback = globalThis.requestAnimationFrame;
-     }
+	globalThis.queueMicrotask ??= setTimeout;
+	globalThis.requestAnimationFrame ??= setTimeout;
+	globalThis.requestIdleCallback ??= globalThis.requestAnimationFrame;
 	globalThis.nextIdle=function(){
 		return new Promise((resolve) => {requestIdleCallback(resolve);});  
 	}
@@ -155,7 +149,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       body().appendChild(s);
         });
      }
-	defineNonenumerable(HTMLIFrameElement.prototype, 'iframeDocument', function(obj) {
+	defineNonenumerable(globalThis?.HTMLIFrameElement?.prototype, 'iframeDocument', function(obj) {
 		return this.contentWindow?.document||this.contentDocument;
 	});
 	globalThis.hiddenFrame=function(url){
@@ -225,7 +219,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 	 });
      }
      globalThis.DOMInteractive = (fn) => {
-	 if(!fn){fn=()=>{};}
+	 fn??=()=>{};
          if ((document.readyState == 'complete') || (document.readyState == 'interactive')) {
              return fn();
          }
@@ -236,7 +230,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 	 });
      }
      globalThis.DOMComplete = (fn) => {
-	 if(!fn){fn=()=>{};}
+	 fn??=()=>{};
          if (document.readyState == 'complete') {
              return fn();
          }
@@ -635,7 +629,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              .replace(/[^a-zA-Z0-9_-]/g, "�");
      };
 
-     defineNonenumerable(EventTarget.prototype,'addDeferEventListener' , function(type, listener, options) {
+     defineNonenumerable(globalThis?.EventTarget?.prototype,'addDeferEventListener' , function(type, listener, options) {
          const target = this;
          const deferListener = (event) => {
              defer(() => {
@@ -648,7 +642,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              target.addEventListener(type, deferListener, options);
          }
      });
-      defineNonenumerable(Element.prototype,'addDeferEventListener',function(type, listener, options) {
+      defineNonenumerable(globalThis?.Element?.prototype,'addDeferEventListener',function(type, listener, options) {
          const target = this;
          const deferListener = (event) => {
              defer(() => {
@@ -720,6 +714,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
          globalThis.helpAppliedFunction=function(func){     
              if(typeof func == 'function'){
                 if(func.length == 0){
+		  if(`${func}`.includes('this')){
+		    return function(el){return func.apply(el,[]);};	
+		  }
                   try{func=Function('el',`with(el){return(${func})()}`);}catch(e){}
                 }
              }
