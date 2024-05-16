@@ -1,7 +1,6 @@
 if(!(globalThis?.JXSLOADER)){
  globalThis.JXSLOADER='loading';
-try {
-			 
+try {			 
 Object.defineProperty(Element?.prototype??{}, "innerHTM", {
   get() {
     return innerHTML;
@@ -565,7 +564,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              return;
          }
      }
-
      globalThis.approveProperty = function(obj, prop, val) {
          if (!val) {
              return;
@@ -579,7 +577,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              return;
          }
      }
-
      console.detail = function(stuff) {
          try {
              stuff.constructor.prototype._log = function() {
@@ -666,12 +663,10 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
                  }
              }
          });
-
           defineNonenumerable(Element.prototype,'replaceAttribute' , function(attr, oldval, newval) {
              const el = this;
              el.updateAttribute(attr,el.getAttribute(attr).replace(oldval,newval));
          });
-
          defineNonenumerable(Element.prototype,'approveAttribute',function(attr, val) {
              if (!val) {
                  return;
@@ -685,7 +680,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
                  }
              }
          });
-
          defineNonenumerable(Element.prototype,'getStyle' , function(attribute) {
              try {
                  let compStyles = window.getComputedStyle(this);
@@ -697,7 +691,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              }
              return undefined;
          });
-
          defineNonenumerable(Element.prototype,'updateStyle', function(attr, val) {
              const el = this;
              const elstyle = el.getStyle(attr);
@@ -708,9 +701,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
                      el.style[attr] = val;
                  }
              }
-         });
-
-	     
+         });	     
          globalThis.helpAppliedFunction=function(func){     
              if(typeof func == 'function'){
                 if(func.length == 0){
@@ -877,7 +868,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
          }
      });
 
-     globalThis.declareErrorQueue = [];
+     globalThis.declareErrorQueue ??= [];
      globalThis.wrapDeclare = (fn) => {
          let wrapper = () => {
              try {
@@ -892,12 +883,8 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
      globalThis.declareAsynt = (fn) => {
          asynt(wrapDeclare(fn));
      }
-
-     if (!(globalThis.declarations)) {
-         globalThis.declarations = [];
-         globalThis.declarationStrings = [];
-     }
-
+         globalThis.declarations ??= [];
+         globalThis.declarationStrings ??= [];
      globalThis.declare = function(func, id) {
          if (!func) {
              return;
@@ -1012,12 +999,8 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              }
          }
      };
-
-     if (!(globalThis.deferations)) {
-         globalThis.deferations = [];
-         globalThis.deferationStrings = [];
-     }
-
+     globalThis.deferations ??= [];
+     globalThis.deferationStrings ??= [];
      globalThis.defer = function(func, id) {
          if (!func) {
              return;
@@ -1059,8 +1042,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
                  if (`${new Date().getTime()}`.endsWith("10")) {
                      await async ("deferEvaluator");
                  }
-
-
                  deferations.shift()?.();
              } catch (e) {
                  await async ("deferEvaluator");
@@ -1069,11 +1050,8 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              }
          }
      };
-
-     if (!(globalThis.designations)) {
-         globalThis.designations = [];
-         globalThis.designationStrings = [];
-     }
+     globalThis.designations ??= [];
+     globalThis.designationStrings ??= [];
      globalThis.deliver = function(func){
         setInterval(()=>{
          try{
@@ -1119,9 +1097,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
      };
 
      globalThis.designEvaluator = async function() {
-         if (!(globalThis.designStartup)) {
-             globalThis.designStartup = 0;
-         }
+         globalThis.designStartup ??= 0;
          if (designStartup < 3) {
              designStartup++;
          } else {
@@ -1224,25 +1200,19 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
                  });
              });
          }, 101);
-
          globalThis.page_html = document.querySelector("html") || document.firstElementChild;
-
          globalThis.page_html.setAttribute("window-location", window.location.href);
          declare(() =>
              globalThis.page_html.updateAttribute("window-location", window.location.href),
          );
-
          page_html.setAttribute("user-agent", navigator.userAgent);
          declare(() => page_html.updateAttribute("user-agent", navigator.userAgent));
      }
-
      if (globalThis.window) {
          if (window != window.top) {
              globalThis.page_html.setAttribute("framed", "true");
          }
      }
-
-
      declare(() => {
          if ((window.innerHeight == window.innerWidth)) {
              globalThis.page_html.updateAttribute("orientation", "square");
@@ -1254,7 +1224,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              globalThis.page_html.updateAttribute("orientation", "landscape");
          }
      });
-
      declare(() => {
          globalThis.page_html.updateAttribute("ready-state", document.readyState);
          globalThis.page_html.updateAttribute("visibility-state", document.visibilityState);
@@ -1271,8 +1240,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
          globalThis.page_html.updateAttribute("history-state", (Q(() => JSON.stringify(history.state)) || history.state));
          globalThis.page_html.updateAttribute("online", navigator.onLine);
      });
-
-
      declare(() => {
          const untagged = Array.from(document.querySelectorAll(":not([tag-name])"));
          const untagged_length = untagged.length;
@@ -1289,7 +1256,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              }
          }
      });
-
      declare(() => {
          const untagged = Array.from(document.querySelectorAll(":not([tag])"));
          const untagged_length = untagged.length;
@@ -1301,7 +1267,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              }
          }
      });
-
      declare(() => {
          const untagged = Array.from(document.querySelectorAll(":not([element-prefix])"));
          const untagged_length = untagged.length;
@@ -1313,7 +1278,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              }
          }
      });
-
      declare(() => {
          const unnamed = Array.from(document.querySelectorAll(":not([namespace-uri])"));
          const unnamed_length = unnamed.length;
@@ -1325,7 +1289,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              }
          }
      });
-
      /* declare(() => {
         queryApplyAll("*", (el) => {
           const attrs = el.getAttributeNames();
@@ -1346,26 +1309,17 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
           }
         });
       });*/
-
-
      declare(() => {
          if (!(document.querySelector('style.has-test'))) {
-
              let hasTestStyle = document.createElement('style');
-
              hasTestStyle.className = 'has-test';
-
              hasTestStyle.innerHTM = '.has-test:has(.supported){--has-supported:true;}';
-
              doDOM(() => {
                  body().appendChild(hasTestStyle);
              });
          }
-
          if (!(document.querySelector('span.has-test'))) {
-
              let hasTestSpan = document.createElement('span');
-
              hasTestSpan.className = 'has-test';
 	     let hts=document.createElement('span');
 	     hts.setAttribute('class','supported');
@@ -1374,12 +1328,10 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
                  body().appendChild(hasTestSpan);
              });
          }
-
          let hasTest = !!(getComputedStyle(document.querySelector('span.has-test')).getPropertyValue('--has-supported'));
          updateProperty(globalThis, 'hasSupported', hasTest);
          globalThis.page_html.updateAttribute('has-supported', hasTest);
      });
-
      design(() => {
          queryApplyAll('dynamic-styles', async (el) => {
              let firstRun = false;
@@ -1414,9 +1366,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
                      return;
                  }
              }
-
-
-
              const dynamicStylesJSON = JSON.parse(instructions.querySelector('style').innerHTML);
              const dynamicStyles = dynamicStylesJSON["dynamic-styles"];
              if (dynamicStyles) {
@@ -1446,9 +1395,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
                          continue;
                      }
                  }
-
              }
-
              const dynamicSelectors = dynamicStylesJSON["dynamic-selectors"];
              if (dynamicSelectors) {
                  const dynamicSelectorKeys = Object.keys(dynamicSelectors);
@@ -1466,18 +1413,13 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
                              if ((updatedStyle) && (ds.innerHTML.toString() != updatedStyle)) {
                                  ds.innerHTM = updatedStyle;
                              }
-
                          }
                      } catch (e) {
                          console.log(e);
                          continue;
                      }
                  }
-
              }
-
-
-
          });
      });
 
@@ -1498,8 +1440,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 </dynamic-styles>
 
   */
-
-
      declare(() => {
          if (!(document.querySelector('style[template-styles]'))) {
              let sty = document.createElement('style');
@@ -1510,7 +1450,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              });
          }
      });
-
      function applyDynamicStyles(elem) {
          let output = ':root[dynamic-styles]{\n';
          for (const attr of elem.attributes) {
@@ -1528,7 +1467,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              elem.innerHTM = s;
          }
      }
-
      design(() => {
          const dynamicStyles = document.querySelectorAll('style[dynamic]');
          const dynamicStyles_length = dynamicStyles.length;
@@ -1542,10 +1480,8 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
          }
          document.querySelector(':root').updateAttribute('dynamic-styles', true);
      });
-
      globalThis.modulesSupported = true;
      globalThis.page_html.updateAttribute('modules-supported', true);
-
      let nmscript = document.createElement('script');
      nmscript.setAttribute('nomodule', true);
      nmscript.innerHTM = `
@@ -1553,7 +1489,6 @@ globalThis.modulesSupported=false;
 globalThis.page_html.updateAttribute('modules-supported',false);
 `;
      globalThis.page_html.appendChild(nmscript);
-
      globalThis.safeFetch = async function() {
 	let res;
          try {
@@ -1581,55 +1516,47 @@ globalThis.page_html.updateAttribute('modules-supported',false);
      globalThis.fatch = globalThis.safeFetch;
      globalThis.zfetch = globalThis.safeFetch;
      globalThis.frow = globalThis.unsafeFetch
-	globalThis.zfetchText = async function(){
-		try{
-			let res = await fetch(...arguments);
-			if(res.status > 399){
-				return res.statusText;
-			}
-			return await res.text();
-		}catch(e){
-			return e.message;
+     globalThis.zfetchText = async function(){
+	try{
+		let res = await fetch(...arguments);
+		if(res.status > 399){
+			return res.statusText;
 		}
+		return await res.text();
+	}catch(e){
+		return e.message;
 	}
-
-	JSON.zparse = function(str){
-		try{
-			return JSON.parse(str);
-		}catch(e){
-			console.log(e,str);
-			e.inputText = str;
-			return e;
-		}
+     }
+     JSON.zparse = function(str){
+	try{
+	  return JSON.parse(str);
+	}catch(e){
+	  console.log(e,str);
+	  e.inputText = str;
+	  return e;
 	}
+     }
      globalThis.fetchResponseText = async function() {
          let res = await fetch(...arguments);
          res.fullBody = await res.text();
          return res;
      };
-
-
-
      globalThis.fetchResponseArrayBuffer = async function() {
          let res = await fetch(...arguments);
          res.fullBody = await res.arrayBuffer();
          return res;
      };
-
      globalThis.fetchArrayBuffer = async function() {
          return (await fetch(...arguments)).arrayBuffer();
      };
-
      Q(()=>{
-      defineNonenumerable(Object.prototype,'Þ' , function() {
+       defineNonenumerable(Object.prototype,'Þ' , function() {
          return arguments[0](this, ...Array.from(arguments).slice(1));
+       });
      });
-     });
-
      globalThis.console.lag = async function() {
          return console.log(...arguments);
      };
-
      globalThis.ifTry = (bool, then, elseThen) => {
          if (bool) {
              try {
@@ -1657,7 +1584,6 @@ globalThis.page_html.updateAttribute('modules-supported',false);
              }
          }
      }
-
      globalThis.$ifTry = async (bool, then, elseThen) => {
          bool = await bool;
          if (bool) {
@@ -1702,9 +1628,9 @@ globalThis.page_html.updateAttribute('modules-supported',false);
      globalThis.AsyncFunction = async function() {}.constructor;
 
      /** extract a value from json 
-using string manipulation.
-Great for malformed json.
-*/
+     using string manipulation.
+     Great for malformed json.
+     */
      globalThis.JSON.extract = function(json, str) {
          if (typeof json != "string") {
              json = JSON.stringify(json);
@@ -1718,7 +1644,6 @@ Great for malformed json.
          str[index] = char;
          return str.join("");
      });
-
      defineNonenumerable(String.prototype,'includesAny' , function(arr) {
          let arr_length = arr.length;
          for (let i = 0; i < arr_length; i++) {
@@ -1728,11 +1653,7 @@ Great for malformed json.
          }
          return false;
      });
-
-
-     if (!(globalThis.subscriberList)) {
-         globalThis.subscriberList = Object.create(null);
-     }
+     globalThis.subscriberList ??= Object.create(null);
      declare(() => {
          const subList = Object.keys(globalThis.subscriberList);
          const subList_length = subList.length;
@@ -1751,24 +1672,17 @@ Great for malformed json.
          s.attr = attr;
          globalThis.subscriberList[id] = s;
      }
-
      globalThis.unsubscribeState = function(id) {
          delete globalThis.subscriberList[id];
      }
-
      localStorage.updateItem = function(key, val) {
-
          if (!(localStorage.getItem(key))) {
              localStorage.setItem(key, val);
          } else if (localStorage.getItem(key) != val) {
              localStorage.setItem(key, val);
          }
-
      }
-
-     if (!(globalThis.publisherList)) {
-         globalThis.publisherList = Object.create(null);
-     }
+     globalThis.publisherList ??= Object.create(null);
      declare(() => {
          const pubList = Object.keys(globalThis.publisherList);
          const pubList_length = pubList.length;
@@ -1787,12 +1701,9 @@ Great for malformed json.
          s.attr = attr;
          globalThis.pubList[id] = s;
      }
-
      globalThis.unpublishState = function(id) {
          delete globalThis.publisherList[id];
      }
-
-
      globalThis.toSansSerif = function(str) {
          const abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
          const xyz = '𝖠𝖡𝖢𝖣𝖤𝖥𝖦𝖧𝖨𝖩𝖪𝖫𝖬𝖭𝖮𝖯𝖰𝖱𝖲𝖳𝖴𝖵𝖶𝖷𝖸𝖹𝖺𝖻𝖼𝖽𝖾𝖿𝗀𝗁𝗂𝗃𝗄𝗅𝗆𝗇𝗈𝗉𝗊𝗋𝗌𝗍𝗎𝗏𝗐𝗑𝗒𝗓';
@@ -1802,8 +1713,6 @@ Great for malformed json.
          }
          return str;
      }
-
-
      Object.descriptorKeys = function(obj) {
          try {
              return Object.keys(Object.getOwnPropertyDescriptors(obj)) || [];
@@ -1811,10 +1720,9 @@ Great for malformed json.
              return [];
          }
      }
-
 document.filterSelectorAll = function(filter) {
   try{
-var resultList = [];
+    var resultList = [];
     filter=helpAppliedFunction(filter);
     let root = this instanceof Node ? this : document;
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, {
@@ -1831,10 +1739,9 @@ var resultList = [];
   }
     return resultList;
 };
-
 document.filterSelector = function(filter) {
-try{
-filter=helpAppliedFunction(filter);
+  try{
+    filter=helpAppliedFunction(filter);
     let root = this instanceof Node ? this : document;
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, {
         acceptNode: node => filter(node) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP
@@ -1842,12 +1749,10 @@ filter=helpAppliedFunction(filter);
     while (walker.nextNode()) {
         return walker.currentNode;
     }
-}catch(e){
+  }catch(e){
 	return undefined;
-}
-
+  }
 };
-
      Object.forInKeys = function(obj) {
          let keys = [];
          for (const i in obj) {
@@ -1859,7 +1764,6 @@ filter=helpAppliedFunction(filter);
          }
          return keys;
      }
-
      globalThis.assimilate = function(target, source) {
          if (!source) {
              return;
@@ -1926,9 +1830,7 @@ filter=helpAppliedFunction(filter);
          return target;
      }
      Q(() => {
-         if (!Atomics) {
-             globalThis.Atomics = {};
-         }
+          globalThis.Atomics ??= {};
      });
      Q(() => assimilate(globalThis, Object));
      Q(() => assimilate(globalThis, Reflect));
@@ -1948,13 +1850,7 @@ filter=helpAppliedFunction(filter);
      Q(() => mimic(globalThis, body(), Element.prototype));
      Q(() => mimic(globalThis, body(), Node.prototype));
      Q(() => mimic(globalThis, body(), EventTarget.prototype));
-
-	
-
-
-
-
-     defineNonenumerable(Object.prototype,'xpathSelector',function(query){
+     defineNonenumerable(globalThis.Node?.prototype,'xpathSelector',function(query){
 		let node = this;
 		if(!(node instanceof Node)){
 			node = document;
@@ -1971,7 +1867,7 @@ filter=helpAppliedFunction(filter);
 			return;
 		}
 	});
-defineNonenumerable(Object.prototype,'xpathSelectorAll', function(query){
+     defineNonenumerable(globalThis.Node?.prototype,'xpathSelectorAll', function(query){
                 let node = this;
                 if(!(node instanceof Node)){
                                 node = document;
@@ -1993,10 +1889,9 @@ defineNonenumerable(Object.prototype,'xpathSelectorAll', function(query){
                                 return [];
                 }
                 return nodeList;
-	}
-);
-defineNonenumerable(Object.prototype,'xpath',Object.prototype.xpathSelector);
-defineNonenumerable(Object.prototype,'xpathAll',Object.prototype.xpathSelectorAll);
+	});
+     defineNonenumerable(globalThis.Node?.prototype,'xpath',globalThis.Node?.prototype?.xpathSelector??(()=>{}));
+     defineNonenumerable(globalThis.Node?.prototype,'xpathAll',globalThis.Node?.prototype?.xpathSelectorAll??(()=>{}));
 
  
  globalThis.xpathApplyAll = async function(query, func) {
@@ -2027,7 +1922,7 @@ defineNonenumerable(Object.prototype,'xpathAll',Object.prototype.xpathSelectorAl
 
  };
 
-    defineNonenumerable(Object.prototype,'cssSelector',function(query){
+    defineNonenumerable(globalThis.Node?.prototype,'cssSelector',function(query){
 		let node = this;
 		if(!(node instanceof Node)){
 			node = document;
@@ -2038,7 +1933,7 @@ defineNonenumerable(Object.prototype,'xpathAll',Object.prototype.xpathSelectorAl
 			return;
 		}
 	});
-defineNonenumerable(Object.prototype,'cssSelectorAll', function(query){
+defineNonenumerable(globalThis.Node?.prototype,'cssSelectorAll', function(query){
                 let node = this;
                 if(!(node instanceof Node)){
                          node = document;
@@ -2049,8 +1944,7 @@ defineNonenumerable(Object.prototype,'cssSelectorAll', function(query){
 			return [];
                 }
 
-	}
-);
+});
 
 
 	
@@ -2067,14 +1961,14 @@ defineNonenumerable(Object.prototype,'cssSelectorAll', function(query){
 	     return resultList;
 	};
 
-     defineNonenumerable(HTMLCollection.prototype,'querySelector',function(qy){
+     defineNonenumerable(globalThis.HTMLCollection?.prototype,'querySelector',function(qy){
       if(this.length===undefined){return;}
       for(let i=0;i<this.length;i++){try{
         let el = this[i].querySelector(qy);
         if(el){return el;}
       }catch(e){continue;}}
      });
-     defineNonenumerable(HTMLCollection.prototype,'querySelectorAll',function(qy){
+     defineNonenumerable(globalThis.HTMLCollection?.prototype,'querySelectorAll',function(qy){
       if(this.length===undefined){return;}
       let arr = [];
       if(this.length < 1){return arr;}
@@ -2099,33 +1993,21 @@ defineNonenumerable(Object.prototype,'cssSelectorAll', function(query){
          const reg = new RegExp(startText, "gi")
          if(reg.test(endText)){
              endText = toSansSerif(endText);
-         }
-         
-         if (!el) {
-             return;
-         }
+         }  
+         if (!el) { return;}
          var n, a = [],
              walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
          while (n = walk.nextNode()) {
              a.push(n);
              let ntext = n.textContent;
-
              ntext = ntext.replace(reg, endText);
-
-
              updateProperty(n, 'textContent', ntext);
-
-
-
          };
          if (document.title.toLowerCase().includes(startText.toLowerCase())) {
-             document.title = document.title
-                 .replace(reg, endText);
+             document.title = document.title.replace(reg, endText);
          }
          return a;
      }
-
-
      if (globalThis.XMLHttpRequest) {
          let xhttp = new XMLHttpRequest();
          xhttp.onreadystatechange = function() {
@@ -2145,44 +2027,35 @@ defineNonenumerable(Object.prototype,'cssSelectorAll', function(query){
                  }
              }
          };
-         xhttp.open("GET", window.location.href, true);
+         xhttp.open("GET", location.href, true);
          xhttp.send();
      }
      void async function() {
-         let myrequest = new Request(window.location.href);
+         let myrequest = new Request(location.href);
          let myresponse = await fetch(myrequest);
          myrequest.headers.forEach(function() {
              globalThis.page_html.updateAttribute(`fetch-request-header-${arguments[1]}`, arguments[0]);
          });
-
-
          myresponse.headers.forEach(function() {
              globalThis.page_html.updateAttribute(`response-header-${arguments[1]}`, arguments[0]);
          })
      }();
-
-     globalThis.mouseX = 0;
-     globalThis.mouseY = 0;
-
+     globalThis.mouseX ??= 0;
+     globalThis.mouseY ??= 0;
      function updateMouseLocation(event) {
          defer(() => {
              globalThis.mouseX = event.pageX;
              globalThis.mouseY = event.pageY;
          });
      }
-
-     window.addEventListener("mousemove", updateMouseLocation, false);
-     window.addEventListener("mouseenter", updateMouseLocation, false);
-     window.addEventListener("mouseleave", updateMouseLocation, false);
-
-     globalThis.screenX = 0;
-     globalThis.screenY = 0;
-
+     window?.addEventListener?.("mousemove", updateMouseLocation, false);
+     window?.addEventListener?.("mouseenter", updateMouseLocation, false);
+     window?.addEventListener?.("mouseleave", updateMouseLocation, false);
+     globalThis.screenX ??= 0;
+     globalThis.screenY ??= 0;
      function updateTouchScreenLocation(event) {
          defer(() => {
-             if (!globalThis.wasFocused) {
-                 globalThis.wasFocused = true;
-             }
+             globalThis.wasFocused = true;
              const event_touches_length = event.touches.length;
              for (let i = 0; i < event_touches_length; i++) {
                  try {
@@ -2201,7 +2074,6 @@ defineNonenumerable(Object.prototype,'cssSelectorAll', function(query){
              document.firstElementChild.addEventListener("touchend", updateTouchScreenLocation, false);
              document.firstElementChild.addEventListener("touchmove", updateTouchScreenLocation, false);
              document.firstElementChild.addEventListener("touchcancel", updateTouchScreenLocation, false);
-
              document.body.addEventListener("touchstart", updateTouchScreenLocation, false);
              document.body.addEventListener("touchend", updateTouchScreenLocation, false);
              document.body.addEventListener("touchmove", updateTouchScreenLocation, false);
@@ -2211,22 +2083,16 @@ defineNonenumerable(Object.prototype,'cssSelectorAll', function(query){
          document.firstElementChild.addEventListener("touchend", updateTouchScreenLocation, false);
          document.firstElementChild.addEventListener("touchmove", updateTouchScreenLocation, false);
          document.firstElementChild.addEventListener("touchcancel", updateTouchScreenLocation, false);
-
          document.body.addEventListener("touchstart", updateTouchScreenLocation, false);
          document.body.addEventListener("touchend", updateTouchScreenLocation, false);
          document.body.addEventListener("touchmove", updateTouchScreenLocation, false);
          document.body.addEventListener("touchcancel", updateTouchScreenLocation, false);
      });
-
-
-     globalThis.clientX = 0;
-     globalThis.clientY = 0;
-
+     globalThis.clientX ??= 0;
+     globalThis.clientY ??= 0;
      function updateTouchclientLocation(event) {
          defer(() => {
-             if (!globalThis.wasFocused) {
-                 globalThis.wasFocused = true;
-             }
+             globalThis.wasFocused = true;
              const event_touches_length = event.touches.length;
              for (let i = 0; i < event_touches_length; i++) {
                  try {
@@ -2246,7 +2112,6 @@ defineNonenumerable(Object.prototype,'cssSelectorAll', function(query){
              document.firstElementChild.addEventListener("touchend", updateTouchclientLocation, false);
              document.firstElementChild.addEventListener("touchmove", updateTouchclientLocation, false);
              document.firstElementChild.addEventListener("touchcancel", updateTouchclientLocation, false);
-
              document.body.addEventListener("touchstart", updateTouchclientLocation, false);
              document.body.addEventListener("touchend", updateTouchclientLocation, false);
              document.body.addEventListener("touchmove", updateTouchclientLocation, false);
@@ -2256,17 +2121,12 @@ defineNonenumerable(Object.prototype,'cssSelectorAll', function(query){
          document.firstElementChild.addEventListener("touchend", updateTouchclientLocation, false);
          document.firstElementChild.addEventListener("touchmove", updateTouchclientLocation, false);
          document.firstElementChild.addEventListener("touchcancel", updateTouchclientLocation, false);
-
          document.body.addEventListener("touchstart", updateTouchclientLocation, false);
          document.body.addEventListener("touchend", updateTouchclientLocation, false);
          document.body.addEventListener("touchmove", updateTouchclientLocation, false);
          document.body.addEventListener("touchcancel", updateTouchclientLocation, false);
      });
-
-
      declare(() => {
-
-
          queryApplyAll('if:not([evaluation]):not(template if,for if,if if,else if)', async (IF) => {
              IF.setAttribute('evaluation', 'in progress');
              let ELSE = false;
@@ -2275,12 +2135,9 @@ defineNonenumerable(Object.prototype,'cssSelectorAll', function(query){
                      ELSE = IF.nextElementSibling;
                  }
                  let condition = IF.getAttribute('condition');
-
                  condition = !!(await $Q(async () => await eval(condition)));
-
                  if (condition) {
                      let template = IF.querySelector('template');
-
                      if (!template) {
                          template = document.createElement('template');
                          template.innerHTM = IF.innerHTML;
@@ -2290,7 +2147,6 @@ defineNonenumerable(Object.prototype,'cssSelectorAll', function(query){
                      if (ELSE) {
                          ELSE.updateAttribute('evaluation', 'done');
                      }
-
                  } else {
                      if (ELSE) {
                          let template = ELSE.querySelector('template');
@@ -2308,25 +2164,17 @@ defineNonenumerable(Object.prototype,'cssSelectorAll', function(query){
                  IF.setAttribute('evaluation', 'error');
                  IF.setAttribute('error', e.message);
              }
-
-
          });
-
      });
-
      declare(() => {
-
-
          queryApplyAll('for:not([evaluation]):not(template for,for for,if for,else for)', async (FOR) => {
              FOR.setAttribute('evaluation', 'in progress');
              try {
-
                  let items = FOR.getAttribute('items');
                  if (!items) {
                      return FOR.updateAttribute('evaluation', 'missing items');
                  }
                  items = await eval(`$A(${items})`);
-
                  let template = FOR.querySelector('template');
                  if (!template) {
                      template = document.createElement('template');
@@ -2353,16 +2201,12 @@ defineNonenumerable(Object.prototype,'cssSelectorAll', function(query){
                  }
                  FOR.parentElement.insertBefore(fragment.content, FOR);
                  FOR.updateAttribute('evaluation', 'done');
-
              } catch (e) {
                  console.log(e);
                  FOR.setAttribute('evaluation', 'error');
                  FOR.setAttribute('error', e.message);
              }
-
-
          });
-
      });
 
      /*declare(() => {
@@ -2508,7 +2352,6 @@ defineNonenumerable(Element.prototype,'setValues',function(attr){
   }
   return el;
  };
-
  globalThis.waitExists=async function(query){
   while(!select(query)){await sleep(100);await nextIdle();}
   return true;
@@ -2519,7 +2362,7 @@ defineNonenumerable(Element.prototype,'setValues',function(attr){
   return func(select(query));
  };
 globalThis.onTrue=async function(bool,func){
-  if(!func){func = ()=>{};}
+  func ??= ()=>{};
   while(!(await $Q(bool))){await sleep(100);await nextIdle();}
   return func();
  };
@@ -2527,7 +2370,7 @@ globalThis.onTrue=async function(bool,func){
      console.log("JavaxScript loaded successfully");
 
  } catch (e) {
-      globalThis.JXSLOADER='failed';
+     globalThis.JXSLOADER='failed';
      console.log("JavaxScript failed to load: ", e);
  }
 }else{
