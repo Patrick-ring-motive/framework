@@ -28,7 +28,7 @@ Object.defineProperty(Element.prototype, "innerHTM", {
      enumerable: false
    });
  }
-	defineNonenumerable(Element.prototype,'setTrait' , function(attr, val) {
+	defineNonenumerable((globalThis.Element??{}).prototype,'setTrait' , function(attr, val) {
              const el = this;
 		el.setAttribute(attr,val);
 		el[attr]=val;
