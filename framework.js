@@ -27,7 +27,7 @@ Object.defineProperty(Element?.prototype??{}, "innerHTM", {
      enumerable: false
    });
  }
-	defineNonenumerable(globalThis?.Element?.prototype,'setTrait' , function(attr, val) {
+	defineNonenumerable(globalThis?.Element?.prototype??{},'setTrait' , function(attr, val) {
              const el = this;
 		el.setAttribute(attr,val);
 		el[attr]=val;
@@ -148,7 +148,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       body().appendChild(s);
         });
      }
-	defineNonenumerable(globalThis?.HTMLIFrameElement?.prototype, 'iframeDocument', function(obj) {
+	defineNonenumerable(globalThis?.HTMLIFrameElement?.prototype??{}, 'iframeDocument', function(obj) {
 		return this.contentWindow?.document||this.contentDocument;
 	});
 	globalThis.hiddenFrame=function(url){
@@ -626,7 +626,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              .replace(/[^a-zA-Z0-9_-]/g, "�");
      };
 
-     defineNonenumerable(globalThis?.EventTarget?.prototype,'addDeferEventListener' , function(type, listener, options) {
+     defineNonenumerable(globalThis?.EventTarget?.prototype??{},'addDeferEventListener' , function(type, listener, options) {
          const target = this;
          const deferListener = (event) => {
              defer(() => {
@@ -639,7 +639,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              target.addEventListener(type, deferListener, options);
          }
      });
-      defineNonenumerable(globalThis?.Element?.prototype,'addDeferEventListener',function(type, listener, options) {
+      defineNonenumerable(globalThis?.Element?.prototype??{},'addDeferEventListener',function(type, listener, options) {
          const target = this;
          const deferListener = (event) => {
              defer(() => {
@@ -1850,7 +1850,7 @@ document.filterSelector = function(filter) {
      Q(() => mimic(globalThis, body(), Element.prototype));
      Q(() => mimic(globalThis, body(), Node.prototype));
      Q(() => mimic(globalThis, body(), EventTarget.prototype));
-     defineNonenumerable(globalThis.Node?.prototype,'xpathSelector',function(query){
+     defineNonenumerable(globalThis.Node?.prototype??{},'xpathSelector',function(query){
 		let node = this;
 		if(!(node instanceof Node)){
 			node = document;
@@ -1867,7 +1867,7 @@ document.filterSelector = function(filter) {
 			return;
 		}
 	});
-     defineNonenumerable(globalThis.Node?.prototype,'xpathSelectorAll', function(query){
+     defineNonenumerable(globalThis.Node?.prototype??{},'xpathSelectorAll', function(query){
                 let node = this;
                 if(!(node instanceof Node)){
                                 node = document;
@@ -1890,8 +1890,8 @@ document.filterSelector = function(filter) {
                 }
                 return nodeList;
 	});
-     defineNonenumerable(globalThis.Node?.prototype,'xpath',globalThis.Node?.prototype?.xpathSelector??(()=>{}));
-     defineNonenumerable(globalThis.Node?.prototype,'xpathAll',globalThis.Node?.prototype?.xpathSelectorAll??(()=>{}));
+     defineNonenumerable(globalThis.Node?.prototype??{},'xpath',globalThis.Node?.prototype?.xpathSelector??(()=>{}));
+     defineNonenumerable(globalThis.Node?.prototype??{},'xpathAll',globalThis.Node?.prototype?.xpathSelectorAll??(()=>{}));
 
  
  globalThis.xpathApplyAll = async function(query, func) {
@@ -1922,7 +1922,7 @@ document.filterSelector = function(filter) {
 
  };
 
-    defineNonenumerable(globalThis.Node?.prototype,'cssSelector',function(query){
+    defineNonenumerable(globalThis.Node?.prototype??{},'cssSelector',function(query){
 		let node = this;
 		if(!(node instanceof Node)){
 			node = document;
@@ -1933,7 +1933,7 @@ document.filterSelector = function(filter) {
 			return;
 		}
 	});
-defineNonenumerable(globalThis.Node?.prototype,'cssSelectorAll', function(query){
+defineNonenumerable(globalThis.Node?.prototype??{},'cssSelectorAll', function(query){
                 let node = this;
                 if(!(node instanceof Node)){
                          node = document;
@@ -1961,14 +1961,14 @@ defineNonenumerable(globalThis.Node?.prototype,'cssSelectorAll', function(query)
 	     return resultList;
 	};
 
-     defineNonenumerable(globalThis.HTMLCollection?.prototype,'querySelector',function(qy){
+     defineNonenumerable(globalThis.HTMLCollection?.prototype??{},'querySelector',function(qy){
       if(this.length===undefined){return;}
       for(let i=0;i<this.length;i++){try{
         let el = this[i].querySelector(qy);
         if(el){return el;}
       }catch(e){continue;}}
      });
-     defineNonenumerable(globalThis.HTMLCollection?.prototype,'querySelectorAll',function(qy){
+     defineNonenumerable(globalThis.HTMLCollection?.prototype??{},'querySelectorAll',function(qy){
       if(this.length===undefined){return;}
       let arr = [];
       if(this.length < 1){return arr;}
@@ -2048,9 +2048,9 @@ defineNonenumerable(globalThis.Node?.prototype,'cssSelectorAll', function(query)
              globalThis.mouseY = event.pageY;
          });
      }
-     window?.addEventListener?.("mousemove", updateMouseLocation, false);
-     window?.addEventListener?.("mouseenter", updateMouseLocation, false);
-     window?.addEventListener?.("mouseleave", updateMouseLocation, false);
+     globalThis.window?.addEventListener?.("mousemove", updateMouseLocation, false);
+     globalThis.window?.addEventListener?.("mouseenter", updateMouseLocation, false);
+     globalThis.window?.addEventListener?.("mouseleave", updateMouseLocation, false);
      globalThis.screenX ??= 0;
      globalThis.screenY ??= 0;
      function updateTouchScreenLocation(event) {
@@ -2267,7 +2267,7 @@ defineNonenumerable(globalThis.Node?.prototype,'cssSelectorAll', function(query)
 
 
 };
-defineNonenumerable(Element.prototype,'setAttributes',function(attr){
+defineNonenumerable(globalThis.Element?.prototype??{},'setAttributes',function(attr){
  if(!attr){return;}
  try{
   const attrkeys = Object.keys(attr);
@@ -2279,7 +2279,7 @@ defineNonenumerable(Element.prototype,'setAttributes',function(attr){
  }catch(e){return;}
 });
 
-defineNonenumerable(Element.prototype,'setStyles',function(attr){
+defineNonenumerable(globalThis.Element?.prototype??{},'setStyles',function(attr){
  if(!attr){return;}
  try{
   const attrkeys = Object.keys(attr);
@@ -2291,7 +2291,7 @@ defineNonenumerable(Element.prototype,'setStyles',function(attr){
  }catch(e){return;}
 });
 
-defineNonenumerable(Element.prototype,'setValues',function(attr){
+defineNonenumerable(globalThis.Element?.prototype??{},'setValues',function(attr){
  if(!attr){return;}
  try{
   const attrkeys = Object.keys(attr);
@@ -2303,7 +2303,7 @@ defineNonenumerable(Element.prototype,'setValues',function(attr){
  }catch(e){return;}
 });
 
- defineNonenumerable(Element.prototype,'addChildren',function(lis){
+ defineNonenumerable(globalThis.Element?.prototype??{},'addChildren',function(lis){
   for(let i = 0;i<lis.length;i++){try{
    if(`${lis[i].constructor}`.toLowerCase().includes('element')){
     try{    
