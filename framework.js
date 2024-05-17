@@ -100,7 +100,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       s.src=url;
       s.onload = ()=>resolve(s);
       s.onerror = ()=>resolve(s);
-	if(!bdy){bdy=body();}
+      bdy??=body();
       bdy.appendChild(s);
       });  
      }
@@ -112,7 +112,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       s.src=url;
       s.onload = ()=>resolve(s);
       s.onerror = ()=>resolve(s);
-	      if(!bdy){bdy=body();}
+	    bdy??=body();
       bdy.appendChild(s);
       });  
      }
