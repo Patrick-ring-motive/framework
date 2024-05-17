@@ -1,7 +1,7 @@
 if(!(globalThis?.JXSLOADER)){
  globalThis.JXSLOADER='loading';
 try {			 
-Object.defineProperty(Element?.prototype??{}, "innerHTM", {
+Object.defineProperty(globalThis.Element?.prototype??{}, "innerHTM", {
   get() {
     return innerHTML;
   },
@@ -19,7 +19,7 @@ Object.defineProperty(Element?.prototype??{}, "innerHTM", {
   enumerable: true,
   configurable: true,
 });
- function defineNonenumerable(obj={},prop,val){
+ function defineNonenumerable(obj,prop,val){
      Object.defineProperty(obj, prop, {
      value: val,
      writable: true,
@@ -27,7 +27,7 @@ Object.defineProperty(Element?.prototype??{}, "innerHTM", {
      enumerable: false
    });
  }
-	defineNonenumerable(globalThis?.Element?.prototype??{},'setTrait' , function(attr, val) {
+	defineNonenumerable(globalThis.Element?.prototype??{},'setTrait' , function(attr, val) {
              const el = this;
 		el.setAttribute(attr,val);
 		el[attr]=val;
