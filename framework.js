@@ -72,15 +72,15 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 	globalThis.nextTask=function(){
 		return new Promise((resolve) => {queueMicrotask(resolve);});  
 	}
-     window.nodeName = 'window';
-     window.tagName = 'WINDOW';
-     window.tag = 'Window';
+     (globalThis.window??{}).nodeName = 'window';
+     (globalThis.window??{}).tagName = 'WINDOW';
+     (globalThis.window??{}).tag = 'Window';
      globalThis.doInterval=function(fn,ms){
       setTimeout(fn,0);
       return setInterval(fn,ms);
      }
-     globalThis.body = () => document.body || document.firstElementChild;
-     globalThis.style = function(selector,obj){
+     (globalThis.window??{}).body = () => document.body || document.firstElementChild;
+     (globalThis.window??{}).style = function(selector,obj){
       return new Promise((resolve) => {
       let s = document.createElement('style');
       let css = `${selector}{`;
@@ -94,7 +94,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       body().appendChild(s);
          });
      }
-     globalThis.importScript = function(url,bdy){
+     (globalThis.window??{}).importScript = function(url,bdy){
       return new Promise((resolve) => {
       let s = document.createElement('script');
       s.src=url;
@@ -104,7 +104,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       bdy.appendChild(s);
       });  
      }
-     globalThis.importModule = function(url,bdy){
+     (globalThis.window??{}).importModule = function(url,bdy){
       return new Promise((resolve) => {
       let s = document.createElement('script');
       s.setAttribute('type','module');
@@ -116,7 +116,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       bdy.appendChild(s);
       });  
      }
-     globalThis.importStyle=function(url){
+     (globalThis.window??{}).importStyle=function(url){
 	return new Promise((resolve) => {
 		  let l = document.createElement('link');
 		  l.rel='stylesheet';
@@ -138,7 +138,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 		  body().appendChild(h);
 	  });
     };
-     globalThis.script = function(fn){
+     (globalThis.window??{}).script = function(fn){
       return new Promise((resolve) => {
       let s = document.createElement('script');
       let js = `(${fn})();`;
@@ -151,7 +151,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 	defineNonenumerable(globalThis?.HTMLIFrameElement?.prototype??{}, 'iframeDocument', function(obj) {
 		return this.contentWindow?.document||this.contentDocument;
 	});
-	globalThis.hiddenFrame=function(url){
+	(globalThis.window??{}).hiddenFrame=function(url){
 	return new Promise((resolve) => {
 		  let h = document.createElement('iframe');
 		  h.src = url;
@@ -209,7 +209,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
      globalThis.get = key => globalThis[key];
      globalThis.set = (key, val) => globalThis[key] = val;
 
-     globalThis.DOMContentLoaded = (fn) => {
+     (globalThis.window??{}).DOMContentLoaded = (fn) => {
 	 if(!fn){fn=()=>{};}
          return new Promise((resolve) => {
 		(document || globalThis).addEventListener("DOMContentLoaded", ()=>{
@@ -217,7 +217,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 		 });
 	 });
      }
-     globalThis.DOMInteractive = (fn) => {
+     (globalThis.window??{}).DOMInteractive = (fn) => {
 	 fn??=()=>{};
          if ((document.readyState == 'complete') || (document.readyState == 'interactive')) {
              return fn();
@@ -228,7 +228,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 		 });
 	 });
      }
-     globalThis.DOMComplete = (fn) => {
+     (globalThis.window??{}).DOMComplete = (fn) => {
 	 fn??=()=>{};
          if (document.readyState == 'complete') {
              return fn();
@@ -239,7 +239,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 		 });
 	 });
      }
-     globalThis.doDOM = (fn) => {
+     (globalThis.window??{}).doDOM = (fn) => {
          try {
            return fn();
          } catch (e) {
