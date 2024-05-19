@@ -85,14 +85,14 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       let s = document.createElement('style');
       let css = `${selector}{`;
       s.onload = ()=>resolve(s);
-		    s.onerror = ()=>resolve(s);
+		  s.onerror = ()=>resolve(s);
       for (const property in obj) {
        css += `${property}: ${obj[property]};`;
       }
       css += `}`;
-	s.innerHTM=css;
+	    s.innerHTM=css;
       body().appendChild(s);
-         });
+      });
      }
      (globalThis.window??{}).importScript = function(url,bdy){
       return new Promise((resolve) => {
@@ -143,10 +143,10 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       let s = document.createElement('script');
       let js = `(${fn})();`;
       s.onload = ()=>resolve(s);
-		    s.onerror = ()=>resolve(s);
+		  s.onerror = ()=>resolve(s);
       try{ s.innerHTML = js; }catch(e){ s.innerText = js; }
       body().appendChild(s);
-        });
+      });
      }
 	defineNonenumerable(globalThis?.HTMLIFrameElement?.prototype??{}, 'iframeDocument', function(obj) {
 		return this.contentWindow?.document||this.contentDocument;
@@ -205,12 +205,11 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
      globalThis.fetchText = async function() {
          return (await fetch(...arguments)).text();
      };
-
+    
      globalThis.get = key => globalThis[key];
      globalThis.set = (key, val) => globalThis[key] = val;
-
      (globalThis.window??{}).DOMContentLoaded = (fn) => {
-	 if(!fn){fn=()=>{};}
+	       fn??=()=>{};
          return new Promise((resolve) => {
 		(document || globalThis).addEventListener("DOMContentLoaded", ()=>{
 			 try{resolve(fn());}catch(e){resolve(e);}
@@ -218,7 +217,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 	 });
      }
      (globalThis.window??{}).DOMInteractive = (fn) => {
-	 fn??=()=>{};
+	       fn??=()=>{};
          if ((document.readyState == 'complete') || (document.readyState == 'interactive')) {
              return fn();
          }
@@ -229,7 +228,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 	 });
      }
      (globalThis.window??{}).DOMComplete = (fn) => {
-	 fn??=()=>{};
+	       fn??=()=>{};
          if (document.readyState == 'complete') {
              return fn();
          }
@@ -258,7 +257,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              return [];
          },
          set(newValue) {
-
          },
          enumerable: true,
          configurable: true,
@@ -288,8 +286,8 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
      globalThis.draggingSticky = false;
      globalThis.dragging = false;
      globalThis.addEventListener("dragstart", (event) => {
-         globalThis.dragging = true;
-         globalThis.draggingSticky = true;
+     globalThis.dragging = true;
+     globalThis.draggingSticky = true;
      });
      globalThis.addEventListener("dragend", (event) => {
          globalThis.dragging = false;
@@ -334,9 +332,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              console.log('Attempting to call "from" in the wrong context');
              return _ => _;
          },
-         set(newValue) {
-
-         },
+         set(newValue) {},
          enumerable: true,
          configurable: true,
      });
@@ -545,36 +541,21 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
      };
 
      globalThis.updateProperty = function(obj, prop, val) {
-         if (!(obj[prop])) {
-             obj[prop] = val;
-             return;
-         }
-         if (obj[prop] != val) {
-             obj[prop] = val;
-             return;
+         if (`${obj?.[`${prop}`]}` != val) {
+             (obj??{})[`${prop}`] = val;
          }
      }
 
      globalThis.replaceProperty = function(obj, prop, rep, val) {
-         if (!(obj[prop])) {
-             return;
-         }
-         if (obj[prop] != val) {
-             updateProperty(obj, prop, obj[prop].replace(rep,val)) ;
-             return;
+            updateProperty(obj, prop, obj?.[`${prop}`]?.replace?.(rep,val)) ;
          }
      }
      globalThis.approveProperty = function(obj, prop, val) {
          if (!val) {
              return;
          }
-         if (!(obj[prop])) {
-             obj[prop] = val;
-             return;
-         }
-         if (obj[prop] != val) {
-             obj[prop] = val;
-             return;
+         if (`${obj?.[`${prop}`]}` != val) {
+             (obj??{})[`${prop}`] = val;
          }
      }
      console.detail = function(stuff) {
