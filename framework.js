@@ -661,10 +661,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              this.updateAttribute(attr,el.getAttribute(attr).replace(oldval,newval));
          });
          defineNonenumerable(globalThis.Element?.prototype??{},'approveAttribute',function(attr, val) {
-             if (!val) {
-                 return;
+             if (!!val) {
+               this.updateAttribute(attr,val);
              }
-             this.updateAttribute(attr,val);
          });
          defineNonenumerable(globalThis.Element?.prototype??{},'getStyle' , function(attribute) {
              try {
@@ -685,9 +684,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
          globalThis.helpAppliedFunction=function(func){     
              if(typeof func == 'function'){
                 if(func.length == 0){
-		  if(`${func}`.includes('this')){
-		    return function(el){return func.apply(el,[]);};	
-		  }
+		              if(`${func}`.includes('this')){
+		                return function(el){return func.apply(el,[]);};	
+		              }
                   try{func=Function('el',`with(el){return(${func})()}`);}catch(e){}
                 }
              }
@@ -900,25 +899,14 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
      };
 
      globalThis.declareEvaluator = async function() {
-         if (!(globalThis.declareStartup)) {
-             globalThis.declareStartup = 0;
-         }
+         globalThis.declareStartup ??= 0;
          if (declareStartup < 3) {
              declareStartup++;
          } else {
              if ((document.readyState != 'complete') && (Math.floor(Math.random() * 10) < 8)) {
                  return;
              }
-             if (draggingSticky) {
-                 return;
-             }
-             if (typingSticky) {
-                 return;
-             }
-             if (clickingSticky) {
-                 return;
-             }
-             if (document.hidden) {
+             if (draggingSticky||typingSticky||clickingSticky||document.hidden) {
                  return;
              }
              if (document.visibilityState == 'hidden') {
@@ -934,10 +922,10 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              }
              if (document.readyState == 'complete') {
                  if (globalThis.wasFocused) {
-                     if ((navigator.userActivation) && (navigator.userActivation?.isActive === false)) {
+                     if (globalThis.navigator?.userActivation?.isActive === false){
                          return;
                      }
-                     if ((navigator.userActivation) && (navigator.userActivation?.hasBeenActive === false)) {
+                     if (globalThis.navigator?.userActivation?.hasBeenActive === false){
                          return;
                      }
                      if (!document.hasFocus()) {
@@ -1099,10 +1087,10 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              }
              if (document.readyState == 'complete') {
                  if (globalThis.wasFocused) {
-                     if ((navigator.userActivation) && (navigator.userActivation.isActive === false)) {
+                     if (globalThis.navigator?.userActivation?.isActive === false)) {
                          return;
                      }
-                     if ((navigator.userActivation) && (navigator.userActivation.hasBeenActive === false)) {
+                     if (globalThis.navigator?.userActivation?.hasBeenActive === false)) {
                          return;
                      }
                      if (!document.hasFocus()) {
@@ -1131,17 +1119,17 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
      Q(() => globalThis.deferEvaluator());
      Q(() => globalThis.designEvaluator());
      if (globalThis.document) {
-         (document || globalThis).addEventListener("DOMContentLoaded", (event) => {
+         (globalThis.document || globalThis).addEventListener("DOMContentLoaded", (event) => {
              Q(() => globalThis.declareEvaluator());
              Q(() => globalThis.deferEvaluator());
              Q(() => globalThis.designEvaluator());
          });
-         (document || globalThis).addEventListener("readystatechange", (event) => {
+         (globalThis.document || globalThis).addEventListener("readystatechange", (event) => {
              Q(() => globalThis.declareEvaluator());
              Q(() => globalThis.deferEvaluator());
              Q(() => globalThis.designEvaluator());
          });
-         window.addEventListener("load", (event) => {
+         globalThis.window?.addEventListener?.("load", (event) => {
              Q(() => globalThis.declareEvaluator());
              Q(() => globalThis.deferEvaluator());
              Q(() => globalThis.designEvaluator());
