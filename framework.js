@@ -1,20 +1,41 @@
 if(!(globalThis?.JXSLOADER)){
  globalThis.JXSLOADER='loading';
 try {			 
+  
+globalThis.TryCatch=function(){
+  let e =  {};
+  for(let i = 0;i<arguments.length;i++){
+    try{
+      return arguments[i]?.(e);
+    }catch(err){
+       e = err;
+    }
+  }
+}
+
+globalThis.$TryCatch=async function(){
+  let e =  {};
+  for(let i = 0;i<arguments.length;i++){
+    try{
+      return await arguments[i]?.(e);
+    }catch(err){
+       e = err;
+    }
+  }
+}
+  
 Object.defineProperty(globalThis.Element?.prototype??{}, "innerHTM", {
   get() {
     return innerHTML;
   },
   set(newValue) {
-    try{
-	this.innerHTML=newValue;
-	}catch(e){
-		try{
+    TryCatch(()=>{
+	    this.innerHTML=newValue;
+	  },()=>{
 			this.innerText=newValue;
-		}catch(e){
+		},()=>{
 			this.textContent=newValue;
-		}
-	}
+		});
   },
   enumerable: true,
   configurable: true,
@@ -33,7 +54,7 @@ Object.defineProperty(globalThis.Element?.prototype??{}, "innerHTM", {
 		el[attr]=val;
          });
 	globalThis.createElement=function(){
-		return document.createElement(...arguments);
+		return globalThis.document?.createElement?.(...arguments);
 	}
 defineNonenumerable(Object.prototype, 'setValue', function(key, val) {
     this[key] = val;
@@ -218,11 +239,11 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
      }
      (globalThis.window??{}).DOMInteractive = (fn) => {
 	       fn??=()=>{};
-         if ((document.readyState == 'complete') || (document.readyState == 'interactive')) {
+         if ((globalThis.document?.readyState == 'complete') || (globalThis.document?.readyState == 'interactive')) {
              return fn();
          }
          return new Promise((resolve) => {
-		(document || globalThis).addEventListener("DOMContentLoaded", ()=>{
+		(globalThis.document || globalThis).addEventListener("DOMContentLoaded", ()=>{
 			 try{resolve(fn());}catch(e){resolve(e);}
 		 });
 	 });
@@ -233,7 +254,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              return fn();
          }
 	return new Promise((resolve) => {
-		 (document || globalThis).addEventListener("load", ()=>{
+		 (globalThis.document || globalThis).addEventListener("load", ()=>{
 			 try{resolve(fn());}catch(e){resolve(e);}
 		 });
 	 });
@@ -243,7 +264,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
            return fn();
          } catch (e) {
 	        return new Promise((resolve) => {
-			(document || globalThis).addEventListener("DOMContentLoaded", ()=>{
+			(globalThis.document || globalThis).addEventListener("DOMContentLoaded", ()=>{
 				 try{resolve(fn());}catch(e){resolve(e);}
 			 });
 		 });
@@ -551,10 +572,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
          }
      }
      globalThis.approveProperty = function(obj, prop, val) {
-         if (!val) {
-             return;
-         }
-         if (`${obj?.[`${prop}`]}` != val) {
+         if ((!!val)&&(`${obj?.[`${prop}`]}` != val)) {
              (obj??{})[`${prop}`] = val;
          }
      }
