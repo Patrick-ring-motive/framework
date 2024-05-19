@@ -28,7 +28,7 @@ Object.defineProperty(globalThis.Element?.prototype??{}, "innerHTM", {
    });
  }
 	defineNonenumerable(globalThis.Element?.prototype??{},'setTrait' , function(attr, val) {
-             const el = this;
+    const el = this;
 		el.setAttribute(attr,val);
 		el[attr]=val;
          });
@@ -634,34 +634,21 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
          }
      });
      if (globalThis.Element) {
-         defineNonenumerable(Element.prototype,'updateAttribute' , function(attr, val) {
-             const el = this;
-             if (!el.hasAttribute(attr, val)) {
-                 el.setAttribute(attr, val);
-             } else {
-                 if (el.getAttribute(attr) != val) {
-                     el.setAttribute(attr, val);
-                 }
+         defineNonenumerable(globalThis.Element?.prototype??{},'updateAttribute' , function(attr, val) {
+             if (`${this.getAttribute(`${attr}`)}` != `${val}`) {
+               this.setAttribute(`${attr}`, `${val}`);
              }
          });
-          defineNonenumerable(Element.prototype,'replaceAttribute' , function(attr, oldval, newval) {
-             const el = this;
-             el.updateAttribute(attr,el.getAttribute(attr).replace(oldval,newval));
+          defineNonenumerable(globalThis.Element?.prototype??{},'replaceAttribute' , function(attr, oldval, newval) {
+             this.updateAttribute(attr,el.getAttribute(attr).replace(oldval,newval));
          });
-         defineNonenumerable(Element.prototype,'approveAttribute',function(attr, val) {
+         defineNonenumerable(globalThis.Element?.prototype??{},'approveAttribute',function(attr, val) {
              if (!val) {
                  return;
              }
-             const el = this;
-             if (!el.hasAttribute(attr, val)) {
-                 el.setAttribute(attr, val);
-             } else {
-                 if (el.getAttribute(attr) != val) {
-                     el.setAttribute(attr, val);
-                 }
-             }
+             this.updateAttribute(attr,val);
          });
-         defineNonenumerable(Element.prototype,'getStyle' , function(attribute) {
+         defineNonenumerable(globalThis.Element?.prototype??{},'getStyle' , function(attribute) {
              try {
                  let compStyles = window.getComputedStyle(this);
                  const out =
@@ -672,16 +659,10 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              }
              return undefined;
          });
-         defineNonenumerable(Element.prototype,'updateStyle', function(attr, val) {
-             const el = this;
-             const elstyle = el.getStyle(attr);
-             if (!elstyle) {
-                 el.style[attr] = val;
-             } else {
-                 if (elstyle != val) {
-                     el.style[attr] = val;
-                 }
-             }
+         defineNonenumerable(globalThis.Element?.prototype??{},'updateStyle', function(attr, val) {
+            if (`${this.getStyle?.(`${attr}`)}` != `${val}`) {
+                (this?.style??{})[`${attr}`] = `${val}`;
+            }
          });	     
          globalThis.helpAppliedFunction=function(func){     
              if(typeof func == 'function'){
@@ -699,7 +680,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
           return func;
          }
          globalThis.queryApplyAll = async function(query, func) {
-	     const sel = globalThis.selectAll||document.querySelectorAll;
+	           const sel = globalThis.selectAll||document.querySelectorAll;
              func=helpAppliedFunction(func);
              let elems = Array.from(sel(query));
              const elems_length = elems.length;
