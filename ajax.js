@@ -1,26 +1,21 @@
 
-XMLHttpRequest.prototype.nativeOpen=XMLHttpRequest.prototype.open;
-
-XMLHttpRequest.prototype.customOpen=function(method, url, asynch, user, password)
-{
-
+(globalThis.XMLHttpRequest?.prototype??{}).nativeOpen=globalThis.XMLHttpRequest?.prototype?.open;
+(globalThis.XMLHttpRequest?.prototype??{}).customOpen=function(method, url, asynch, user, password){
 this.method=method;
 this.requestURL=url;
 this.asynch=asynch;
 if(user){this.user=user;}
 if(password){this.password=password;}
 this.requestHeaders=new Map();
-
 return this.nativeOpen(method, url, asynch, user, password);
-
 }
 
 /*XMLHttpRequest.prototype.open=XMLHttpRequest.prototype.customOpen;*/
 
 
-XMLHttpRequest.prototype.nativeSend=XMLHttpRequest.prototype.send;
+(globalThis.XMLHttpRequest?.prototype??{}).nativeSend=globalThis.XMLHttpRequest?.prototype?.send;
 
-XMLHttpRequest.prototype.customSend=function(body)
+(globalThis.XMLHttpRequest?.prototype??{}).customSend=function(body)
 {
 
 this.body=body;
@@ -36,10 +31,10 @@ return this.nativeSend(body);
 
 
 
-XMLHttpRequest.prototype.nativeSetRequestHeader=XMLHttpRequest.prototype.setRequestHeader;
+(globalThis.XMLHttpRequest?.prototype??{}).nativeSetRequestHeader=globalThis.XMLHttpRequest?.prototype?.setRequestHeader;
 
 
-XMLHttpRequest.prototype.customSetRequestHeader=function (header,value){
+(globalThis.XMLHttpRequest?.prototype??{}).customSetRequestHeader=function (header,value){
 
 
 try{
@@ -69,9 +64,9 @@ return;
 
 /*XMLHttpRequest.prototype.setRequestHeader=XMLHttpRequest.prototype.customSetRequestHeader;*/
 
-window.Response.nativeRedirect=window.Response.redirect;
+(globalThis.Response??{}).nativeRedirect=globalThis.Response?.redirect;
 
-window.Response.customRedirect=function(url,status){
+(globalThis.Response??{}).customRedirect=function(url,status){
 
 let red = this.nativeRedirect(url,status);
   red.redirectURL=url;
@@ -84,9 +79,9 @@ let red = this.nativeRedirect(url,status);
 
 
 
-window.Response.nativeClone=window.Response.clone;
+(globalThis.Response??{}).nativeClone=globalThis.Response?.clone;
 
-window.Response.customClone=function(){
+(globalThis.Response??{}).customClone=function(){
 
 let cln = this.nativeClone();
   
@@ -98,9 +93,9 @@ let cln = this.nativeClone();
 
 
 
-window.Response.nativeError=window.Response.error;
+(globalThis.Response??{}).nativeError=globalThis.Response?.error;
 
-window.Response.customError=function(){
+(globalThis.Response??{}).customError=function(){
 
 let ero = this.nativeError();
   
@@ -111,9 +106,9 @@ let ero = this.nativeError();
 /*window.Response.error=window.Response.customError;*/
 
 
-window.Response.nativeText=window.Response.text;
+(globalThis.Response??{}).nativeText=globalThis.Response?.text;
 
-window.Response.customText=async function(){
+(globalThis.Response??{}).customText=async function(){
 
 let txt = await this.nativeText();
   
@@ -126,9 +121,9 @@ let txt = await this.nativeText();
 
 
 
-window.Response.nativeJson=window.Response.json;
+(globalThis.Response??{}).nativeJson=globalThis.Response?.json;
 
-window.Response.customJson=async function(){
+(globalThis.Response??{}).customJson=async function(){
 
 let jsn = await this.nativeJson();
   
@@ -142,9 +137,9 @@ let jsn = await this.nativeJson();
 
 
 
-window.Response.nativeBlob=window.Response.blob;
+(globalThis.Response??{}).nativeBlob=globalThis.Response?.blob;
 
-window.Response.customBlob=async function(){
+(globalThis.Response??{}).customBlob=async function(){
 
 let blb = await this.nativeBlob();
   
@@ -156,9 +151,9 @@ let blb = await this.nativeBlob();
 
 
 
-window.Response.nativeFormData=window.Response.formData;
+(globalThis.Response??{}).nativeFormData=globalThis.Response?.formData;
 
-window.Response.customFormData=async function(){
+(globalThis.Response??{}).customFormData=async function(){
 
 let dta = await this.nativeFormData();
   
@@ -171,9 +166,9 @@ let dta = await this.nativeFormData();
 
 
 
-window.Response.nativeArrayBuffer=window.Response.arrayBuffer;
+(globalThis.Response??{}).nativeArrayBuffer=globalThis.Response?.arrayBuffer;
 
-window.Response.customArrayBuffer=async function(){
+(globalThis.Response??{}).customArrayBuffer=async function(){
 
 let bfr = await this.nativeArrayBuffer();
   
@@ -186,9 +181,9 @@ let bfr = await this.nativeArrayBuffer();
 
 
 
-window.Request.nativeClone=window.Request.clone;
+(globalThis.Request??{}).nativeClone=globalThis.Request?.clone;
 
-window.Request.customClone=function(){
+(globalThis.Request??{}).customClone=function(){
 
 let cln = this.nativeClone();
   
@@ -200,9 +195,9 @@ let cln = this.nativeClone();
 
 
 
-window.Request.nativeText=window.Request.text;
+(globalThis.Request??{}).nativeText=globalThis.Request?.text;
 
-window.Request.customText=async function(){
+(globalThis.Request??{}).customText=async function(){
 
 let txt = await this.nativeText();
   
@@ -215,9 +210,9 @@ let txt = await this.nativeText();
 
 
 
-window.Request.nativeJson=window.Request.json;
+(globalThis.Request??{}).nativeJson=globalThis.Request?.json;
 
-window.Request.customJson=async function(){
+(globalThis.Request??{}).customJson=async function(){
 
 let jsn = await this.nativeJson();
   
@@ -231,9 +226,9 @@ let jsn = await this.nativeJson();
 
 
 
-window.Request.nativeBlob=window.Request.blob;
+(globalThis.Request??{}).nativeBlob=globalThis.Request?.blob;
 
-window.Request.customBlob=async function(){
+(globalThis.Request??{}).customBlob=async function(){
 
 let blb = await this.nativeBlob();
   
@@ -245,9 +240,9 @@ let blb = await this.nativeBlob();
 
 
 
-window.Request.nativeFormData=window.Request.formData;
+(globalThis.Request??{}).nativeFormData=globalThis.Request?.formData;
 
-window.Request.customFormData=async function(){
+(globalThis.Request??{}).customFormData=async function(){
 
 let dta = await this.nativeFormData();
   
@@ -260,9 +255,9 @@ let dta = await this.nativeFormData();
 
 
 
-window.Request.nativeArrayBuffer=window.Request.arrayBuffer;
+(globalThis.Request??{}).nativeArrayBuffer=globalThis.Request?.arrayBuffer;
 
-window.Request.customArrayBuffer=async function(){
+(globalThis.Request??{}).customArrayBuffer=async function(){
 
 let bfr = await this.nativeArrayBuffer();
   
@@ -273,9 +268,9 @@ let bfr = await this.nativeArrayBuffer();
 /*window.Request.arrayBuffer=window.Request.customArrayBuffer;*/
 
 
-window.nativeFetch=window.fetch;
+globalThis.nativeFetch=globalThis.fetch;
 
-window.customFetch=async function(request,headers){
+globalThis.customFetch=async function(request,headers){
   var req;
   var response;
   if(typeof request=='string'){
@@ -296,5 +291,5 @@ window.customFetch=async function(request,headers){
     return response;
 }
 
-window.fetch=window.customFetch;
+globalThis.fetch=globalThis.customFetch;
 
