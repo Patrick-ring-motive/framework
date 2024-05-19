@@ -736,7 +736,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 
 
      globalThis.queryAttrAll = async function(query, attr, val, func) {
-	 const sel = globalThis.selectAll||document.querySelectorAll;
+	       const sel = globalThis.selectAll||document.querySelectorAll;
          func=helpAppliedFunction(func);
          let elems = Array.from(sel(query));
          const elems_length = elems.length;
@@ -971,7 +971,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              return (async () => {
                  return defer(await (func), id);
              })();
-
          }
          if (`${func.constructor}`.includes("romise")) {
              return defer(() => func().next(), id);
@@ -1170,26 +1169,25 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
          page_html.setAttribute("user-agent", navigator.userAgent);
          declare(() => page_html.updateAttribute("user-agent", navigator.userAgent));
      }
-     if (globalThis.window) {
-         if (window != window.top) {
-             globalThis.page_html.setAttribute("framed", "true");
-         }
+     if (globalThis.window != globalThis.window?.top) {
+        globalThis.page_html?.setAttribute?.("framed", "true");
      }
      declare(() => {
-         if ((window.innerHeight == window.innerWidth)) {
-             globalThis.page_html.updateAttribute("orientation", "square");
+         if ((globalThis.innerHeight == globalThis.innerWidth)) {
+             globalThis.page_html?.updateAttribute?.("orientation", "square");
          }
-         if (window.innerHeight > window.innerWidth) {
-             globalThis.page_html.updateAttribute("orientation", "portrait");
+         if (globalThis.innerHeight > globalThis.innerWidth) {
+             globalThis.page_html?.updateAttribute?.("orientation", "portrait");
          }
-         if (window.innerHeight < window.innerWidth) {
-             globalThis.page_html.updateAttribute("orientation", "landscape");
+         if (globalThis.innerHeight < globalThis.innerWidth) {
+             globalThis.page_html?.updateAttribute?.("orientation", "landscape");
          }
      });
      declare(() => {
-         globalThis.page_html.updateAttribute("ready-state", document.readyState);
-         globalThis.page_html.updateAttribute("visibility-state", document.visibilityState);
-         globalThis.page_html.updateAttribute("character-set", document.characterSet);
+      Q(()=>{
+         globalThis.page_html.updateAttribute.("ready-state", document.readyState);
+         globalThis.page_html.updateAttribute.("visibility-state", document.visibilityState);
+         globalThis.page_html.updateAttribute.("character-set", document.characterSet);
          globalThis.page_html.updateAttribute("compat-mode", document.compatMode);
          globalThis.page_html.updateAttribute("content-type", document.contentType);
          globalThis.page_html.updateAttribute("cookie", document.cookie);
@@ -1201,7 +1199,8 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
          globalThis.page_html.updateAttribute("title", document.title);
          globalThis.page_html.updateAttribute("history-state", (Q(() => JSON.stringify(history.state)) || history.state));
          globalThis.page_html.updateAttribute("online", navigator.onLine);
-     });
+        });
+      });
      declare(() => {
          const untagged = Array.from(document.querySelectorAll(":not([tag-name])"));
          const untagged_length = untagged.length;
@@ -1272,12 +1271,12 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
         });
       });*/
      declare(() => {
-         if (!(document.querySelector('style.has-test'))) {
-             let hasTestStyle = document.createElement('style');
+         if (!(glbalThis.document?.querySelector?.('style.has-test'))) {
+             let hasTestStyle = globalThis.document?.createElement?.('style')??{};
              hasTestStyle.className = 'has-test';
              hasTestStyle.innerHTM = '.has-test:has(.supported){--has-supported:true;}';
              doDOM(() => {
-                 body().appendChild(hasTestStyle);
+                 body()?.appendChild?.(hasTestStyle);
              });
          }
          if (!(document.querySelector('span.has-test'))) {
@@ -1452,18 +1451,18 @@ globalThis.page_html.updateAttribute('modules-supported',false);
 `;
      globalThis.page_html.appendChild(nmscript);
      globalThis.safeFetch = async function() {
-	let res;
+	   let res;
          try {
              res = await fetch(...arguments);
-		 res.requested = arguments
-		 return res;
+		         res.requested = arguments
+		         return res;
          } catch (e) {
              console.log(e);
              res = new Response(arguments[0]+'\n'+e.message+'\n'+e.stack, {
                  status: 569,
                  statusText: e.message
              });
-		res.requested = arguments;
+		        res.requested = arguments;
          }
 	return res;
      };
@@ -1815,7 +1814,7 @@ document.filterSelector = function(filter) {
      defineNonenumerable(globalThis.Node?.prototype??{},'xpathSelector',function(query){
 		let node = this;
 		if(!(node instanceof Node)){
-			node = document;
+			node = globalThis?.document??node;
 		}
 		try{
 			return document.evaluate(
@@ -1832,11 +1831,11 @@ document.filterSelector = function(filter) {
      defineNonenumerable(globalThis.Node?.prototype??{},'xpathSelectorAll', function(query){
                 let node = this;
                 if(!(node instanceof Node)){
-                                node = document;
+                                node = globalThis?.document??node;
                 }
                 let nodeList = [];
                 try{
-                        const nodeSnapshot = document.evaluate(
+                        const nodeSnapshot = document?.evaluate?.(
                                   query,
                                   node,
                                   null,
@@ -1857,31 +1856,18 @@ document.filterSelector = function(filter) {
 
  
  globalThis.xpathApplyAll = async function(query, func) {
-
      func=helpAppliedFunction(func);
-
      let elems = xpathAll(query);
-
      const elems_length = elems.length;
-
      for (let i = 0; i < elems_length; i++) {
-
-	 try {
-
-	     func(elems[i]);
-
-	 } catch (e) {
-
-	     await async ("xpathApplyAll");
-
-	     console.log(e);
-
-	     continue;
-
-	 }
-
+	     try {
+	       func(elems[i]);
+	     }catch (e) {
+	       await async ("xpathApplyAll");
+	       console.log(e);
+	       continue;
+	     }
      }
-
  };
 
     defineNonenumerable(globalThis.Node?.prototype??{},'cssSelector',function(query){
@@ -1907,9 +1893,6 @@ defineNonenumerable(globalThis.Node?.prototype??{},'cssSelectorAll', function(qu
                 }
 
 });
-
-
-	
 	globalThis.select = function(query){
 	return document.cssSelector(query)||document.xpath(query)||document.filterSelector(query);
      }
