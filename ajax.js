@@ -9,46 +9,27 @@ if(password){this.password=password;}
 this.requestHeaders=new Map();
 return this.nativeOpen(method, url, asynch, user, password);
 }
-
 /*XMLHttpRequest.prototype.open=XMLHttpRequest.prototype.customOpen;*/
 
 
 (globalThis.XMLHttpRequest?.prototype??{}).nativeSend=globalThis.XMLHttpRequest?.prototype?.send;
-
 (globalThis.XMLHttpRequest?.prototype??{}).customSend=function(body)
 {
-
 this.body=body;
-
-
 return this.nativeSend(body);
-
 }
 
 
 /*XMLHttpRequest.prototype.send=XMLHttpRequest.prototype.customSend;*/
-
-
-
-
 (globalThis.XMLHttpRequest?.prototype??{}).nativeSetRequestHeader=globalThis.XMLHttpRequest?.prototype?.setRequestHeader;
-
-
 (globalThis.XMLHttpRequest?.prototype??{}).customSetRequestHeader=function (header,value){
-
-
 try{
-
 this.nativeSetRequestHeader(header,value);
-
 if(this.requestHeaders.get(header)){
-
 this.requestHeaders.set(header,this.requestHeaders.get(header)+', '+value);
-
 }
 else{
 this.requestHeaders.set(header,value);
-
 }
 
 
