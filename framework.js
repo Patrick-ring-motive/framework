@@ -270,9 +270,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 		 });
          }
      }
-     for(const prop in window){
+     for(const prop in window){try{
 	     if(!globalThis[prop])globalThis[prop]=window[prop];
-     }
+     }catch(e){continue;}}
 
 
      Object.defineProperty(globalThis, "arguments", {
