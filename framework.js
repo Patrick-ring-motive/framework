@@ -687,7 +687,13 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              if(typeof func == 'function'){
                 if(func.length == 0){
 		              if(`${func}`.includes('this')){
-		                return function(el){return func.apply(el,[]);};	
+		                return function(el){
+				  try{
+					return func.apply(el,[]);
+				  }catch(e){
+					try{func=Function('el',`with(el){return(${func}).apply(el,[])}`);}catch(e){}
+				  }
+				};	
 		              }
                   try{func=Function('el',`with(el){return(${func})()}`);}catch(e){}
                 }
