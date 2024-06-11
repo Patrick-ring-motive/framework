@@ -100,7 +100,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       setTimeout(fn,0);
       return setInterval(fn,ms);
      }
-     (globalThis.window??{}).body = () => document.body || document.firstElementChild;
+     globalThis.body = () => document.body || document.firstElementChild;
      (globalThis.window??{}).style = function(selector,obj){
       return new Promise((resolve) => {
       let s = document.createElement('style');
@@ -269,6 +269,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 			 });
 		 });
          }
+     }
+     for(const prop in window){
+	     if(!globalThis[prop])globalThis[prop]=window[prop];
      }
 
 
