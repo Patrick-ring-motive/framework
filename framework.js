@@ -1644,11 +1644,16 @@ globalThis.page_html.updateAttribute('modules-supported',false);
      globalThis.unsubscribeState = function(id) {
          delete globalThis.subscriberList[id];
      }
-     localStorage.updateItem = function(key, val) {
-         if (!(localStorage.getItem(key))) {
-             localStorage.setItem(key, val);
-         } else if (localStorage.getItem(key) != val) {
-             localStorage.setItem(key, val);
+     Storage.prototype.updateItem = function(key, val) {
+         if (!(this.getItem(key))) {
+             this.setItem(key, val);
+         } else if (this.getItem(key) != val) {
+             this.setItem(key, val);
+         }
+     }
+     Storage.prototype.insertItem = function(key, val) {
+         if (!(this.getItem(key))) {
+             this.setItem(key, val);
          }
      }
      globalThis.publisherList ??= Object.create(null);
