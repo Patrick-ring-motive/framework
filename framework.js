@@ -1,6 +1,6 @@
 if(!(globalThis?.JXSLOADER)){
  globalThis.JXSLOADER='loading';
-try {			 
+try {	 
   
 globalThis.TryCatch=function(){
   let e =  {};
@@ -48,14 +48,14 @@ Object.defineProperty(globalThis.Element?.prototype??{}, "innerHTM", {
      enumerable: false
    });
  }
-	defineNonenumerable(globalThis.Element?.prototype??{},'setTrait' , function(attr, val) {
+defineNonenumerable(globalThis.Element?.prototype??{},'setTrait' , function(attr, val) {
     const el = this;
 		el.setAttribute(attr,val);
 		el[attr]=val;
-         });
-	globalThis.createElement=function(){
-		return globalThis.document?.createElement?.(...arguments);
-	}
+});
+globalThis.createElement=function(){
+	return globalThis.document?.createElement?.(...arguments);
+}
 defineNonenumerable(Object.prototype, 'setValue', function(key, val) {
     this[key] = val;
 });
@@ -569,7 +569,6 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 
      globalThis.replaceProperty = function(obj, prop, rep, val) {
             updateProperty(obj, prop, obj?.[`${prop}`]?.replace?.(rep,val)) ;
-         }
      }
      globalThis.approveProperty = function(obj, prop, val) {
          if ((!!val)&&(`${obj?.[`${prop}`]}` != val)) {
@@ -1087,10 +1086,10 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              }
              if (document.readyState == 'complete') {
                  if (globalThis.wasFocused) {
-                     if (globalThis.navigator?.userActivation?.isActive === false)) {
+                     if (globalThis.navigator?.userActivation?.isActive === false) {
                          return;
                      }
-                     if (globalThis.navigator?.userActivation?.hasBeenActive === false)) {
+                     if (globalThis.navigator?.userActivation?.hasBeenActive === false) {
                          return;
                      }
                      if (!document.hasFocus()) {
@@ -1191,9 +1190,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
      });
      declare(() => {
       Q(()=>{
-         globalThis.page_html.updateAttribute.("ready-state", document.readyState);
-         globalThis.page_html.updateAttribute.("visibility-state", document.visibilityState);
-         globalThis.page_html.updateAttribute.("character-set", document.characterSet);
+         globalThis.page_html.updateAttribute("ready-state", document.readyState);
+         globalThis.page_html.updateAttribute("visibility-state", document.visibilityState);
+         globalThis.page_html.updateAttribute("character-set", document.characterSet);
          globalThis.page_html.updateAttribute("compat-mode", document.compatMode);
          globalThis.page_html.updateAttribute("content-type", document.contentType);
          globalThis.page_html.updateAttribute("cookie", document.cookie);
@@ -1277,7 +1276,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
         });
       });*/
      declare(() => {
-         if (!(glbalThis.document?.querySelector?.('style.has-test'))) {
+         if (!(globalThis.document?.querySelector?.('style.has-test'))) {
              let hasTestStyle = globalThis.document?.createElement?.('style')??{};
              hasTestStyle.className = 'has-test';
              hasTestStyle.innerHTM = '.has-test:has(.supported){--has-supported:true;}';
@@ -2320,7 +2319,7 @@ globalThis.onTrue=async function(bool,func){
      globalThis.JXSLOADER='succeeded';
      console.log("JavaxScript loaded successfully");
 
- } catch (e) {
+ }catch (e) {
      globalThis.JXSLOADER='failed';
      console.log("JavaxScript failed to load: ", e);
  }
