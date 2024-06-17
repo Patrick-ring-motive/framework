@@ -2332,7 +2332,189 @@ globalThis.onTrue=async function(bool,func){
  };
      globalThis.JXSLOADER='succeeded';
      console.log("JavaxScript loaded successfully");
-
+Array.prototype.toMapped = function () {
+  return [...this].map(...arguments);
+};
+Array.prototype.toFiltered = function () {
+  return [...this].filter(...arguments);
+};
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+Array.prototype.has = function (value) {
+  return this.indexOf(value) > -1;
+};
+try{
+Object.defineProperty(Array.prototype, "size", {
+  get() {
+    return this.length;
+  },
+  set(newValue) {
+    this.length = newValue;
+  },
+});
+}catch(e){}
+Array.prototype.clear = function () {
+  this.length = 0;
+  return this;
+};
+Array.prototype.add = function () {
+  return this.push(...arguments);
+};
+Array.prototype.delete = function (value) {
+  let bool = false;
+  while (this.has(value)) {
+    delete this[this.indexOf(value)];
+    bool = true;
+  }
+  return bool;
+};
+Array.prototype.ofEach = function () {
+  this.forEach(...arguments);
+  return this;
+};
+Array.prototype.toEach = function () {
+  const x = [...this];
+  x.forEach(...arguments);
+  return x;
+};
+Array.prototype.get = function (i) {
+  return this[i];
+};
+Array.prototype.set = function (i, x) {
+  return (this[i] = x);
+};
+Array.prototype.popped = function () {
+  this.pop(...arguments);
+  return this;
+};
+Array.prototype.toPopped = function () {
+  const x = [...this];
+  x.pop(...arguments);
+  return x;
+};
+Array.prototype.pushed = function () {
+  this.push(...arguments);
+  return this;
+};
+Array.prototype.toPushed = function () {
+  const x = [...this];
+  x.push(...arguments);
+  return x;
+};
+Array.prototype.shifted = function () {
+  this.shift(...arguments);
+  return this;
+};
+Array.prototype.toShifted = function () {
+  const x = [...this];
+  x.shift(...arguments);
+  return x;
+};
+Array.prototype.unshifted = function () {
+  this.unshift(...arguments);
+  return this;
+};
+Array.prototype.toUnshifted = function () {
+  const x = [...this];
+  x.unshift(...arguments);
+  return x;
+};
+const setkeys = Object.getOwnPropertyNames(Set.prototype);
+for (let i = 0; i < setkeys.length; i++) {
+  try {
+    if (
+      !Array.prototype[setkeys[i]] &&
+      typeof Set.prototype[setkeys[i]] == "function"
+    ) {
+      Array.prototype[setkeys[i]] = function () {
+        const a = new Set(this);
+        const x = a[setkeys[i]](...arguments);
+        try {
+          return [...x];
+        } catch (e) {
+          return x ?? [...a];
+        }
+      };
+    }
+  } catch (e) {
+    continue;
+  }
+}
+const arrkeys = Object.getOwnPropertyNames(Array.prototype);
+for (let i = 0; i < arrkeys.length; i++) {
+  try {
+    if (
+      !String.prototype[arrkeys[i]] &&
+      typeof Array.prototype[arrkeys[i]] == "function"
+    ) {
+      String.prototype[arrkeys[i]] = function () {
+        const a = [...this];
+        const x = a[arrkeys[i]](...arguments);
+        return x?.join?.("") ?? a?.join?.("") ?? x;
+      };
+    }
+    if (
+      !Set.prototype[arrkeys[i]] &&
+      typeof Array.prototype[arrkeys[i]] == "function"
+    ) {
+      Set.prototype[arrkeys[i]] = function () {
+        const a = [...this];
+        const x = a[arrkeys[i]](...arguments);
+        if (x instanceof Set) {
+          return new Set(x);
+        }
+        return x || new Set(a);
+      };
+    }
+    if (!Array[arrkeys[i]]) {
+      Array[arrkeys[i]] = function () {
+        return [][arrkeys[i]].call(...arguments);
+      };
+    }
+  } catch (e) {
+    continue;
+  }
+}
+String.prototype.remove = function (re) {
+  return this.replace(re, "");
+};
+String.prototype.removeAll = function (re) {
+  return this.replace(new RegExp(re, "g"), "");
+};
+String.prototype.matches = function (re) {
+  return this.match(re) ?? [];
+};
+String.prototype.matchesAll = function (re) {
+  return [...this.match(re)];
+};
+String.prototype.test = function (re) {
+  return re.test(this);
+};
+String.prototype.exec = function (re) {
+  return re.exex(this) ?? [];
+};
+const strkeys = Object.getOwnPropertyNames(String.prototype);
+for (let i = 0; i < strkeys.length; i++) {
+  try {
+    if (
+      !Number.prototype[strkeys[i]] &&
+      typeof String.prototype[strkeys[i]] == "function"
+    ) {
+      Number.prototype[strkeys[i]] = function () {
+        const a = `${this}`;
+        const x = a[strkeys[i]](...arguments);
+        try {
+          return Number(x);
+        } catch (e) {
+          return x;
+        }
+      };
+    }
+  } catch (e) {
+    continue;
+  }
+}
  }catch (e) {
      globalThis.JXSLOADER='failed';
      console.log("JavaxScript failed to load: ", e);
