@@ -1,7 +1,7 @@
 if(!(globalThis?.JXSLOADER)){
  globalThis.JXSLOADER='loading';
 try {	 
-  
+Math.rand=x=>~~(Math.random()*x);
 globalThis.TryCatch=function(){
   let e =  {};
   for(let i = 0;i<arguments.length;i++){
