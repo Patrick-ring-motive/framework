@@ -2,6 +2,8 @@ if(!(globalThis?.JXSLOADER)){
  globalThis.JXSLOADER='loading';
 try {	 
 Math.rand=x=>~~(Math.random()*x);
+Math.sum=function(){return [...arguments].reduce((x,y)=>x+y,0);};
+Math.avg=function(){return [...arguments].reduce((x,y)=>x+y/(arguments.length||1),0);};
 globalThis.TryCatch=function(){
   let e =  {};
   for(let i = 0;i<arguments.length;i++){
