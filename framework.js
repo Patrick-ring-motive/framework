@@ -114,7 +114,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       }
       css += `}`;
 	    s.innerHTM=css;
+	try{
       body().appendChild(s);
+	}catch(e){console.log(e);}
       });
      }
      (globalThis.window??{}).importScript = function(url,bdy){
@@ -124,7 +126,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       s.onload = ()=>resolve(s);
       s.onerror = ()=>resolve(s);
       bdy??=body();
-      bdy.appendChild(s);
+	try{
+    		  bdy.appendChild(s);
+	}catch(e){console.log(e);}
       });  
      }
      (globalThis.window??{}).importModule = function(url,bdy){
@@ -136,7 +140,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       s.onload = ()=>resolve(s);
       s.onerror = ()=>resolve(s);
 	    bdy??=body();
-      bdy.appendChild(s);
+	      try{
+      		bdy.appendChild(s);
+	}catch(e){console.log(e);}
       });  
      }
      (globalThis.window??{}).importStyle=function(url){
@@ -157,8 +163,12 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 		  h.setAttribute('frameborder','0');
 		  h.onload = ()=>resolve(l);
 		  h.onerror = ()=>resolve(l);
+		try{
 		  body().appendChild(l);
+		}catch(e){console.log(e);}
+		try{
 		  body().appendChild(h);
+		}catch(e){console.log(e);}
 	  });
     };
      (globalThis.window??{}).script = function(fn){
@@ -168,7 +178,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
       s.onload = ()=>resolve(s);
 		  s.onerror = ()=>resolve(s);
       try{ s.innerHTML = js; }catch(e){ s.innerText = js; }
-      body().appendChild(s);
+      try{
+      	body().appendChild(s);
+      }catch(e){console.log(e);}
       });
      }
 	defineNonenumerable(globalThis?.HTMLIFrameElement?.prototype??{}, 'iframeDocument', function(obj) {
@@ -187,7 +199,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 		  h.setAttribute('frameborder','0');
 		  h.onload = ()=>resolve(h);
 		  h.onerror = ()=>resolve(h);
-		  body().appendChild(h);
+		  try{
+		 	 body().appendChild(h);
+	         }catch(e){console.log(e);}
 	  });
     };
 	
@@ -1998,7 +2012,7 @@ defineNonenumerable(globalThis.Node?.prototype??{},'cssSelectorAll', function(qu
      }
      void async function() {
          let myrequest = new Request(location.href);
-         let myresponse = await fetch(myrequest);
+         let myresponse = await zfetch(myrequest);
          myrequest.headers.forEach(function() {
              globalThis.page_html.updateAttribute(`fetch-request-header-${arguments[1]}`, arguments[0]);
          });
