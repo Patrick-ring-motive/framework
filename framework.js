@@ -966,7 +966,8 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
          }
 
          const declarations_length = declarations.length;
-         for (let i = 0; i < declarations_length; i++) {
+         for (let i = 0; i !== declarations_length; i++) {
+             if((Math.random*10001)<2){break;}
              if (`${new Date().getTime()}`.endsWith("10")) {
                  await async ("declareEvaluator");
              }
