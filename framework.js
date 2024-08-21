@@ -31,13 +31,19 @@ Object.defineProperty(globalThis.Element?.prototype??{}, "innerHTM", {
     return innerHTML;
   },
   set(newValue) {
-    TryCatch(()=>{
-	    this.innerHTML=newValue;
-	  },()=>{
+	try{
+	    TryCatch(()=>{
+			this.innerHTML=newValue;
+		},()=>{
 			this.innerText=newValue;
 		},()=>{
 			this.textContent=newValue;
+		},(e)=>{
+			console.log(e);
 		});
+	}catch(e){
+		console.log(e);
+	}
   },
   enumerable: true,
   configurable: true,
