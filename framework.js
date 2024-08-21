@@ -1482,10 +1482,11 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
      globalThis.page_html.updateAttribute('modules-supported', true);
      let nmscript = document.createElement('script');
      nmscript.setAttribute('nomodule', true);
-     nmscript.innerHTM = `
+    try{ nmscript.innerHTM = `
 globalThis.modulesSupported=false;
 globalThis.page_html.updateAttribute('modules-supported',false);
 `;
+       }catch(e){console.log(e);}
      globalThis.page_html.appendChild(nmscript);
      globalThis.safeFetch = async function() {
 	   let res;
