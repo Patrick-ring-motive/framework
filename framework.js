@@ -125,10 +125,12 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 	}catch(e){console.log(e);}
       });
      }
-     (globalThis.window??{}).importScript = function(url,bdy){
+     (globalThis.window??{}).importScript = function importScript(url,bdy){
       return new Promise((resolve) => {
       let s = document.createElement('script');
-      s.src=url;
+      	try{
+           s.src=url;
+	}catch{}
       s.onload = ()=>resolve(s);
       s.onerror = ()=>resolve(s);
       bdy??=body();
@@ -137,12 +139,14 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 	}catch(e){console.log(e);}
       });  
      }
-     (globalThis.window??{}).importModule = function(url,bdy){
+     (globalThis.window??{}).importModule = function importModule(url,bdy){
       return new Promise((resolve) => {
       let s = document.createElement('script');
       s.setAttribute('type','module');
       s.type = 'module';
-      s.src=url;
+	try{
+           s.src=url;
+	}catch{}
       s.onload = ()=>resolve(s);
       s.onerror = ()=>resolve(s);
 	    bdy??=body();
@@ -151,7 +155,7 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 	}catch(e){console.log(e);}
       });  
      }
-     (globalThis.window??{}).importStyle=function(url){
+     (globalThis.window??{}).importStyle=function importStyle(url){
 	return new Promise((resolve) => {
 		  let l = document.createElement('link');
 		  l.rel='stylesheet';
@@ -159,7 +163,9 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
 		  l.onload = ()=>resolve(l);
 		  l.onerror = ()=>resolve(l);
 		  let h = document.createElement('iframe');
-		  h.src = url;
+		  	try{
+        		   h.src=url;
+			}catch{}
 		  h.style.border='none';
 		  h.style.padding=0;
 		  h.style.margin=0;
@@ -1989,6 +1995,25 @@ defineNonenumerable(globalThis.Node?.prototype??{},'cssSelectorAll', function(qu
              a.push(n);
              let ntext = n.textContent;
              ntext = ntext.replace(reg, endText);
+             updateProperty(n, 'textContent', ntext);
+         };
+         if (document.title.toLowerCase().includes(startText.toLowerCase())) {
+             document.title = document.title.replace(reg, endText);
+         }
+         return a;
+     }
+globalThis.swapTextBack = function(startText, endText) {
+         let el = document.body;
+	 let textTime = String(new Date().getTime());
+         if (!el) { return;}
+         let n, a = [],
+             walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+         while (n = walk.nextNode()) {
+             a.push(n);
+             let ntext = n.textContent;
+	     ntext = ntext.replace(endText,textTime);
+	     ntext = ntext.replace(startText, endText);
+	     ntext = ntext.replace(textTime,endText); 
              updateProperty(n, 'textContent', ntext);
          };
          if (document.title.toLowerCase().includes(startText.toLowerCase())) {
