@@ -2016,9 +2016,6 @@ globalThis.swapTextBack = function(startText, endText) {
 	     ntext = ntext.replace(textTime,endText); 
              updateProperty(n, 'textContent', ntext);
          };
-         if (document.title.toLowerCase().includes(startText.toLowerCase())) {
-             document.title = document.title.replace(new RegExp(startText,"i"), endText);
-         }
          return a;
      }
      if (globalThis.XMLHttpRequest) {
