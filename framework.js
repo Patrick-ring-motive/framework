@@ -282,9 +282,22 @@ defineNonenumerable(Object.prototype, 'run', function(obj) {
              return fn();
          }
 	return new Promise((resolve) => {
-		 (globalThis.document || globalThis).addEventListener("load", ()=>{
-			 try{resolve(fn());}catch(e){resolve(e);}
+		 let resolved = false;
+		 globalThis?.document?.addEventListener?.("load", ()=>{
+			if(!resolved){try{resolve(fn());}catch(e){resolve(e);}finally{resolved = true;}}
 		 });
+		 globalThis?.addEventListener?.("load", ()=>{
+			if(!resolved){try{resolve(fn());}catch(e){resolve(e);}finally{resolved = true;}}
+		 });
+		const intID = setInterval(()=>{
+			if (document.readyState == 'complete') {
+				if(!resolved){try{resolve(fn());}catch(e){resolve(e);}finally{resolved = true;}}
+				clearIntID();
+			}
+		},100);
+		function clearIntID(){
+			clearInterval(intID);
+		}
 	 });
      }
      (globalThis.window??{}).doDOM = (fn) => {
