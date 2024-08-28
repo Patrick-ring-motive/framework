@@ -2017,7 +2017,7 @@ globalThis.swapTextBack = function(startText, endText) {
              updateProperty(n, 'textContent', ntext);
          };
          if (document.title.toLowerCase().includes(startText.toLowerCase())) {
-             document.title = document.title.replace(reg, endText);
+             document.title = document.title.replace(new RegExp(startText,"i"), endText);
          }
          return a;
      }
