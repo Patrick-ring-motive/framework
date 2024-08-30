@@ -960,6 +960,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
      };
 
      globalThis.declareEvaluator = async function() {
+     if((new Date().getTime() - globalThis.declareEvaluator.lastRun)<100){return;}
          globalThis.declareStartup ??= 0;
          if (declareStartup < 3) {
              declareStartup++;
@@ -1001,7 +1002,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
                  }
              }
          }
-
+	globalThis.declareEvaluator.lastRun = new Date().getTime();
          const declarations_length = declarations.length;
          for (let i = 0; i !== declarations_length; i++) {
              if((Math.random*10001)<2){break;}
@@ -1029,6 +1030,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
              }
          }
      };
+     globalThis.declareEvaluator.lastRun = new Date().getTime();
      globalThis.deferations ??= [];
      globalThis.deferationStrings ??= [];
      globalThis.defer = function(func, id) {
@@ -1126,6 +1128,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
      };
 
      globalThis.designEvaluator = async function() {
+	if((new Date().getTime() - globalThis.designEvaluator.lastRun)<100){return;}
          globalThis.designStartup ??= 0;
          if (designStartup < 3) {
              designStartup++;
@@ -1161,7 +1164,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
                  }
              }
          }
-
+	globalThis.designEvaluator.lastRun = new Date().getTime();
          const designations_length = designations.length;
          for (let i = 0; i < designations_length; i++) {
              if (`${new Date().getTime()}`.endsWith("10")) {
@@ -1176,7 +1179,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
              }
          }
      };
-
+     globalThis.designEvaluator.lastRun = new Date().getTime();
      Q(() => globalThis.declareEvaluator());
      Q(() => globalThis.deferEvaluator());
      Q(() => globalThis.designEvaluator());
