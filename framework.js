@@ -15,11 +15,14 @@ globalThis.TryCatch=function(){
   }
 }
 try{
-const HTMLCollectionPrototype = Object.getPrototypeOf(globalThis?.document?.getElementsByTagName?.('HTMLCollection'));
+	const HTMLCollectionPrototype = Object.getPrototypeOf(globalThis?.document?.getElementsByTagName?.('HTMLCollection'));
 	if(Object.getPrototypeOf(HTMLCollectionPrototype)?.constructor?.name != 'NodeList'){
-		Object.setPrototypeOf(HTMLCollectionPrototype,document.querySelectorAll('NodeList'))
+		Object.setPrototypeOf(HTMLCollectionPrototype,document.querySelectorAll('NodeList'));
 	}
-
+	const NodeListPrototype = Object.getPrototypeOf(globalThis?.document?.querySelectorAll?.('NodeList'));
+	if(Object.getPrototypeOf(NodeListPrototype)?.constructor?.name != 'Array'){
+		Object.setPrototypeOf(NodeListPrototype,[]);
+	}
 }catch{};
 globalThis.$TryCatch=async function(){
   let e =  {};
