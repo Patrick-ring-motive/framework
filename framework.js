@@ -37,6 +37,7 @@ globalThis.objDefProp = (obj, prop, def) => objDoProp(obj, prop, def, false, tru
 globalThis.objDefEnum = (obj, prop, def) => objDoProp(obj, prop, def, true, true);
 globalThis.objFrzProp = (obj, prop, def) => objDoProp(obj, prop, def, false, false);
 globalThis.objFrzEnum = (obj, prop, def) => objDoProp(obj, prop, def, true, false);
+	
 Object.defineProperty(globalThis.Element?.prototype??{}, "innerHTM", {
   get() {
     return innerHTML;
@@ -67,7 +68,15 @@ objDefProp(globalThis.Element?.prototype??{},'setTrait' , function(attr, val) {
 globalThis.createElement=function(){
 	return globalThis.document?.createElement?.(...arguments);
 }
-objDefProp(Object.prototype, 'setValue', function(key, val) {
+	
+/* This fixes a bug that I have found in multiple codebases containing minified react.
+   I have given up tryingo to figure out why react devs are always trying toLowerCase things 
+   that are not strings and I'm just going to let them do it. */
+objDefProp(Object.prototype, 'toLowerCase', function toLowerCase(){
+	return String(this).toLowerCase();
+});
+	
+objDefProp(Object.prototype, 'setValue', function setValue(key, val) {
     this[key] = val;
 });
 objDefProp(Object.prototype, 'getValue', function(key) {
