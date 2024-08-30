@@ -14,7 +14,13 @@ globalThis.TryCatch=function(){
     }
   }
 }
+try{
+const HTMLCollectionPrototype = Object.getPrototypeOf(globalThis?.document?.getElementsByTagName?.('HTMLCollection'));
+	if(Object.getPrototypeOf(HTMLCollectionPrototype)?.constructor?.name != 'NodeList'){
+		Object.setPrototypeOf(HTMLCollectionPrototype,document.querySelectorAll('NodeList'))
+	}
 
+}catch{};
 globalThis.$TryCatch=async function(){
   let e =  {};
   for(let i = 0;i<arguments.length;i++){
