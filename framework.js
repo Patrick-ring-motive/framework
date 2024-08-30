@@ -610,28 +610,28 @@ objDefProp(Object.prototype, 'run', function(obj) {
          }
      };
 
-     globalThis.ptr = function(obj) {
+     globalThis.ptr = function ptr(obj) {
          let pointer = Object.create(null);
          pointer["*"] = obj;
          Object.seal(pointer);
          return pointer;
      };
 
-     globalThis.updateProperty = function(obj, prop, val) {
+     globalThis.updateProperty = function updateProperty(obj, prop, val) {
          if (`${obj?.[`${prop}`]}` != val) {
              (obj??{})[`${prop}`] = val;
          }
      }
 
-     globalThis.replaceProperty = function(obj, prop, rep, val) {
+     globalThis.replaceProperty = function replaceProperty(obj, prop, rep, val) {
             updateProperty(obj, prop, obj?.[`${prop}`]?.replace?.(rep,val)) ;
      }
-     globalThis.approveProperty = function(obj, prop, val) {
+     globalThis.approveProperty = function approveProperty(obj, prop, val) {
          if ((!!val)&&(`${obj?.[`${prop}`]}` != val)) {
              (obj??{})[`${prop}`] = val;
          }
      }
-     console.detail = function(stuff) {
+     console.detail = function detail(stuff) {
          try {
              stuff.constructor.prototype._log = function() {
                  console.log(this);
@@ -641,11 +641,11 @@ objDefProp(Object.prototype, 'run', function(obj) {
              console.log(stuff);
          }
      };
-     console.list = function() {
+     console.list = function list() {
          console.log([...arguments]);
      };
 
-     globalThis.sanitizeAttr = function(str) {
+     globalThis.sanitizeAttr = function sanitizeAttr(str) {
          return str
              .replaceAll(":", "i")
              .replaceAll(".", "o")
@@ -680,7 +680,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
              .replace(/[^a-zA-Z0-9_-]/g, "�");
      };
 
-     objDefProp(globalThis?.EventTarget?.prototype??{},'addDeferEventListener' , function(type, listener, options) {
+     objDefProp(globalThis?.EventTarget?.prototype??{},'addDeferEventListener' , function addDeferEventListener(type, listener, options) {
          const target = this;
          const deferListener = (event) => {
              defer(() => {
@@ -693,7 +693,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
              target.addEventListener(type, deferListener, options);
          }
      });
-      objDefProp(globalThis?.Element?.prototype??{},'addDeferEventListener',function(type, listener, options) {
+      objDefProp(globalThis?.Element?.prototype??{},'addDeferEventListener',function addDeferEventListener(type, listener, options) {
          const target = this;
          const deferListener = (event) => {
              defer(() => {
@@ -707,20 +707,20 @@ objDefProp(Object.prototype, 'run', function(obj) {
          }
      });
      if (globalThis.Element) {
-         objDefProp(globalThis.Element?.prototype??{},'updateAttribute' , function(attr, val) {
+         objDefProp(globalThis.Element?.prototype??{},'updateAttribute' , function updateAttribute(attr, val) {
              if (`${this.getAttribute(`${attr}`)}` != `${val}`) {
                this.setAttribute(`${attr}`, `${val}`);
              }
          });
-          objDefProp(globalThis.Element?.prototype??{},'replaceAttribute' , function(attr, oldval, newval) {
+          objDefProp(globalThis.Element?.prototype??{},'replaceAttribute' , function replaceAttribute(attr, oldval, newval) {
              this.updateAttribute(attr,el.getAttribute(attr).replace(oldval,newval));
          });
-         objDefProp(globalThis.Element?.prototype??{},'approveAttribute',function(attr, val) {
+         objDefProp(globalThis.Element?.prototype??{},'approveAttribute',function approveAttribute(attr, val) {
              if (!!val) {
                this.updateAttribute(attr,val);
              }
          });
-         objDefProp(globalThis.Element?.prototype??{},'getStyle' , function(attribute) {
+         objDefProp(globalThis.Element?.prototype??{},'getStyle' , function getStyle(attribute) {
              try {
                  let compStyles = window.getComputedStyle(this);
                  const out =
@@ -731,12 +731,12 @@ objDefProp(Object.prototype, 'run', function(obj) {
              }
              return undefined;
          });
-         objDefProp(globalThis.Element?.prototype??{},'updateStyle', function(attr, val) {
+         objDefProp(globalThis.Element?.prototype??{},'updateStyle', function updateStyle(attr, val) {
             if (`${this.getStyle?.(`${attr}`)}` != `${val}`) {
                 (this?.style??{})[`${attr}`] = `${val}`;
             }
          });	     
-         globalThis.helpAppliedFunction=function(func){     
+         globalThis.helpAppliedFunction = function helpAppliedFunction(func){     
              if(typeof func == 'function'){
                 if(func.length == 0){
 		              if(`${func}`.includes('this')){
@@ -757,7 +757,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
              }
           return func;
          }
-         globalThis.queryApplyAll = async function(query, func) {
+         globalThis.queryApplyAll = async function queryApplyAll(query, func) {
 	           const sel = globalThis.selectAll||document.querySelectorAll;
              func=helpAppliedFunction(func);
              let elems = Array.from(sel(query));
@@ -775,7 +775,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
 
 
 
-          globalThis.selectApplyAll = async function(query, func) {
+          globalThis.selectApplyAll = async function selectApplyAll(query, func) {
 	   const sel = globalThis.selectAll||document.querySelectorAll;
            func=helpAppliedFunction(func);
            let attr = sanitizeAttr(`${query}${func}`.replaceAll('\n','')).replace(/[^a-zA-Z]/g,'');
@@ -795,7 +795,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
          };
      }
 
-     globalThis.queryApplyAllAwait = async function(query, func) {
+     globalThis.queryApplyAllAwait = async function queryApplyAllAwait(query, func) {
 	 const sel = globalThis.selectAll||document.querySelectorAll;
          func=helpAppliedFunction(func);
          let elems = Array.from(sel(query));
@@ -813,7 +813,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
 
 
 
-     globalThis.queryAttrAll = async function(query, attr, val, func) {
+     globalThis.queryAttrAll = async function queryAttrAll(query, attr, val, func) {
 	       const sel = globalThis.selectAll||document.querySelectorAll;
          func=helpAppliedFunction(func);
          let elems = Array.from(sel(query));
@@ -833,7 +833,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
          }
      };
 
-     globalThis.queryBindAll = function(query, func) {
+     globalThis.queryBindAll = function queryBindAll(query, func) {
          func=helpAppliedFunction(func);
          const attr = "query-" + sanitizeAttr(query) + sanitizeAttr(func.toString());
          query = query + ":not([" + attr + "])";
@@ -925,7 +925,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
      }
          globalThis.declarations ??= [];
          globalThis.declarationStrings ??= [];
-     globalThis.declare = function(func, id) {
+     globalThis.declare = function declare(func, id) {
          if (!func) {
              return;
          }
@@ -959,7 +959,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
          }
      };
 
-     globalThis.declareEvaluator = async function() {
+     globalThis.declareEvaluator = async function declareEvaluator() {
      if((new Date().getTime() - globalThis.declareEvaluator.lastRun)<100){return;}
          globalThis.declareStartup ??= 0;
          if (declareStartup < 3) {
