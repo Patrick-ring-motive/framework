@@ -1979,9 +1979,17 @@ objDefProp(globalThis.Node?.prototype??{},'cssSelectorAll', function(query){
                 }
 
 });
-	globalThis.select = function(query){
+	globalThis.select = function select(query){
 	return document.cssSelector(query)||document.xpath(query)||document.filterSelector(query);
      }
+    globalThis.zselect = function zselect(query){
+      try{
+	       return document.cssSelector(query)||document.xpath(query)||document.filterSelector(query)||document.createElement('null');
+     }catch(e){
+         return Object.assign(document.createElement('error'),e);
+      }
+    }
+    
      globalThis.selectAll = function(query){
 	     let resultList = [];
 	     try{
