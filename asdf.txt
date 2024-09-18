@@ -1,0 +1,8 @@
+void async function llmUI(){
+    const typoCdn = 'https://cdn.jsdelivr.net/npm/typo-js@1.2.4/';
+    await import(`${typoCdn}typo.min.js`);
+    const [aff,dic] = await Promise.all([zfetchText(`${typoCdn}dictionaries/en_US/en_US.aff`),
+                                         zfetchText(`${typoCdn}dictionaries/en_US/en_US.dic`)]);
+    const dictionary = new Typo("en_US",aff,dic);
+    console.log(dictionary.check("mispelled"));
+}?.();
