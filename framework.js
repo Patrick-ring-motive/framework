@@ -983,6 +983,9 @@ objDefProp(Object.prototype, 'run', function(obj) {
              if (document.visibilityState == 'hidden') {
                  return;
              }
+	     if (globalThis.navigator?.scheduling?.isInputPending?.()) {
+		return;
+	     }
              if (idleDetectionAllowed) {
                  if (detector.userState == 'idle') {
                      return;
