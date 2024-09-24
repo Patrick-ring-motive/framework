@@ -83,7 +83,7 @@ globalThis.createElement=function(){
    that are not strings and I'm just going to let them do it. */
 objDefProp(Object.prototype, 'toLowerCase', function toLowerCase(){
 	console.warn('Someone trying to make a non-string lowercase', this);
-	return String(this).toLowerCase();
+	return '';/*String(this).toLowerCase();*/
 });
 	
 objDefProp(Object.prototype, 'setValue', function setValue(key, val) {
