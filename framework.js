@@ -81,8 +81,12 @@ globalThis.createElement=function(){
 /* This fixes a bug that I have found in multiple codebases containing minified react.
    I have given up trying to figure out why react devs are always trying toLowerCase things 
    that are not strings and I'm just going to let them do it. */
+globalThis.LowerCaseBugTriggered = false;
 objDefProp(Object.prototype, 'toLowerCase', function toLowerCase(){
-	console.warn('Someone trying to make a non-string lowercase', this);
+	if(!globalThis.LowerCaseBugTriggered){
+		console.warn('Someone trying to make a non-string lowercase', this);
+		globalThis.LowerCaseBugTriggered = true;
+	}
 	return '';/*String(this).toLowerCase();*/
 });
 	
