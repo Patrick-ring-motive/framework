@@ -2419,6 +2419,10 @@ objDefProp(globalThis.Element?.prototype??{},'setValues',function(attr){
   while(!select(query)){await sleep(100);await nextIdle();}
   return true;
  };
+ globalThis.waitSelect=async function(query){
+  while(!select(query)){await sleep(100);await nextIdle();}
+  return select(query);
+ };
  globalThis.onExists=async function(query,func){
   await waitExists(query);
   func=helpAppliedFunction(func);
