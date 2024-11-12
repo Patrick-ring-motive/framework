@@ -2,7 +2,7 @@ const instanceTry = function instanceTry(inst,type){
   try{
     return (inst == type) || (inst instanceof type);
   }catch(e){
-    if(e.message.includes("'instanceof' is not callable"){
+    if(e.message.includes("'instanceof' is not callable")){
       return false;
     }else{
       console.warn(e,...arguments);
