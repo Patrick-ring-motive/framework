@@ -28,7 +28,7 @@ const specificTypeOf = function specificTypeOf(inst,type){
 
 const anyKindOf = function anyKindOf(inst,type){
   try{
-    return instanceTry(inst,type)
+    return instanceTry(inst,type) || constructOf(inst,type) || protoOf(inst,type) || specificTypeOf(inst,type);
   }catch(e){
     console.warn(e,...arguments);
     return false;
