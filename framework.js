@@ -93,17 +93,17 @@ objDefProp(Object.prototype, 'toLowerCase', function toLowerCase(){
 objDefProp(Object.prototype, 'setValue', function setValue(key, val) {
     this[key] = val;
 });
-objDefProp(Object.prototype, 'getValue', function(key) {
+objDefProp(Object.prototype, 'getValue', function getValue(key) {
     return this[key];
 });
-objDefProp(Object.prototype, 'delValue', function(key) {
+objDefProp(Object.prototype, 'delValue', function delValue(key) {
     delete this[key];
 });
 objDefProp(Object.prototype, 'deleteValue', Object.prototype.delValue);
-objDefProp(Object.prototype, 'runValue', function(key, args) {
+objDefProp(Object.prototype, 'runValue', function runValue(key, args) {
     try {
         return this[key](...args);
-    } catch (e) {
+    } catch {
         return this[key](args);
     }
 });
@@ -118,24 +118,24 @@ objDefProp(Object.prototype, 'run', function(obj) {
 	globalThis.queueMicrotask ??= setTimeout;
 	globalThis.requestAnimationFrame ??= setTimeout;
 	globalThis.requestIdleCallback ??= globalThis.requestAnimationFrame;
-	globalThis.nextIdle=function(){
+	globalThis.nextIdle=function nextIdle(){
 		return new Promise((resolve) => {requestIdleCallback(resolve);});  
 	}
-	globalThis.nextFrame=function(){
+	globalThis.nextFrame=function nextFrame(){
 		return new Promise((resolve) => {requestAnimationFrame(resolve);});  
 	}
-	globalThis.nextTask=function(){
+	globalThis.nextTask=function nextTask(){
 		return new Promise((resolve) => {queueMicrotask(resolve);});  
 	}
      (globalThis.window??{}).nodeName = 'window';
      (globalThis.window??{}).tagName = 'WINDOW';
      (globalThis.window??{}).tag = 'Window';
-     globalThis.doInterval=function(fn,ms){
+     globalThis.doInterval=function doInterval(fn,ms){
       setTimeout(fn,0);
       return setInterval(fn,ms);
      }
      globalThis.body = () => document.body || document.firstElementChild;
-     (globalThis.window??{}).style = function(selector,obj){
+     (globalThis.window??{}).style = function style(selector,obj){
       return new Promise((resolve) => {
       let s = document.createElement('style');
       let css = `${selector}{`;
@@ -146,27 +146,31 @@ objDefProp(Object.prototype, 'run', function(obj) {
       }
       css += `}`;
 	    s.innerHTM=css;
-	try{
-      body().appendChild(s);
-	}catch(e){console.log(e);}
+	   try{
+       body().appendChild(s);
+	   }catch(e){
+       console.warn(e,...arguments);
+     }
       });
      }
      (globalThis.window??{}).importScript = function importScript(url,bdy){
-      return new Promise((resolve) => {
+      return new Promise(function promise(resolve) {
       let s = document.createElement('script');
       	try{
            s.src=url;
-	}catch{}
+	      }catch{}
       s.onload = ()=>resolve(s);
       s.onerror = ()=>resolve(s);
       bdy??=body();
 	try{
     		  bdy.appendChild(s);
-	}catch(e){console.log(e);}
+	}catch(e){
+    console.warn(e,...arguments);
+  }
       });  
      }
      (globalThis.window??{}).importModule = function importModule(url,bdy){
-      return new Promise((resolve) => {
+      return new Promise(function promise(resolve){
       let s = document.createElement('script');
       s.setAttribute('type','module');
       s.type = 'module';
@@ -178,11 +182,13 @@ objDefProp(Object.prototype, 'run', function(obj) {
 	    bdy??=body();
 	      try{
       		bdy.appendChild(s);
-	}catch(e){console.log(e);}
+	}catch(e){
+    console.warn(e,...arguments);
+  }
       });  
      }
      (globalThis.window??{}).importStyle=function importStyle(url){
-	return new Promise((resolve) => {
+	return new Promise(function promise(resolve) {
 		  let l = document.createElement('link');
 		  l.rel='stylesheet';
 		  l.href=url;
@@ -203,14 +209,18 @@ objDefProp(Object.prototype, 'run', function(obj) {
 		  h.onerror = ()=>resolve(l);
 		try{
 		  body().appendChild(l);
-		}catch(e){console.log(e);}
+		}catch(e){
+      console.warn(e,...arguments);
+    }
 		try{
 		  body().appendChild(h);
-		}catch(e){console.log(e);}
+		}catch(e){
+      console.warn(e,...arguments);
+    }
 	  });
     };
      (globalThis.window??{}).script = function(fn){
-      return new Promise((resolve) => {
+      return new Promise(function promise(resolve) {
       let s = document.createElement('script');
       let js = `(${fn})();`;
       s.onload = ()=>resolve(s);
@@ -218,14 +228,16 @@ objDefProp(Object.prototype, 'run', function(obj) {
       try{ s.innerHTML = js; }catch(e){ s.innerText = js; }
       try{
       	body().appendChild(s);
-      }catch(e){console.log(e);}
+      }catch(e){
+        console.warn(e,...arguments);
+      }
       });
      }
 	objDefProp(globalThis?.HTMLIFrameElement?.prototype??{}, 'iframeDocument', function(obj) {
 		return this.contentWindow?.document||this.contentDocument;
 	});
-	(globalThis.window??{}).hiddenFrame=function(url){
-	return new Promise((resolve) => {
+	(globalThis.window??{}).hiddenFrame=function hiddenFrame(url){
+	return new Promise(function promise(resolve) {
 		  let h = document.createElement('iframe');
 		  h.src = url;
 		  h.style.border='none';
@@ -239,7 +251,9 @@ objDefProp(Object.prototype, 'run', function(obj) {
 		  h.onerror = ()=>resolve(h);
 		  try{
 		 	 body().appendChild(h);
-	         }catch(e){console.log(e);}
+	         }catch(e){
+            console.warn(e,...arguments);
+          }
 	  });
     };
 	
@@ -277,7 +291,7 @@ objDefProp(Object.prototype, 'run', function(obj) {
          return await _;
      };
 
-     globalThis.fetchText = async function() {
+     globalThis.fetchText = async function fetchText() {
          return (await fetch(...arguments)).text();
      };
     
