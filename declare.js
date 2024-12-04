@@ -264,17 +264,173 @@ globalThis.declareErrorQueue ??= [];
              }
          }
      };
-     globalThis.declareEvaluator.lastRun = new Date().getTime();
+     globalThis.declareEvaluator.lastRun = new Date().getTime();globalThis.deferations ??= [];
+     globalThis.deferationStrings ??= [];
+     globalThis.defer = function(func, id) {
+         if (!func) {
+             return;
+         }
+         if ((func.next) && (`${func}` == '[object Generator]')) {
+             return (async () => {
+                 return defer(await (func), id);
+             })();
+         }
+         if (`${func.constructor}`.includes("romise")) {
+             return defer(() => func().next(), id);
+         }
+         try {
+             if (`${func.constructor}`.toLowerCase().includes("generatorfunction")) {
+                 return defer(() => func().next(), id);
+             }
+         } catch (e) {
+             console.log(e);
+         };
+         if (`${func.constructor}`.includes("unction")) {
+             let funcString = func.toString() + id;
+             if ((!(deferationStrings.includes(funcString))) ||
+                 (!(funcString.includes('defer(')))) {
+                 globalThis.deferations.push(func);
+                 globalThis.deferationStrings.push(funcString);
+             }
+         } else {
+             Q(() => {
+                 defer(() => ((eval?.(`${func}`), id) || eval(`${func}`), id));
+             });
+         }
+     };
+
+     globalThis.deferEvaluator = async function() {
+         const deferations_length = deferations.length;
+         for (let i = 0; i < deferations_length; i++) {
+             try {
+                 if (`${new Date().getTime()}`.endsWith("10")) {
+                     await async ("deferEvaluator");
+                 }
+                 deferations.shift()?.();
+             } catch (e) {
+                 await async ("deferEvaluator");
+                 console.log(e);
+                 continue;
+             }
+         }
+     };
+     globalThis.designations ??= [];
+     globalThis.designationStrings ??= [];
+     globalThis.deliver = function(func){
+        setInterval(()=>{
+         try{
+          func();
+         }catch(e){
+          console.log(e.message);
+         }
+        },100);
+     };
+  
+     globalThis.design = function(func, id) {
+         if (!func) {
+             return;
+         }
+         if ((func.next) && (`${func}` == '[object Generator]')) {
+             return (async () => {
+                 return design(await (func), id);
+             })();
+
+         }
+         if (`${func.constructor}`.includes("romise")) {
+             return design(() => func().next(), id);
+         }
+         try {
+             if (`${func.constructor}`.toLowerCase().includes("generatorfunction")) {
+                 return design(() => func().next(), id);
+             }
+         } catch (e) {
+             console.log(e);
+         };
+         if (`${func.constructor}`.includes("unction")) {
+             let funcString = func.toString() + id;
+             if ((!(designationStrings.includes(funcString))) ||
+                 (!(funcString.includes('design(')))) {
+                 globalThis.designations.push(func);
+                 globalThis.designationStrings.push(funcString);
+             }
+         } else {
+             Q(() => {
+                 design(() => ((eval?.(`${func}`), id) || eval(`${func}`), id));
+             });
+         }
+     };
+
+     globalThis.designEvaluator = async function() {
+	if((new Date().getTime() - globalThis.designEvaluator.lastRun)<100){return;}
+         globalThis.designStartup ??= 0;
+         if (designStartup < 3) {
+             designStartup++;
+         } else {
+             if ((document.readyState != 'complete') && (Math.floor(Math.random() * 10) < 8)) {
+                 return;
+             }
+             if (document.hidden) {
+                 return;
+             }
+             if (document.visibilityState == 'hidden') {
+                 return;
+             }
+             if (idleDetectionAllowed) {
+                 if (detector.userState == 'idle') {
+                     return;
+                 }
+                 if (detector.screenState == 'locked') {
+                     return;
+                 }
+             }
+             if (document.readyState == 'complete') {
+                 if (globalThis.wasFocused) {
+                     if (globalThis.navigator?.userActivation?.isActive === false) {
+                         return;
+                     }
+                     if (globalThis.navigator?.userActivation?.hasBeenActive === false) {
+                         return;
+                     }
+                     if (!document.hasFocus()) {
+                         return;
+                     }
+                 }
+             }
+         }
+	globalThis.designEvaluator.lastRun = new Date().getTime();
+         const designations_length = designations.length;
+         for (let i = 0; i < designations_length; i++) {
+             if (`${new Date().getTime()}`.endsWith("10")) {
+                 await async ("designEvaluator");
+             }
+             try {
+                 designations[i]();
+             } catch (e) {
+                 await async ("designEvaluator");
+                 console.log(e);
+                 continue;
+             }
+         }
+     };
+     globalThis.designEvaluator.lastRun = new Date().getTime();
      Q(() => globalThis.declareEvaluator());
+     Q(() => globalThis.deferEvaluator());
+     Q(() => globalThis.designEvaluator());
+
          (globalThis.document || globalThis).addEventListener("DOMContentLoaded", (event) => {
              Q(() => globalThis.declareEvaluator());
+             Q(() => globalThis.deferEvaluator());
+             Q(() => globalThis.designEvaluator());
          });
          (globalThis.document || globalThis).addEventListener("readystatechange", (event) => {
              Q(() => globalThis.declareEvaluator());
+             Q(() => globalThis.deferEvaluator());
+             Q(() => globalThis.designEvaluator());
          });
          globalThis.window?.addEventListener?.("load", (event) => {
              Q(() => globalThis.declareEvaluator());
              Q(() => globalThis.deferEvaluator());
+             Q(() => globalThis.designEvaluator());
          });
          setInterval(function() {
              if (globalThis.declareEvaluationInProgress) {
@@ -288,10 +444,27 @@ globalThis.declareErrorQueue ??= [];
                      } catch (e) {
                          await console.log(e);
                      }
+                     Q(() => globalThis.deferEvaluator());
                      setTimeout(() => globalThis.declareEvaluationInProgress = false, 1);
                  });
              });
          }, 100);
+         setInterval(function() {
+             if (globalThis.designEvaluationInProgress) {
+                 return true;
+             }
+             globalThis.designEvaluationInProgress = true;
+             requestIdleCallback(() => {
+                 requestAnimationFrame(async () => {
+                     try {
+                         await globalThis.designEvaluator();
+                     } catch (e) {
+                         await console.log(e);
+                     }
+                     setTimeout(() => globalThis.designEvaluationInProgress = false, 1);
+                 });
+             });
+         }, 101);
 
 
          globalThis.queryApplyAll = async function queryApplyAll(query, func) {
