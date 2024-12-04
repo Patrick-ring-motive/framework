@@ -309,3 +309,74 @@ globalThis.declareErrorQueue ??= [];
                  }
              }
          };
+
+     globalThis.idleDetectionAllowed = false;
+     Q(() => {
+         globalThis.detector = new IdleDetector();
+         void async function() {
+             try {
+                 await detector.start();
+                 idleDetectionAllowed = true;
+             } catch (e) {
+                 idleDetectionAllowed = false;
+             }
+         }();
+     });
+     globalThis.wasFocused = false;
+     Q(() => {
+         if (document.body) {
+             document.body.addEventListener("focusin", (event) => {
+                 if (document.readyState == 'complete') {
+                     globalThis.wasFocused = true;
+                 }
+             });
+             document.body.addEventListener('mousedown', (event) => {
+                 if (document.readyState == 'complete') {
+                     globalThis.wasFocused = true;
+                 }
+             });
+         } else {
+             (document || globalThis).addEventListener("DOMContentLoaded", (event) => {
+                 document.body.addEventListener("focusin", (event) => {
+                     if (document.readyState == 'complete') {
+                         globalThis.wasFocused = true;
+                     }
+                 });
+                 document.body.addEventListener('mousedown', (event) => {
+                     if (document.readyState == 'complete') {
+                         globalThis.wasFocused = true;
+                     }
+                 });
+             });
+         }
+         if (document.firstElementChild) {
+             document.firstElementChild.addEventListener("focusin", (event) => {
+                 if (document.readyState == 'complete') {
+                     globalThis.wasFocused = true;
+                 }
+             });
+             document.firstElementChild.addEventListener('mousedown', (event) => {
+                 if (document.readyState == 'complete') {
+                     globalThis.wasFocused = true;
+                 }
+             });
+         } else {
+             (document || globalThis).addEventListener("DOMContentLoaded", (event) => {
+                 document.firstElementChild.addEventListener("focusin", (event) => {
+                     if (document.readyState == 'complete') {
+                         globalThis.wasFocused = true;
+                     }
+                 });
+                 document.firstElementChild.addEventListener('mousedown', (event) => {
+                     if (document.readyState == 'complete') {
+                         globalThis.wasFocused = true;
+                     }
+                 });
+             });
+         }
+     });
+         objDefProp(globalThis.Element?.prototype??{},'updateAttribute' , function updateAttribute(attr, val) {
+             if (`${this.getAttribute(`${attr}`)}` != `${val}`) {
+               this.setAttribute(`${attr}`, `${val}`);
+             }
+         });
