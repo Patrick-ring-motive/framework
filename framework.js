@@ -49,7 +49,7 @@ globalThis.objFrzEnum = (obj, prop, def) => objDoProp(obj, prop, def, true, fals
 	
 Object.defineProperty(globalThis.Element?.prototype??{}, "innerHTM", {
   get() {
-    return innerHTML;
+    return this.innerHTML;
   },
   set(newValue) {
 	try{
