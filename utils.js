@@ -92,3 +92,7 @@ export const parseHTML = function parseHTML(x){
   return parser?.parseFromString?.(x, 'text/html');
 };
 
+export const parseXML = function parseXML(x){
+  return parser?.parseFromString?.(x, 'text/xml');
+};
+
