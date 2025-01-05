@@ -24,6 +24,8 @@ export const instanceOf = function instanceOf(x,y){
   }
 };
 
+export const str = (x) => String((x?.description ?? x?.source ?? x?.name) || x);
+
 export const isNullish = function isNullish(x){
   return x === undefined || x === null;
 };
