@@ -58,22 +58,37 @@ export const isArray = function isArray(x){
 
 const serializer = newQ(globalThis.XMLSerializer);
 
-export const serializeXML = node => serializer?.serializeToString?.(node);
+export const serializeXML = function serializeXML(node){
+  return serializer?.serializeToString?.(node);
+};
 
-export const bytes = buff => new Uint8Array(buff);
+export const bytes = function bytes(buff){
+  return new Uint8Array(buff);
+};
 
 const encoder = newQ(globalThis.TextEncoder);
 
-export const encode = s => encoder?.encode?.(s) ?? bytes([...s].map(x => x.charCodeAt()));
+export const encode = function encode(s){
+  return encoder?.encode?.(s) ?? bytes([...s].map(x => x.charCodeAt()));
+};
 
-export const buffer = s => encode(s).buffer;
+export const buffer = function buffer(s){
+  return encode(s).buffer;
+};
 
 const decoder = newQ(globalThis.TextDecoder);
 
-export const decode = byte => decoder?.decode?.(byte) ?? String.fromCharCode(...byte);
+export const decode = function decode(byte){
+  return decoder?.decode?.(byte) ?? String.fromCharCode(...byte);
+};
 
-export const text = buff => decode(bytes(buff));
+export const text = function text(buff){
+  return decode(bytes(buff));
+};
 
 const parser = newQ(globalThis.DOMParser);
 
-export const parseHTML = x => parser.parseFromString(x, 'text/html');
+export const parseHTML = function parseHTML(x){
+  return parser?.parseFromString?.(x, 'text/html');
+};
+
