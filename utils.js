@@ -88,6 +88,18 @@ export const text = function text(buff){
   return decode(bytes(buff));
 };
 
+export const stream = function stream(x){
+  try{
+    return new Response(x).body;
+  }catch(e){
+    try{
+      return ReadableStream.from(x);
+    }catch{
+      throw e;
+    }
+  }
+};
+
 const parser = newQ(globalThis.DOMParser);
 
 export const parseHTML = function parseHTML(x){
