@@ -1,4 +1,21 @@
 
+export const q = (varFn) => {
+  try{
+    return varFn?.();
+  }catch(e){
+    if(e.name != "ReferenceError"){
+      throw e;
+    }
+  }
+};
+
+export const newQ = (...args) => {
+  const fn = args?.shift?.();
+  return fn && new fn(...args);
+};
+
+
+
 export const instanceOf = function instanceOf(x,y){
   try{
     return x instanceof y;
