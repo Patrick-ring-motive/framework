@@ -14,7 +14,7 @@ export const newQ = (...args) => {
   return fn && new fn(...args);
 };
 
-
+export const callQ = (...args) => args?.[0]?.call?.(...args);
 
 export const instanceOf = function instanceOf(x,y){
   try{
