@@ -1,3 +1,10 @@
+export const importScript = async function importScript(url) {
+    return eval?.call(globalThis, await (await fetch(url)).text());
+};
+export const applyMethod = ($this, fn, args) => $this[fn].apply($this, args);
+export const enact = (fn, args) => fn.apply(undefined, args);
+export const arr = (x) => Array.from(x);
+export const anew = (fn, args) => Reflect.construct(fn, args);
 
 export const Q = (varFn) => {
   try{
