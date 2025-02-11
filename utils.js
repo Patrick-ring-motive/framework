@@ -1,4 +1,10 @@
 
+export const Q = (varFn) => {
+  try{
+    return varFn?.();
+  }catch{}
+};
+
 export const q = (varFn) => {
   try{
     return varFn?.();
@@ -62,6 +68,10 @@ export const isObject = function isObject(x){
 
 export const isArray = function isArray(x){
   return Array.isArray(x) || x instanceof Array;
+};
+
+export const isFunction = function isFunction(x){
+  return typeof x === 'function' || x instanceof Function;
 };
 
 const serializer = newQ(globalThis.XMLSerializer);
