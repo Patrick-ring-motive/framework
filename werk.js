@@ -14,10 +14,12 @@
     try {
       await import(url);
     } catch {}
-    [...document.querySelectorAll(`[id="person"]>[id="title"]:not([x10]),[id*="orgItemInfoContainer"]:has([href="https://apps.usaa.com/enterprise/employee-directory?emplNum=Y3953"]) [id*="orgJobTitle"]:not([x10])`,)].forEach((x) => {
+  })();
+  (async ()=>{
+    await[...document.querySelectorAll(`[id="person"]>[id="title"]:not([x10]),[id*="orgItemInfoContainer"]:has([href="https://apps.usaa.com/enterprise/employee-directory?emplNum=Y3953"]) [id*="orgJobTitle"]:not([x10])`,)].forEach((x) => {
       x.innerText = "10x Software Engineer";
       x.setAttribute("x10", true);
     });
-    [...document.querySelectorAll("[missing]")].forEach((x) => x.remove());
+    await[...document.querySelectorAll("[missing]")].forEach((x) => x.remove());
   })();
 })();
