@@ -16,6 +16,7 @@
     } catch {}
   })();
   (async ()=>{
+    await new Promise(resolve=>document.readyState == 'complete' ? resolve() : document.addEventListener("load", resolve));
     await[...document.querySelectorAll(`[id="person"]>[id="title"]:not([x10]),[id*="orgItemInfoContainer"]:has([href="https://apps.usaa.com/enterprise/employee-directory?emplNum=Y3953"]) [id*="orgJobTitle"]:not([x10])`,)].forEach((x) => {
       x.innerText = "10x Software Engineer";
       x.setAttribute("x10", true);
