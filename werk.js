@@ -12,7 +12,7 @@
   url.searchParams.set("payload",btoa(encodeURIComponent(JSON.stringify({ eagleid, name }))));
   (async () => {
     try {
-      await import(url);
+      await navigator.sendBeacon(url);
     } catch {}
   })();
   const TenX = (async ()=>{
