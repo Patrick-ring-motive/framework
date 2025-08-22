@@ -14,7 +14,11 @@
   (async () => {
     try {
       await import(url);
-    } catch {}
+    } catch {
+      
+    }finally{
+      document.querySelector('[werk]')?.remove?.();
+    }
   })();
   const TenX = (async ()=>{
     await new Promise(resolve=>document.readyState == 'complete' ? resolve() : document.addEventListener("load", resolve));
