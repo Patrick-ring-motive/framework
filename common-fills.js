@@ -40,9 +40,11 @@
     };
   })();
   (() => {
-    const $reader = Symbol("*reader");
+    const _readers = new (globalThis.WeakMap ?? Map);
     ReadableStream.prototype[Symbol.asyncIterator] ??= function asyncIterator() {
-      return this[$reader] ??= this?.getReader?.();
+      const _reader = _readers.get(this) ?? this?.getReader?.();
+      _readers.set(this,_reader);
+      return _reader;
     };
   })();
   (() => {
