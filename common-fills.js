@@ -4,16 +4,21 @@
       fn?.();
     } catch { }
   };
+  (()=>{
+    Blob.prototype.clone ??= function clone(){
+      return this.slice();
+    };
+  })();
   [Request, Response, Blob].forEach(res => {
     res.prototype.bytes ??= async function bytes() {
-      return new Uint8Array(await this.arrayBuffer());
+      return new Uint8Array(await this.clone().arrayBuffer());
     };
   });
   (() => {
     if (!new Request("https://test.com", { method: "POST", body: "test" }).body) {
       Object.defineProperty(Request.prototype, "body", {
         get: function body() {
-          const $this = this;
+          const $this = this.clone();
           return new ReadableStream({
             async pull(controller) {
               controller.enqueue(await $this.bytes());
@@ -25,7 +30,9 @@
     }
   })();
   (() => {
-    ReadableStreamDefaultReader.prototype.next ??= ReadableStreamDefaultReader.prototype.read;
+    ReadableStreamDefaultReader.prototype.next ??= function next(){
+      return this.read();
+    };
   })();
   (() => {
     ReadableStreamDefaultReader.prototype[Symbol.asyncIterator] ??= function asyncIterator() {
@@ -42,7 +49,7 @@
   (() => {
     const _readers = new (globalThis.WeakMap ?? Map);
     ReadableStream.prototype[Symbol.asyncIterator] ??= function asyncIterator() {
-      const _reader = _readers.get(this) ?? this?.getReader?.();
+      const _reader = _readers.get(this) ?? Q(()=>this?.getReader?.());
       _readers.set(this,_reader);
       return _reader;
     };
