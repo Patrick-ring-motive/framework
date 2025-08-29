@@ -11,21 +11,24 @@
   })();
   [Request, Response, Blob].forEach(res => {
     res.prototype.bytes ??= async function bytes() {
-      return new Uint8Array(await this.clone().arrayBuffer());
+      return new Uint8Array(await this.arrayBuffer());
     };
   });
   (() => {
     if (!new Request("https://test.com", { method: "POST", body: "test" }).body) {
       Object.defineProperty(Request.prototype, "body", {
-        get: function body() {
+        get: (function stream(){
           const $this = this.clone();
-          return new ReadableStream({
+          const $body = new ReadableStream({
             async pull(controller) {
               controller.enqueue(await $this.bytes());
               controller.close();
             },
           });
-        },
+          return function body(){
+            return $body;
+          };
+        })()
       });
     }
   })();
