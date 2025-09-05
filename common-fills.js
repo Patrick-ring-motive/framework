@@ -1,14 +1,9 @@
 (() => {
-    const Q = fn => {
-        try {
-            fn?.();
-        } catch {}
-    };
-    (() => {
-        Blob.prototype.clone ??= Object.setPrototypeOf(function clone() {
-            return this.slice();
-        },Blob);
-    })();
+    const Q = fn =>{try{return fn?.()}catch{}};
+	const close = ctrl => Q(()=>ctrl.close());
+	const cancel = reader => Q(()=>reader.cancel());
+	const releaseLock = reader => Q(()=>reader.releaseLock());
+	
     [Request, Response, Blob].forEach(res => {
         res.prototype.bytes ??= Object.setPrototypeOf(async function bytes() {
             return new Uint8Array(await this.arrayBuffer());
@@ -16,10 +11,6 @@
     });
 (()=>{
 	if (new Request("https://example.com", {method:"POST",body:"test"}).body) {return};
-	const Q = fn =>{try{return fn?.()}catch{}};
-	const close = ctrl => Q(()=>ctrl.close());
-	const cancel = reader => Q(()=>reader.cancel());
-	const releaseLock = reader => Q(()=>reader.releaseLock());
 	Object.defineProperty(Request.prototype, "body", {
 		get: (() => {
 			if(/GET|HEAD/.test(this.method))return null;
@@ -82,19 +73,5 @@
             _readers.set(this, _reader);
             return _reader;
         },ReadableStream);
-    })();
-    (() => {
-        globalThis.requestAnimationFrame ??= function requestAnimationFrame(fn) {
-            return setTimeout(fn, 0);
-        };
-    })();
-    (() => {
-        globalThis.requestIdleCallback ??= globalThis.requestAnimationFrame;
-    })();
-    (() => {
-        globalThis.cancelAnimationFrame ??= clearTimeout;
-    })();
-    (() => {
-        globalThis.cancelIdleCallback ??= globalThis.cancelAnimationFrame;
     })();
 })();
