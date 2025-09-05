@@ -5,21 +5,21 @@
         } catch {}
     };
     (() => {
-        Blob.prototype.clone ??= function clone() {
+        Blob.prototype.clone ??= Object.setPrototypeOf(function clone() {
             return this.slice();
-        };
+        },Blob);
     })();
     [Request, Response, Blob].forEach(res => {
-        res.prototype.bytes ??= async function bytes() {
+        res.prototype.bytes ??= Object.setPrototypeOf(async function bytes() {
             return new Uint8Array(await this.arrayBuffer());
-        };
+        },Uint8Array);
     });
     (() => {
         if (!new Request("https://test.com", {method:"POST",body:"test"}).body) {
             Object.defineProperty(Request.prototype, "body", {
                 get: (() => {
                     let $this, $body;
-                    return function body() {
+                    return Object.setPrototypeOf(function body() {
                         $this ??= this.clone();
                         $body ??= new ReadableStream({
                             async pull(controller) {
@@ -28,37 +28,37 @@
                             },
                         });
                         return $body;
-                    };
+                    },ReadableStream);
                 })()
             });
         }
     })();
     (() => {
-        ReadableStreamDefaultReader.prototype.next ??= function next() {
+        ReadableStreamDefaultReader.prototype.next ??= Object.setPrototypeOf(function next() {
             return this.read();
-        };
+        },ReadableStreamDefaultReader.prototype.read);
     })();
     (() => {
-        ReadableStreamDefaultReader.prototype[Symbol.asyncIterator] ??= function asyncIterator() {
+        ReadableStreamDefaultReader.prototype[Symbol.asyncIterator] ??= Object.setPrototypeOf(function asyncIterator() {
             return this;
-        };
+        },ReadableStreamDefaultReader);
     })();
     (() => {
-        ReadableStreamDefaultReader.prototype['return'] ??= function release(reason) {
+        ReadableStreamDefaultReader.prototype['return'] ??= Object.setPrototypeOf(function release(reason) {
             Q(() => this.cancel?.(reason));
             Q(() => this.releaseLock?.());
             return {
                 done: true
             };
-        };
+        },ReadableStreamDefaultReader.prototype.releaseLock);
     })();
     (() => {
         const _readers = new(globalThis.WeakMap ?? Map);
-        ReadableStream.prototype[Symbol.asyncIterator] ??= function asyncIterator() {
+        ReadableStream.prototype[Symbol.asyncIterator] ??= Object.setPrototypeOf(function asyncIterator() {
             const _reader = _readers.get(this) ?? Q(() => this?.getReader?.());
             _readers.set(this, _reader);
             return _reader;
-        };
+        },ReadableStream);
     })();
     (() => {
         globalThis.requestAnimationFrame ??= function requestAnimationFrame(fn) {
