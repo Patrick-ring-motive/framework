@@ -14,8 +14,8 @@
 			const releaseLock = reader => Q(()=>reader.releaseLock());
 			const isPromise = x => x instanceof Promise || x?.constructor?.name === 'Promise' || typeof x?.then === 'function';
 			ReadableStream.from ??= Object.setPrototypeOf(function from(obj){
-				let $iter;
-				return new ReadableStream({
+				let $iter, $readableStream;
+				$readableStream = new ReadableStream({
 							pull: Object.setPrototypeOf(async function pull(controller) {
 								try{
 									$iter ??= obj?.[Symbol.iterator]?.() ?? obj?.[Symbol.asyncIterator]?.() ?? [...obj][Symbol.iterator]();
@@ -30,9 +30,12 @@
 									}
 								}catch(e){
                                   close(controller);
+								  cancel($reqdableStream);
 								  throw e;
 								}
-						},ReadableStreamDefaultController);
+						},ReadableStreamDefaultController),
+			    });
+				return $readableStream
 			},ReadableStream);
 			if (new record("https://example.com", {method:"POST",body:"test"}).body) {return};
 			Object.defineProperty(record.prototype, "body", {
@@ -62,7 +65,7 @@
 									cancel($reader);
 									cancel($stream);
 								}
-							},ReadableStreamDefaultController)
+							},ReadableStreamDefaultController),
 						});
 						return $body;
 					},ReadableStream);
