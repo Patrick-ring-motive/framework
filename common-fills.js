@@ -12,6 +12,19 @@
 			const close = ctrl => Q(()=>ctrl.close());
 			const cancel = reader => Q(()=>reader.cancel());
 			const releaseLock = reader => Q(()=>reader.releaseLock());
+			ReadableStream.from ??= Object.setPrototypeOf(function from(obj){
+				let $iter;
+				return new ReadableStream({
+							pull: Object.setPrototypeOf(async function start(controller) {
+									$iter ??= obj?.[Symbol.iterator]?.() ?? obj?.[Symbol.asyncIterator]?.() ?? [...obj][Symbol.iterator]();
+									const chunk = $iter.next();
+									if(chunk?.done === false){
+										controller.enqueue(chunk?.value);
+									}else{
+										
+									}
+						});
+			},ReadableStream);
 			if (new record("https://example.com", {method:"POST",body:"test"}).body) {return};
 			Object.defineProperty(record.prototype, "body", {
 				get: (() => {
