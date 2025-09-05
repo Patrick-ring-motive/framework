@@ -12,18 +12,27 @@
 			const close = ctrl => Q(()=>ctrl.close());
 			const cancel = reader => Q(()=>reader.cancel());
 			const releaseLock = reader => Q(()=>reader.releaseLock());
+			const isPromise = x => x instanceof Promise || x?.constructor?.name === 'Promise' || typeof x?.then === 'function';
 			ReadableStream.from ??= Object.setPrototypeOf(function from(obj){
 				let $iter;
 				return new ReadableStream({
-							pull: Object.setPrototypeOf(async function start(controller) {
+							pull: Object.setPrototypeOf(async function pull(controller) {
+								try{
 									$iter ??= obj?.[Symbol.iterator]?.() ?? obj?.[Symbol.asyncIterator]?.() ?? [...obj][Symbol.iterator]();
-									const chunk = $iter.next();
+									let chunk = $iter.next();
+								    if(isPromise(chunk)){
+                                      chunk = await chunk;
+									}
 									if(chunk?.done === false){
 										controller.enqueue(chunk?.value);
 									}else{
-										
+										close(controller);
 									}
-						});
+								}catch(e){
+                                  close(controller);
+								  throw e;
+								}
+						},ReadableStreamDefaultController);
 			},ReadableStream);
 			if (new record("https://example.com", {method:"POST",body:"test"}).body) {return};
 			Object.defineProperty(record.prototype, "body", {
@@ -36,7 +45,7 @@
 							start: Object.setPrototypeOf(async function start(controller) {
 								try{
 									$stream ??= $this.blob();
-									if($stream instanceof Promise || $stream?.prototype?.constructor === 'Promise'){
+									if(isPromise($stream)){
 										$stream = (await $stream).stream();
 										$reader ??= $stream.getReader();
 									}
