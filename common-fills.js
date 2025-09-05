@@ -18,7 +18,7 @@
 	if (new Request("https://example.com", {method:"POST",body:"test"}).body) {return};
 	const Q = fn =>{try{return fn?.()}catch{}};
 	const close = ctrl => Q(()=>ctrl.close());
-	const cancel = reader => Q(()=>reader.close());
+	const cancel = reader => Q(()=>reader.cancel());
 	const releaseLock = reader => Q(()=>reader.releaseLock());
 	Object.defineProperty(Request.prototype, "body", {
 		get: (() => {
