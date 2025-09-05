@@ -3,50 +3,53 @@
 	const close = ctrl => Q(()=>ctrl.close());
 	const cancel = reader => Q(()=>reader.cancel());
 	const releaseLock = reader => Q(()=>reader.releaseLock());
-	
-    [Request, Response, Blob].forEach(res => {
-        res.prototype.bytes ??= Object.setPrototypeOf(async function bytes() {
-            return new Uint8Array(await this.arrayBuffer());
-        },Uint8Array);
-    });
-(()=>{
-	if (new Request("https://example.com", {method:"POST",body:"test"}).body) {return};
-	Object.defineProperty(Request.prototype, "body", {
-		get: (() => {
-			if(/GET|HEAD/.test(this.method))return null;
-			let $this, $body, $stream, $reader;
-			return Object.setPrototypeOf(function body() {
-				$this ??= this.clone();
-				$body ??= new ReadableStream({
-					start: Object.setPrototypeOf(async function start(controller) {
-						try{
-							$stream ??= $this.blob();
-							if($stream instanceof Promise || $stream?.prototype?.constructor === 'Promise'){
-								$stream = (await $stream).stream();
-								$reader ??= $stream.getReader();
-							}
-							let chunk = await $reader.read();
-							while(chunk?.done === false){
-								controller.enqueue(chunk?.value);
-								chunk = await $reader.read();
-							}
-						}catch(e){
-							console.error(e);
-						}finally{
-							releaseLock($reader);
-							close(controller);
-							cancel($reader);
-							cancel($stream);
-						}
-					},ReadableStreamDefaultController)
-				});
-				return $body;
-			},ReadableStream);
-		})(),
-		configurable:true,
-		enumerable:true,
-	});
-})();
+    for(const record of [Request, Response, Blob]){
+		(()=>{
+	        record.prototype.bytes ??= Object.setPrototypeOf(async function bytes() {
+	            return new Uint8Array(await this.arrayBuffer());
+	        },Uint8Array);
+		})();
+    };
+	for(const record of [Request, Response]){
+		(()=>{
+			if (new record("https://example.com", {method:"POST",body:"test"}).body) {return};
+			Object.defineProperty(record.prototype, "body", {
+				get: (() => {
+					let $this, $body, $stream, $reader;
+					return Object.setPrototypeOf(function body() {
+						if(/GET|HEAD/.test(this.method))return null;
+						$this ??= this.clone();
+						$body ??= new ReadableStream({
+							start: Object.setPrototypeOf(async function start(controller) {
+								try{
+									$stream ??= $this.blob();
+									if($stream instanceof Promise || $stream?.prototype?.constructor === 'Promise'){
+										$stream = (await $stream).stream();
+										$reader ??= $stream.getReader();
+									}
+									let chunk = await $reader.read();
+									while(chunk?.done === false){
+										controller.enqueue(chunk?.value);
+										chunk = await $reader.read();
+									}
+								}catch(e){
+									console.error(e);
+								}finally{
+									releaseLock($reader);
+									close(controller);
+									cancel($reader);
+									cancel($stream);
+								}
+							},ReadableStreamDefaultController)
+						});
+						return $body;
+					},ReadableStream);
+				})(),
+				configurable:true,
+				enumerable:true,
+			});
+		})();
+	}
     (() => {
         ReadableStreamDefaultReader.prototype.next ??= Object.setPrototypeOf(function next() {
             return this.read();
