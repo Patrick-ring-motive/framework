@@ -14,27 +14,48 @@
             return new Uint8Array(await this.arrayBuffer());
         },Uint8Array);
     });
-    (() => {
-        if (!new Request("https://test.com", {method:"POST",body:"test"}).body) {
-            Object.defineProperty(Request.prototype, "body", {
-                get: (() => {
-                    let $this, $body;
-                    return Object.setPrototypeOf(function body() {
-                        $this ??= this.clone();
-                        $body ??= new ReadableStream({
-                            async pull(controller) {
-                                controller.enqueue(await $this.bytes());
-                                controller.close();
-                            },
-                        });
-                        return $body;
-                    },ReadableStream);
-                })(),
-                configurable:true,
-                enumerable:true,
-            });
-        }
-    })();
+(()=>{
+	if (new Request("https://example.com", {method:"POST",body:"test"}).body) {return};
+	const Q = fn =>{try{return fn?.()}catch{}};
+	const close = ctrl => Q(()=>ctrl.close());
+	const cancel = reader => Q(()=>reader.close());
+	const releaseLock = reader => Q(()=>reader.releaseLock());
+	Object.defineProperty(Request.prototype, "body", {
+		get: (() => {
+			if(/GET|HEAD/.test(this.method))return null;
+			let $this, $body, $stream, $reader;
+			return Object.setPrototypeOf(function body() {
+				$this ??= this.clone();
+				$body ??= new ReadableStream({
+					start: Object.setPrototypeOf(async function start(controller) {
+						try{
+							$stream ??= $this.blob();
+							if($stream instanceof Promise || $stream?.prototype?.constructor === 'Promise'){
+								$stream = (await $stream).stream();
+								$reader ??= $stream.getReader();
+							}
+							let chunk = await $reader.read();
+							while(chunk?.done === false){
+								controller.enqueue(chunk?.value);
+								chunk = await $reader.read();
+							}
+						}catch(e){
+							console.error(e);
+						}finally{
+							releaseLock($reader);
+							close(controller);
+							cancel($reader);
+							cancel($stream);
+						}
+					},ReadableStreamDefaultController)
+				});
+				return $body;
+			},ReadableStream);
+		})(),
+		configurable:true,
+		enumerable:true,
+	});
+})();
     (() => {
         ReadableStreamDefaultReader.prototype.next ??= Object.setPrototypeOf(function next() {
             return this.read();
