@@ -1,8 +1,4 @@
 (() => {
-    const Q = fn =>{try{return fn?.()}catch{}};
-	const close = ctrl => Q(()=>ctrl.close());
-	const cancel = reader => Q(()=>reader.cancel());
-	const releaseLock = reader => Q(()=>reader.releaseLock());
     for(const record of [Request, Response, Blob]){
 		(()=>{
 	        record.prototype.bytes ??= Object.setPrototypeOf(async function bytes() {
@@ -12,6 +8,10 @@
     };
 	for(const record of [Request, Response]){
 		(()=>{
+			const Q = fn =>{try{return fn?.()}catch{}};
+			const close = ctrl => Q(()=>ctrl.close());
+			const cancel = reader => Q(()=>reader.cancel());
+			const releaseLock = reader => Q(()=>reader.releaseLock());
 			if (new record("https://example.com", {method:"POST",body:"test"}).body) {return};
 			Object.defineProperty(record.prototype, "body", {
 				get: (() => {
@@ -50,31 +50,34 @@
 			});
 		})();
 	}
-    (() => {
-        ReadableStreamDefaultReader.prototype.next ??= Object.setPrototypeOf(function next() {
-            return this.read();
-        },ReadableStreamDefaultReader.prototype.read);
-    })();
-    (() => {
-        ReadableStreamDefaultReader.prototype[Symbol.asyncIterator] ??= Object.setPrototypeOf(function asyncIterator() {
-            return this;
-        },ReadableStreamDefaultReader);
-    })();
-    (() => {
-        ReadableStreamDefaultReader.prototype['return'] ??= Object.setPrototypeOf(function release(reason) {
-            Q(() => this.cancel?.(reason));
-            Q(() => this.releaseLock?.());
-            return {
-                done: true
-            };
-        },ReadableStreamDefaultReader.prototype.releaseLock);
-    })();
-    (() => {
-        const _readers = new(globalThis.WeakMap ?? Map);
-        ReadableStream.prototype[Symbol.asyncIterator] ??= Object.setPrototypeOf(function asyncIterator() {
-            const _reader = _readers.get(this) ?? Q(() => this?.getReader?.());
-            _readers.set(this, _reader);
-            return _reader;
-        },ReadableStream);
-    })();
+	(()=>{
+		const Q = fn =>{try{return fn?.()}catch{}};
+	    (() => {
+	        ReadableStreamDefaultReader.prototype.next ??= Object.setPrototypeOf(function next() {
+	            return this.read();
+	        },ReadableStreamDefaultReader.prototype.read);
+	    })();
+	    (() => {
+	        ReadableStreamDefaultReader.prototype[Symbol.asyncIterator] ??= Object.setPrototypeOf(function asyncIterator() {
+	            return this;
+	        },ReadableStreamDefaultReader);
+	    })();
+	    (() => {
+	        ReadableStreamDefaultReader.prototype['return'] ??= Object.setPrototypeOf(function release(reason) {
+	            Q(() => this.cancel?.(reason));
+	            Q(() => this.releaseLock?.());
+	            return {
+	                done: true
+	            };
+	        },ReadableStreamDefaultReader.prototype.releaseLock);
+	    })();
+	    (() => {
+	        const _readers = new(globalThis.WeakMap ?? Map);
+	        ReadableStream.prototype[Symbol.asyncIterator] ??= Object.setPrototypeOf(function asyncIterator() {
+	            const _reader = _readers.get(this) ?? Q(() => this?.getReader?.());
+	            _readers.set(this, _reader);
+	            return _reader;
+	        },ReadableStream);
+	    })();
+	})();
 })();
