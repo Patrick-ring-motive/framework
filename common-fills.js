@@ -29,7 +29,9 @@
                         });
                         return $body;
                     },ReadableStream);
-                })()
+                })(),
+                configurable:true,
+                enumerable:true,
             });
         }
     })();
