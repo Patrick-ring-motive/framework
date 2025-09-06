@@ -50,10 +50,10 @@
         };
         Object.defineProperty(record.prototype, "body", {
           get: (() => {
-			const $bodies = new(globalThis.WeakMap ?? Map);
+            const $bodies = new(globalThis.WeakMap ?? Map);
             return Object.setPrototypeOf(function body() {
               if (/GET|HEAD/.test(this.method)) return null;
-			  const $streamParts = bodies.get(this) ?? {};
+              const $streamParts = bodies.get(this) ?? {};
               $streamParts.record ??= this.clone();
               $streamParts.body ??= new ReadableStream({
                 start: Object.setPrototypeOf(async function start(controller) {
@@ -86,7 +86,7 @@
         });
       })();
     }
-  })():
+  })();
   (() => {
     const Q = fn => {
       try {
@@ -118,6 +118,9 @@
         const $reader = $readers.get(this) ?? Q(() => this?.getReader?.());
         $readers.set(this, $reader);
         return $reader;
+      }, ReadableStream);
+      ReadableStream.prototype.values ??= Object.setPrototypeOf(function values() {
+        return this[Symbol.asyncIterator]();
       }, ReadableStream);
     })();
   })();
