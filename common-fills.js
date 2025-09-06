@@ -12,6 +12,12 @@
         return fn?.()
       } catch {}
     };
+    class StreamParts{
+      record;
+      body;
+      stream;
+      reader;
+    };
     const close = ctrl => Q(() => ctrl.close());
     const cancel = reader => Q(() => reader.cancel());
     const releaseLock = reader => Q(() => reader.releaseLock());
@@ -53,15 +59,17 @@
             const $bodies = new(globalThis.WeakMap ?? Map);
             return Object.setPrototypeOf(function body() {
               if (/GET|HEAD/.test(this.method)) return null;
-              const $streamParts = $bodies.get(this) ?? {};
+              const $streamParts = $bodies.get(this) ?? new StreamParts();
               $bodies.set(this,$streamParts);
               $streamParts.record ??= this.clone();
               $streamParts.body ??= new ReadableStream({
                 start: Object.setPrototypeOf(async function start(controller) {
                   try {
-                    $streamParts.stream ??= $streamParts.record.blob();
+                    $streamParts.stream ??= $streamParts.record.blob()?.then?.(Object.setPrototypeOf(function stream(blob){
+                      return blob?.stream?.();
+                    },ReadableStream);
                     if (isPromise($streamParts.stream)) {
-                      $streamParts.stream = (await $streamParts.stream).stream();
+                      $streamParts.stream = await $streamParts.stream;
                       $streamParts.reader ??= $streamParts.stream.getReader();
                     }
                     let chunk = await $streamParts.reader.read();
