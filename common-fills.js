@@ -15,6 +15,7 @@
     class StreamParts{
       record;
       body;
+      blob;
       stream;
       reader;
     };
@@ -65,13 +66,12 @@
               $streamParts.body ??= new ReadableStream({
                 start: Object.setPrototypeOf(async function start(controller) {
                   try {
-                    $streamParts.stream ??= $streamParts.record.blob()?.then?.(Object.setPrototypeOf(function stream(blob){
-                      return blob?.stream?.();
-                    },ReadableStream);
-                    if (isPromise($streamParts.stream)) {
-                      $streamParts.stream = await $streamParts.stream;
-                      $streamParts.reader ??= $streamParts.stream.getReader();
+                    $streamParts.blob ??= $streamParts.record.blob();
+                    if (isPromise($streamParts.blob)) {
+                      $streamParts.blob = await $streamParts.blob;
                     }
+                    $streamParts.stream ??= $streamParts.blob.stream();
+                    $streamParts.reader ??= $streamParts.stream.getReader();
                     let chunk = await $streamParts.reader.read();
                     while (chunk?.done === false) {
                       controller.enqueue(chunk?.value);
