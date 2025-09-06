@@ -33,7 +33,7 @@
             }
           } catch (e) {
             close(controller);
-            cancel($reqdableStream);
+            cancel($readableStream);
             throw e;
           }
         }, ReadableStreamDefaultController),
@@ -53,7 +53,8 @@
             const $bodies = new(globalThis.WeakMap ?? Map);
             return Object.setPrototypeOf(function body() {
               if (/GET|HEAD/.test(this.method)) return null;
-              const $streamParts = bodies.get(this) ?? {};
+              const $streamParts = $bodies.get(this) ?? {};
+              $bodies.set(this,$streamParts);
               $streamParts.record ??= this.clone();
               $streamParts.body ??= new ReadableStream({
                 start: Object.setPrototypeOf(async function start(controller) {
