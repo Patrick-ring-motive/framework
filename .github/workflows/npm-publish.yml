@@ -29,6 +29,7 @@ jobs:
         with:
           node-version: 20  # Updated from 16 (EOL)
           registry-url: https://registry.npmjs.org/
+      - run: npm install -g npm@latest 
       - run: npm ci
       - run: npm publish
         # No env section needed - trusted publishing uses OIDC
