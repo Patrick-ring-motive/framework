@@ -6,7 +6,7 @@
       }, Uint8Array);
     })();
   };
-  (() => {
+  (() => { 
     const Q = fn => {
       try {
         return fn?.()
