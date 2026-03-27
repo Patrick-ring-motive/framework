@@ -33,7 +33,9 @@ function importBlobScript(url) {
   }
   </script>
   <script src="${url}"></script></body></html>`;
-  const blob = new Blob([documentSource], { type: "text/html; charset=utf-8" });
+  const blob = new Blob([documentSource], {
+    type: "text/html; charset=utf-8"
+  });
   const Url = URL.createObjectURL(blob);
   const blobFrame = document.createElement('iframe');
   blobFrame.src = Url;
@@ -76,7 +78,9 @@ function importBlobScriptContent(content) {
   }
   </script>
   <script>${content}</script></body></html>`;
-  const blob = new Blob([documentSource], { type: "text/html; charset=utf-8" });
+  const blob = new Blob([documentSource], {
+    type: "text/html; charset=utf-8"
+  });
   const Url = URL.createObjectURL(blob);
   const blobFrame = document.createElement('iframe');
   blobFrame.src = Url;

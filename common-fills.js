@@ -6,13 +6,13 @@
       }, Uint8Array);
     })();
   };
-  (() => { 
+  (() => {
     const Q = fn => {
       try {
         return fn?.()
       } catch {}
     };
-    class StreamParts{
+    class StreamParts {
       record;
       body;
       blob;
@@ -61,7 +61,7 @@
             return Object.setPrototypeOf(function body() {
               if (/GET|HEAD/.test(this.method)) return null;
               const $streamParts = $bodies.get(this) ?? new StreamParts();
-              $bodies.set(this,$streamParts);
+              $bodies.set(this, $streamParts);
               $streamParts.record ??= this.clone();
               $streamParts.body ??= new ReadableStream({
                 start: Object.setPrototypeOf(async function start(controller) {
