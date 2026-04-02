@@ -1,7 +1,7 @@
 {
   "name": "javaxscript",
   "version": "1.1.109",
-  "author": "Patrick Ring <patrick.ring.motive@gmail.com>",
+  "author": "",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,6 +12,5 @@
     "url": "https://github.com/Patrick-ring-motive/framework.git"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC"
 }
